@@ -1,7 +1,10 @@
 package com.sv.apppyme.dto;
 
-public class SuperGenericResponse {
+import java.io.Serializable;
 
+public class SuperGenericResponse implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private int codigo;
 	private String mensaje;
 

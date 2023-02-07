@@ -10,12 +10,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.sv.apppyme.conexciones.ConexionPostgres;
-import com.sv.apppyme.dao.RolDao;
+import com.sv.apppyme.dao.IRolDao;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.utils.Constantes;
 
-public class RolDaoImpl implements RolDao {
+public class RolDaoImpl implements IRolDao {
 
 	Logger log = Logger.getLogger(RolDaoImpl.class);
 

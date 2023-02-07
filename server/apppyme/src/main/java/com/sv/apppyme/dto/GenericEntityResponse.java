@@ -1,9 +1,11 @@
 package com.sv.apppyme.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GenericEntityResponse<E> extends SuperGenericResponse {
+public class GenericEntityResponse<E> extends SuperGenericResponse implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private E entity;
 	private List<E> listaEntity;
 
@@ -13,10 +15,19 @@ public class GenericEntityResponse<E> extends SuperGenericResponse {
 
 	public GenericEntityResponse(GenericEntityResponse<E> cn) {
 		super();
+		this.setCodigo(getCodigo());
+		this.setMensaje(getMensaje());
 		this.entity = cn.getEntity();
 		this.listaEntity = cn.listaEntity;
 	}
 
+	public GenericEntityResponse(int codigo, String mensaje) {
+		super();
+		this.setCodigo(codigo);
+		this.setMensaje(mensaje);
+	}
+	
+	
 	public E getEntity() {
 		return entity;
 	}

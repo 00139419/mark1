@@ -23,5 +23,8 @@ public class Constantes {
 	public static final String DB_TABLA_ROL_COL_ID = "id";
 	public static final String DB_TABLA_ROL_COL_DESCRIPCION = "descripcion";
 	public static final String DB_TABLA_ROL_QUERY_SELECT_EVERYTHING = "SELECT * FROM rol";
+	
+	//contestaes para los controladores
+	public static final String ROOT_CTRL = "/apppyme/api/srv/";
 
 }
