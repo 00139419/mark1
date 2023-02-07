@@ -6,6 +6,10 @@ public class Constantes {
 	public static final int SUCCES = 0;
 	public static final int ERROR = -1;
 	
+	//constantes para mensajes
+	public static final String OK = "OK";
+	public static final String FAIL = "Fallo";
+	
 	//conestantes para la conexion con la base de datos
 	public static final String DB_NAME = "/apppyme";
 	public static final String DB_USERNAME = "postgres";
@@ -18,5 +22,6 @@ public class Constantes {
 	public static final String DB_TABLA_ROL = "rol";
 	public static final String DB_TABLA_ROL_COL_ID = "id";
 	public static final String DB_TABLA_ROL_COL_DESCRIPCION = "descripcion";
+	public static final String DB_TABLA_ROL_QUERY_SELECT_EVERYTHING = "SELECT * FROM rol";
 
 }
