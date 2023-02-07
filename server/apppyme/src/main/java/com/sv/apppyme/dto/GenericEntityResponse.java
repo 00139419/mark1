@@ -11,10 +11,10 @@ public class GenericEntityResponse<E> extends SuperGenericResponse {
 		super();
 	}
 
-	public GenericEntityResponse(E entity, List<E> listaEntity) {
+	public GenericEntityResponse(GenericEntityResponse<E> cn) {
 		super();
-		this.entity = entity;
-		this.listaEntity = listaEntity;
+		this.entity = cn.getEntity();
+		this.listaEntity = cn.listaEntity;
 	}
 
 	public E getEntity() {
@@ -29,22 +29,9 @@ public class GenericEntityResponse<E> extends SuperGenericResponse {
 		return listaEntity;
 	}
 
-	public void setListaEntity(List<E> listaEntity) {
-		this.listaEntity = listaEntity;
-	}
-	
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("[GenericEntityResponse {entity=");
-		builder.append(entity);
-		builder.append(", listaEntity=");
-		builder.append(listaEntity);
-		builder.append("}]");
-		return builder.toString();
+	@SuppressWarnings("unchecked")
+	public void setListaEntity(Object listaEntity) {
+		this.listaEntity = (List<E>) listaEntity;
 	}
 
-	
-	
 }
