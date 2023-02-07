@@ -9,6 +9,7 @@ public class ApppymeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApppymeApplication.class, args);
+		System.out.println("Hola mundo");
 	}
 
 }
