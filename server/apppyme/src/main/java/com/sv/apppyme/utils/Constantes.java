@@ -18,7 +18,5 @@ public class Constantes {
 	public static final String DB_TABLA_ROL = "rol";
 	public static final String DB_TABLA_ROL_COL_ID = "id";
 	public static final String DB_TABLA_ROL_COL_DESCRIPCION = "descripcion";
-	
-	
 
 }
