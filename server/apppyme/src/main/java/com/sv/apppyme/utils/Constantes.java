@@ -21,20 +21,10 @@ public class Constantes {
 	public static final String ROL_ADMIN = "admin";
 	public static final String ROL_USER = "user";
 	
-	//contantes para la tabla roles
+	//contantes para la tablas
 	public static final String DB_TABLA_ROL = "rol";
-	public static final String DB_TABLA_ROL_COL_ID = "id";
-	public static final String DB_TABLA_ROL_COL_DESCRIPCION = "descripcion";
-	
-	
-	//constantes para la tabla usuarios
 	public static final String DB_TABLA_USUARIO = "rol";
-	public static final String DB_TABLA_USUARIO_COL_ID = "id";
-	public static final String DB_TABLA_USUARIO_COL_USERNAME = "username";
-	public static final String DB_TABLA_USUARIO_COL_PASSWORD = "password";
-	public static final String DB_TABLA_USUARIO_COL_ROL_ID = "rol_id";
-	
-	
+
 	//constantes para los controladores
 	public static final String ROOT_CTRL = "/apppyme/api/srv/";
 

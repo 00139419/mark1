@@ -61,8 +61,10 @@ public class srvDataImpl implements IData {
 			String json = mapper.writeValueAsString(userInfo);
 			log.info(json);
 			log.info("::::[insertarUsuario]:::Iniciando proceso de encriptar contraseña::::");
+			
 			if( userInfo.getPassword() == null ||userInfo.getPassword().isBlank() || userInfo.getPassword().isEmpty())
 				throw new SrvValidacionException(Constantes.ERROR, "Campo contraseña viene vacio!");
+			
 			log.info("::::[insertarUsuario]:::Fin proceso de encriptar contraseña::::");			
 			String encryptedPassword = Encriptacion.encriptar(userInfo.getPassword());
 			userInfo.setPassword(encryptedPassword);
@@ -79,10 +81,12 @@ public class srvDataImpl implements IData {
 			log.info("::::[insertarUsuario]:::codigo::::" + resObtenerRol.getCodigo() + "::::");
 			log.info("::::[insertarUsuario]:::mensaje::::" + resObtenerRol.getMensaje() + "::::");
 			log.info("::::[insertarUsuario]:::entity::::" + resObtenerRol.getEntity() + "::::");
+			
 			if (resObtenerRol == null || resObtenerRol.getCodigo() != Constantes.SUCCES) {
 				log.info("::::[ERROR]::::[insertarUsuario]::::Error onteniendo el rol::::" + userInfo.getRol() + "::::");
 				throw new SrvValidacionException(Constantes.ERROR, "Error obteniendo rol" + userInfo.getRol());
 			}
+			
 			log.info("::::[insertarUsuario]:::Creando objeto Usuario::::");
 			usuario.setUsername(userInfo.getUsername());
 			usuario.setPassword(userInfo.getPassword());
@@ -90,10 +94,12 @@ public class srvDataImpl implements IData {
 			log.info("::::[insertarUsuario]:::Usuario creado::::" + usuario.toString() + "::::");
 			log.info("::::[insertarUsuario]:::Llamando al DAO para insertar usuario:::");
 			resServicio = srvUsuarioImpl.insertar(usuario);
+			
 			if (resServicio.getCodigo() != Constantes.SUCCES) {
 				log.info("::::[ERROR]::::[insertarUsuario]::::Error insertando el usuario::::" + usuario.toString() + "::::");
 				throw new SrvValidacionException(Constantes.ERROR, "Error insertando usuario: " + usuario.toString());
 			}
+			
 			log.info("::::[insertarUsuario]::::Usuario insertado correctamente::::usuario::::" + usuario.toString() + "::::");
 			log.info("::::[insertarUsuario]::::Enviando repsuesta del implementacion del servicio::::");
 			resServicio.setCodigo(Constantes.SUCCES);
@@ -102,6 +108,50 @@ public class srvDataImpl implements IData {
 			log.info("::::[ERROR]::::[insertarUsuario]::::Error de generico en la implementacion del servicio::::");
 			log.info("::::[ERROR]::::[insertarUsuario]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[insertarUsuario]::::Imprimiendo stacktrace::::");
+			log.info("--------------------------------------------");
+			e.printStackTrace();
+			log.info("--------------------------------------------");
+			throw new SrvValidacionException(Constantes.ERROR, e.getMessage());
+		}
+		return resServicio;
+	}
+
+	@Override
+	public GenericEntityResponse<Usuario> obtenerUsuarioByUsername(UsuarioDto userInfo) throws SrvValidacionException {
+		GenericEntityResponse<Usuario> resServicio = new GenericEntityResponse<>();
+		try {
+			log.info("::::[INICIO]::::[obtenerUsuarioByUsername]:::Inicinado implementacion del servicio para obtener usuario::::");
+			log.info("::::[obtenerUsuarioByUsername]:::Llamando al DAO para obetner usuario:::");
+			resServicio = srvUsuarioImpl.selectByUsername(userInfo.getUsername());
+			log.info("::::[obtenerUsuarioByUsername]:::Respuesta obtenida del DAO::::");
+			log.info("::::[obtenerUsuarioByUsername]:::codigo::::" + resServicio.getCodigo() + "::::");
+			log.info("::::[obtenerUsuarioByUsername]:::mensaje::::" + resServicio.getMensaje() + "::::");
+			log.info("::::[obtenerUsuarioByUsername]:::entity::::" + resServicio.getEntity() + "::::");
+			
+			if (resServicio.getCodigo() != Constantes.SUCCES)
+				throw new SrvValidacionException(Constantes.ERROR, resServicio.getMensaje());
+			
+			log.info("::::[obtenerUsuarioByUsername]:::Llamando al DAO para ontener el rol:::");
+			GenericEntityResponse<Rol> rol = srvRolImpl.getRolById(resServicio.getEntity().getRol().getId());
+			log.info("::::[obtenerUsuarioByUsername]:::Respuesta obtenida del DAO::::");
+			log.info("::::[obtenerUsuarioByUsername]:::codigo::::" + rol.getCodigo() + "::::");
+			log.info("::::[obtenerUsuarioByUsername]:::mensaje::::" + rol.getMensaje() + "::::");
+			log.info("::::[obtenerUsuarioByUsername]:::entity::::" + rol.getEntity() + "::::");
+			
+			if(rol.getCodigo() != Constantes.SUCCES)
+				throw new SrvValidacionException(Constantes.ERROR, rol.getMensaje());
+			
+			log.info("::::[obtenerUsuarioByUsername]:::Seteando rol al usuario:::");
+			Usuario usuarioFinal = resServicio.getEntity();
+			usuarioFinal.setRol(rol.getEntity());
+			resServicio.setEntity(usuarioFinal);
+			log.info("::::[obtenerUsuarioByUsername]::::Enviando repsuesta del implementacion del servicio::::");
+			resServicio.setCodigo(Constantes.SUCCES);
+			resServicio.setMensaje(Constantes.OK);
+		} catch (Exception e) {
+			log.info("::::[ERROR]::::[obtenerUsuarioByUsername]::::Error de generico en la implementacion del servicio::::");
+			log.info("::::[ERROR]::::[obtenerUsuarioByUsername]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[obtenerUsuarioByUsername]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
 			e.printStackTrace();
 			log.info("--------------------------------------------");

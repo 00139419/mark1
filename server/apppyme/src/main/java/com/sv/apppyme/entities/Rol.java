@@ -15,6 +15,11 @@ public class Rol {
 		this.descripcion = descripcion;
 	}
 	
+	public Rol(int id) {
+		super();
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}

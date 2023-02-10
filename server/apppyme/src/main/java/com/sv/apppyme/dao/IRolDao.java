@@ -9,5 +9,6 @@ public interface IRolDao {
 	
 	GenericEntityResponse<List<Rol>> getAll();
 	GenericEntityResponse<Rol> getRolByDescripcition(String descripcion);
+	GenericEntityResponse<Rol> getRolById(int id);
 
 }

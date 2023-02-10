@@ -17,6 +17,7 @@ import com.sv.apppyme.controllers.dto.UsuarioDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Rol;
+import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.IData;
 import com.sv.apppyme.utils.Constantes;
@@ -54,13 +55,30 @@ public class CtrlData {
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
 			res = srvDataImpl.insertarUsuario(userInfo);
-			log.info("::::[FIN]::::[getAllRoles]::::fin controlador de data::::");
+			log.info("::::[FIN]::::[insetarNuevoUsuario]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
-			log.info("::::[FIN]:::[ERROR]::::[getAllRoles]::::fin controlador de data::::");
+			log.info("::::[FIN]:::[ERROR]::::[insetarNuevoUsuario]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
 		} finally {
 			log.info("***************** Fin Servicio inserta Usuario *****************");
+		}
+	}
+	
+	@PostMapping(value = "obtener/usuarioByUsername", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GenericEntityResponse<Usuario>> obtenerUsuarioByUsername(@RequestBody UsuarioDto userInfo){
+		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
+		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de data::::");
+		GenericEntityResponse<Usuario> res = new GenericEntityResponse<>();
+		try {
+			res = srvDataImpl.obtenerUsuarioByUsername(userInfo);
+			log.info("::::[FIN]::::[obtenerUsuarioByUsername]::::fin controlador de data::::");
+			return new ResponseEntity<GenericEntityResponse<Usuario>>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de data::::");
+			return new ResponseEntity<GenericEntityResponse<Usuario>>(new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+		} finally {
+			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
 		}
 	}
 
