@@ -17,6 +17,9 @@ import com.sv.apppyme.utils.Constantes;
 public class UsuarioDaoImpl implements IUsuarioDao {
 	
 	Logger log = Logger.getLogger(UsuarioDaoImpl.class);
+	
+	public static final String SQL_SELECT = "SELECT * FROM usuario";
+	public static final String SQL_INSERT = "INSERT INTO usuario (username, password, rol_id) VALUES (?,?,?)";
 
 	@Override
 	public SuperGenericResponse insertar(Usuario usuario) {
@@ -25,8 +28,7 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 		try {
 			Connection con = ConexionPostgres.getConnecion();
 			log.info("::::[insertar]::::Conexion CREADO correctamente::::");
-			String query = Constantes.DB_TABLA_USUARIO_QUERY_INSERT;
-			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, query);
+			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, SQL_INSERT);
 			log.info("::::[insertar]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[insertar]:::: Seteando valores al PreparedStatment... ::::");
 			stmt.setString(1, usuario.getUsername());

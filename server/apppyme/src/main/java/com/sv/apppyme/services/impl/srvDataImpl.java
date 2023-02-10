@@ -17,6 +17,7 @@ import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.IData;
 import com.sv.apppyme.utils.Constantes;
+import com.sv.apppyme.utils.Encriptacion;
 
 @Service
 public class srvDataImpl implements IData {
@@ -52,13 +53,21 @@ public class srvDataImpl implements IData {
 	public SuperGenericResponse insertarUsuario(UsuarioDto userInfo) throws SrvValidacionException {
 		SuperGenericResponse resServicio = new SuperGenericResponse();
 		try {
+			log.info("::::[INICIO]::::[insertarUsuario]:::Iniciando proceso de insertar nuevo usuario::::");
 			GenericEntityResponse<Rol> resObtenerRol = null;
 			Usuario usuario = new Usuario();
 			log.info("::::[insertarUsuario]:::Inciando servicio de insertar usuario!::::");
 			log.info("::::[insertarUsuario]:::Mostrando datos recibidos en JSON!::::");
 			String json = mapper.writeValueAsString(userInfo);
 			log.info(json);
-			log.info("::::[INICIO]::::[insertarUsuario]:::llamando servicio para obtener los roles::::");
+			log.info("::::[insertarUsuario]:::Iniciando proceso de encriptar contraseña::::");
+			if( userInfo.getPassword() == null ||userInfo.getPassword().isBlank() || userInfo.getPassword().isEmpty())
+				throw new SrvValidacionException(Constantes.ERROR, "Campo contraseña viene vacio!");
+			log.info("::::[insertarUsuario]:::Fin proceso de encriptar contraseña::::");			
+			String encryptedPassword = Encriptacion.encriptar(userInfo.getPassword());
+			userInfo.setPassword(encryptedPassword);
+			log.info("::::[insertarUsuario]:::Fin proceso de encriptar contraseña::::ContraseñaEncriptada:::" + encryptedPassword + "::::");
+			log.info("::::[insertarUsuario]:::llamando servicio para obtener los roles::::");
 			
 			if (userInfo.getRol() != null)
 				resObtenerRol = srvRolImpl.getRolByDescripcition(userInfo.getRol());

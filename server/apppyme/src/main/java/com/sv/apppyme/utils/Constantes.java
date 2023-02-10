@@ -18,7 +18,6 @@ public class Constantes {
 	public static final String JDBC_URL = "jdbc:postgresql://localhost:";
 	
 	//constantes para tipos de usuarios
-	
 	public static final String ROL_ADMIN = "admin";
 	public static final String ROL_USER = "user";
 	
@@ -34,10 +33,9 @@ public class Constantes {
 	public static final String DB_TABLA_USUARIO_COL_USERNAME = "username";
 	public static final String DB_TABLA_USUARIO_COL_PASSWORD = "password";
 	public static final String DB_TABLA_USUARIO_COL_ROL_ID = "rol_id";
-	public static final String DB_TABLA_USUARIO_QUERY_SELECT_EVERYTHING = "SELECT * FROM usuario";
-	public static final String DB_TABLA_USUARIO_QUERY_INSERT = "INSERT INTO usuario (username, password, rol_id) VALUES (?,?,?)";
 	
-	//contestaes para los controladores
+	
+	//constantes para los controladores
 	public static final String ROOT_CTRL = "/apppyme/api/srv/";
 
 }
