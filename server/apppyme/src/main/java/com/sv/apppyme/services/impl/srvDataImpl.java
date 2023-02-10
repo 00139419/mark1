@@ -18,6 +18,7 @@ import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.IData;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Encriptacion;
+import com.sv.apppyme.utils.Mensajeria;
 
 @Service
 public class srvDataImpl implements IData {
@@ -46,27 +47,34 @@ public class srvDataImpl implements IData {
 			throw new SrvValidacionException(Constantes.ERROR, resDao.getMensaje());
 		log.info("::::[getAllRoles]:::Retornando respuesta::::");
 		log.info("::::[FIN]::::[getAllRoles]:::Fin implementacion del servicio para obtener los roles::::");
+		
 		return resDao;
 	}
 
 	@Override
 	public SuperGenericResponse insertarUsuario(UsuarioDto userInfo) throws SrvValidacionException {
 		SuperGenericResponse resServicio = new SuperGenericResponse();
-		try {
 			log.info("::::[INICIO]::::[insertarUsuario]:::Iniciando proceso de insertar nuevo usuario::::");
 			GenericEntityResponse<Rol> resObtenerRol = null;
 			Usuario usuario = new Usuario();
 			log.info("::::[insertarUsuario]:::Inciando servicio de insertar usuario!::::");
-			log.info("::::[insertarUsuario]:::Mostrando datos recibidos en JSON!::::");
-			String json = mapper.writeValueAsString(userInfo);
-			log.info(json);
-			log.info("::::[insertarUsuario]:::Iniciando proceso de encriptar contraseña::::");
-			
+			try {
+				log.info(":::Login]::::Inicio mostrando datos recibidos en Json::::");
+				log.info(mapper.writeValueAsString(userInfo));
+				log.info(":::Login]::::Fin mostrando datos recibidos en Json::::");
+			} catch (Exception e) {
+				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_ERROR_PARSEAR_OBJECT_TO_STRING);
+			}
 			if( userInfo.getPassword() == null ||userInfo.getPassword().isBlank() || userInfo.getPassword().isEmpty())
 				throw new SrvValidacionException(Constantes.ERROR, "Campo contraseña viene vacio!");
 			
-			log.info("::::[insertarUsuario]:::Fin proceso de encriptar contraseña::::");			
-			String encryptedPassword = Encriptacion.encriptar(userInfo.getPassword());
+			log.info("::::[insertarUsuario]:::Inicio proceso de encriptar contraseña::::");
+			String encryptedPassword = "";
+			try {
+				encryptedPassword = Encriptacion.encriptar(userInfo.getPassword());
+			} catch (Exception e) {
+				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_ERROR_ENCRIPTAR_TEXTO);
+			}
 			userInfo.setPassword(encryptedPassword);
 			log.info("::::[insertarUsuario]:::Fin proceso de encriptar contraseña::::ContraseñaEncriptada:::" + encryptedPassword + "::::");
 			log.info("::::[insertarUsuario]:::llamando servicio para obtener los roles::::");
@@ -101,25 +109,16 @@ public class srvDataImpl implements IData {
 			}
 			
 			log.info("::::[insertarUsuario]::::Usuario insertado correctamente::::usuario::::" + usuario.toString() + "::::");
-			log.info("::::[insertarUsuario]::::Enviando repsuesta del implementacion del servicio::::");
+			log.info("::::FIN[]::::[insertarUsuario]::::retornando repsuesta del implementacion del servicio::::");
 			resServicio.setCodigo(Constantes.SUCCES);
 			resServicio.setMensaje(Constantes.OK);
-		} catch (Exception e) {
-			log.info("::::[ERROR]::::[insertarUsuario]::::Error de generico en la implementacion del servicio::::");
-			log.info("::::[ERROR]::::[insertarUsuario]::::Mensaje::::" + e.getMessage() + "::::");
-			log.info("::::[ERROR]::::[insertarUsuario]::::Imprimiendo stacktrace::::");
-			log.info("--------------------------------------------");
-			e.printStackTrace();
-			log.info("--------------------------------------------");
-			throw new SrvValidacionException(Constantes.ERROR, e.getMessage());
-		}
-		return resServicio;
+		
+			return resServicio;
 	}
 
 	@Override
 	public GenericEntityResponse<Usuario> obtenerUsuarioByUsername(UsuarioDto userInfo) throws SrvValidacionException {
 		GenericEntityResponse<Usuario> resServicio = new GenericEntityResponse<>();
-		try {
 			log.info("::::[INICIO]::::[obtenerUsuarioByUsername]:::Inicinado implementacion del servicio para obtener usuario::::");
 			log.info("::::[obtenerUsuarioByUsername]:::Llamando al DAO para obetner usuario:::");
 			resServicio = srvUsuarioImpl.selectByUsername(userInfo.getUsername());
@@ -145,19 +144,11 @@ public class srvDataImpl implements IData {
 			Usuario usuarioFinal = resServicio.getEntity();
 			usuarioFinal.setRol(rol.getEntity());
 			resServicio.setEntity(usuarioFinal);
-			log.info("::::[obtenerUsuarioByUsername]::::Enviando repsuesta del implementacion del servicio::::");
+			log.info("::::[FIN]::::[obtenerUsuarioByUsername]::::retornando repsuesta del implementacion del servicio::::");
 			resServicio.setCodigo(Constantes.SUCCES);
 			resServicio.setMensaje(Constantes.OK);
-		} catch (Exception e) {
-			log.info("::::[ERROR]::::[obtenerUsuarioByUsername]::::Error de generico en la implementacion del servicio::::");
-			log.info("::::[ERROR]::::[obtenerUsuarioByUsername]::::Mensaje::::" + e.getMessage() + "::::");
-			log.info("::::[ERROR]::::[obtenerUsuarioByUsername]::::Imprimiendo stacktrace::::");
-			log.info("--------------------------------------------");
-			e.printStackTrace();
-			log.info("--------------------------------------------");
-			throw new SrvValidacionException(Constantes.ERROR, e.getMessage());
-		}
-		return resServicio;
+			
+			return resServicio;
 	}
 
 }
