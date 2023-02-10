@@ -30,5 +30,17 @@ public class Rol {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Rol [id=");
+		builder.append(id);
+		builder.append(", descripcion=");
+		builder.append(descripcion);
+		builder.append("]");
+		return builder.toString();
+	}
+	
 	
 }

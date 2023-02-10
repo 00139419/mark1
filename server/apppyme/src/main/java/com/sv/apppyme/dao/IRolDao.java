@@ -8,5 +8,6 @@ import com.sv.apppyme.entities.Rol;
 public interface IRolDao {
 	
 	GenericEntityResponse<List<Rol>> getAll();
+	GenericEntityResponse<Rol> getRolByDescripcition(String descripcion);
 
 }
