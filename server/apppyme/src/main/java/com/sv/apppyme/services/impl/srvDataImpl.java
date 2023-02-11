@@ -50,7 +50,7 @@ public class srvDataImpl implements IData {
 		
 		return resDao;
 	}
-
+	
 	@Override
 	public SuperGenericResponse insertarUsuario(UsuarioDto userInfo) throws SrvValidacionException {
 		SuperGenericResponse resServicio = new SuperGenericResponse();

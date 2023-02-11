@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sv.apppyme.controllers.dto.TokenDto;
 import com.sv.apppyme.controllers.dto.UsuarioDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
@@ -15,6 +16,7 @@ import com.sv.apppyme.services.IData;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Encriptacion;
 import com.sv.apppyme.utils.Mensajeria;
+import com.sv.apppyme.utils.TokenManager;
 
 @Service
 public class srvAuthImpl implements IAuth {
@@ -26,9 +28,14 @@ public class srvAuthImpl implements IAuth {
 	
 	@Autowired
 	IData srvDataimpl;
+	
+	@Autowired
+	TokenManager tokenManager;
 
 	@Override
-	public SuperGenericResponse login(UsuarioDto userinfo) throws SrvValidacionException {
+	public GenericEntityResponse<TokenDto> login(UsuarioDto userinfo) throws SrvValidacionException {
+		
+		GenericEntityResponse<TokenDto> resServicio = new GenericEntityResponse<>();
 		log.info("::::[INICIO]::::[Login]::::Incicio servicio login::::");
 			try {
 				log.info(":::Login]::::Inicio mostrando datos recibidos en Json::::");
@@ -39,10 +46,10 @@ public class srvAuthImpl implements IAuth {
 			}
 			log.info("::::[Login]::::Obteniendo usario::::");
 			GenericEntityResponse<Usuario> resDaoUsario = srvDataimpl.obtenerUsuarioByUsername(userinfo);
-			log.info("::::[getAllRoles]:::Respuesta obtenida del DAO::::");
-			log.info("::::[getAllRoles]:::codigo::::" + resDaoUsario.getCodigo() + "::::");
-			log.info("::::[getAllRoles]:::mensaje::::" + resDaoUsario.getMensaje() + "::::");
-			log.info("::::[getAllRoles]:::entity::::" + resDaoUsario.getEntity() + "::::");
+			log.info("::::[login]:::Respuesta obtenida del DAO::::");
+			log.info("::::[login]:::codigo::::" + resDaoUsario.getCodigo() + "::::");
+			log.info("::::[login]:::mensaje::::" + resDaoUsario.getMensaje() + "::::");
+			log.info("::::[login]:::entity::::" + resDaoUsario.getEntity() + "::::");
 			
 			if(resDaoUsario.getCodigo() != Constantes.SUCCES) 
 				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_LOGIN_ERROR);
@@ -60,8 +67,16 @@ public class srvAuthImpl implements IAuth {
 			if(resEncriptacion.getCodigo() != Constantes.SUCCES) 
 				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_CONTRASEÑA_INCORRECTA);
 			log.info(":::Login]::::Contraseña verificada correctamente!::::");
+			log.info(":::Login]::::Llamando al servicio de crear tokenJWT!::::");
+			String jwt = tokenManager.generarToken(resDaoUsario.getEntity());
+			
+			if(jwt == null || jwt.isBlank() || jwt.isEmpty())
+				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_ERROR_CREANDO_JWT);
+			
+			resServicio.setEntity(new TokenDto(jwt));
+			log.info(":::Login]::::Fin de servicio crear tokenJWT!::::");
 			log.info(":::[FIN]::::Login]::::retornando respuesta del servicio::::");
-			return new SuperGenericResponse(Constantes.SUCCES, Constantes.OK);
+			return resServicio;
 
 	}
 	

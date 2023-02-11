@@ -23,9 +23,13 @@ public class Constantes {
 	
 	//contantes para la tablas
 	public static final String DB_TABLA_ROL = "rol";
-	public static final String DB_TABLA_USUARIO = "rol";
+	public static final String DB_TABLA_USUARIO = "usuario";
 
 	//constantes para los controladores
 	public static final String ROOT_CTRL = "/apppyme/api/srv/";
+	
+	//constantes para JWT
+	public static final String JWT_SECRETKEY = "ultraSecret123ultraSecret123ultraSecret123ultraSecret123";
+	public static final int JWT_EXP_TIME_MILLIS = 1000 * 60 * 60; // 60 minutos
 
 }
