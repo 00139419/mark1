@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sv.apppyme.controllers.dto.TokenDto;
 import com.sv.apppyme.controllers.dto.UsuarioDto;
@@ -33,17 +34,13 @@ public class srvAuthImpl implements IAuth {
 	TokenManager tokenManager;
 
 	@Override
-	public GenericEntityResponse<TokenDto> login(UsuarioDto userinfo) throws SrvValidacionException {
+	public GenericEntityResponse<TokenDto> login(UsuarioDto userinfo) throws SrvValidacionException, JsonProcessingException {
 		
 		GenericEntityResponse<TokenDto> resServicio = new GenericEntityResponse<>();
-		log.info("::::[INICIO]::::[Login]::::Incicio servicio login::::");
-			try {
-				log.info(":::Login]::::Inicio mostrando datos recibidos en Json::::");
-				log.info(mapper.writeValueAsString(userinfo));
-				log.info(":::Login]::::Fin mostrando datos recibidos en Json::::");
-			} catch (Exception e) {
-				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_ERROR_PARSEAR_OBJECT_TO_STRING);
-			}
+			log.info("::::[INICIO]::::[Login]::::Incicio servicio login::::");
+			log.info(":::Login]::::Inicio mostrando datos recibidos en Json::::");
+			log.info(mapper.writeValueAsString(userinfo));
+			log.info(":::Login]::::Fin mostrando datos recibidos en Json::::");
 			log.info("::::[Login]::::Obteniendo usario::::");
 			GenericEntityResponse<Usuario> resDaoUsario = srvDataimpl.obtenerUsuarioByUsername(userinfo);
 			log.info("::::[login]:::Respuesta obtenida del DAO::::");
@@ -66,16 +63,20 @@ public class srvAuthImpl implements IAuth {
 			
 			if(resEncriptacion.getCodigo() != Constantes.SUCCES) 
 				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_CONTRASEÑA_INCORRECTA);
+			
 			log.info(":::Login]::::Contraseña verificada correctamente!::::");
 			log.info(":::Login]::::Llamando al servicio de crear tokenJWT!::::");
 			String jwt = tokenManager.generarToken(resDaoUsario.getEntity());
 			
 			if(jwt == null || jwt.isBlank() || jwt.isEmpty())
 				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_ERROR_CREANDO_JWT);
-			
+
+			resServicio.setCodigo(Constantes.SUCCES);
+			resServicio.setMensaje(Constantes.OK);
 			resServicio.setEntity(new TokenDto(jwt));
 			log.info(":::Login]::::Fin de servicio crear tokenJWT!::::");
 			log.info(":::[FIN]::::Login]::::retornando respuesta del servicio::::");
+			
 			return resServicio;
 
 	}

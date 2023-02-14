@@ -19,6 +19,9 @@ import com.sv.apppyme.utils.Constantes;
 @Service
 public class RolDaoImpl implements IRolDao {
 	
+	//nombre de la tabla
+	public static final String DB_TABLA_ROL = "rol";
+	
 	//columnas de la tabla Rol
 	public static final String COL_ID = "id";
 	public static final String COL_DESCRIPCION = "descripcion";
@@ -27,9 +30,9 @@ public class RolDaoImpl implements IRolDao {
 	Logger log = Logger.getLogger(RolDaoImpl.class);
 	
 	//querys de la tabla rol
-	private String SQL_SELECT_BY_DESCRIPCION = "SELECT * FROM rol WHERE descripcion = ?";
-	private String SQL_SELECT_BY_ID = "SELECT * FROM rol WHERE id = ?";
-	public static final String SQL_SELECT = "SELECT * FROM rol";
+	private String SQL_SELECT_BY_DESCRIPCION = "SELECT * FROM " + DB_TABLA_ROL + " WHERE descripcion = ?";
+	private String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_ROL + " WHERE id = ?";
+	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_ROL;
 
 	@Override
 	public GenericEntityResponse<List<Rol>> getAll() {

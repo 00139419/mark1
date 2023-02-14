@@ -2,6 +2,11 @@ package com.sv.apppyme.utils;
 
 public class Constantes {
 	
+	//Spring security
+	public static final String HEADER_AUTHORIZATION_KEY = "Authorization";
+	public static final String TOKEN_BEARER_PREFIX = "Bearer ";
+	
+	
 	//constantes para respuesta de procesos
 	public static final int SUCCES = 0;
 	public static final int ERROR = -1;
@@ -10,20 +15,17 @@ public class Constantes {
 	public static final String OK = "OK";
 	public static final String FAIL = "Fallo";
 	
-	//conestantes para la conexion con la base de datos
+	//conestantes para JDBC
 	public static final String DB_NAME = "/apppyme";
 	public static final String DB_USERNAME = "postgres";
 	public static final String DB_PASSWORD = "1234";
 	public static final String DB_PUERTO = "5432";
 	public static final String JDBC_URL = "jdbc:postgresql://localhost:";
 	
-	//constantes para tipos de usuarios
+	//roles de los usuarios
 	public static final String ROL_ADMIN = "admin";
 	public static final String ROL_USER = "user";
-	
-	//contantes para la tablas
-	public static final String DB_TABLA_ROL = "rol";
-	public static final String DB_TABLA_USUARIO = "usuario";
+
 
 	//constantes para los controladores
 	public static final String ROOT_CTRL = "/apppyme/api/srv/";
@@ -31,5 +33,6 @@ public class Constantes {
 	//constantes para JWT
 	public static final String JWT_SECRETKEY = "ultraSecret123ultraSecret123ultraSecret123ultraSecret123";
 	public static final int JWT_EXP_TIME_MILLIS = 1000 * 60 * 60; // 60 minutos
+	public static final String JWT_SECRET_CLAIMS = "12345";
 
 }

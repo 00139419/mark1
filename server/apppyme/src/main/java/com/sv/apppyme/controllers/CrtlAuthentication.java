@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sv.apppyme.controllers.dto.TokenDto;
 import com.sv.apppyme.controllers.dto.UsuarioDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
-import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.IAuth;
 import com.sv.apppyme.utils.Constantes;
@@ -39,6 +38,8 @@ public class CrtlAuthentication {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]::::[login]::::Iniciando controlador de auth::::");
 			return new ResponseEntity<GenericEntityResponse<TokenDto>>(new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 }

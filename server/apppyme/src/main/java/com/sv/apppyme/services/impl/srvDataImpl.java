@@ -33,7 +33,7 @@ public class srvDataImpl implements IData {
 	ObjectMapper mapper;
 
 	Logger log = Logger.getLogger(srvDataImpl.class);
-
+	
 	@Override
 	public GenericEntityResponse<List<Rol>> getAllRoles() throws SrvValidacionException {
 		log.info("::::[INICIO]::::[getAllRoles]:::Inicinado implementacion del servicio para obtener los roles::::");

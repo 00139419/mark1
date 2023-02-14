@@ -19,6 +19,9 @@ import com.sv.apppyme.utils.Constantes;
 @Service
 public class UsuarioDaoImpl implements IUsuarioDao {
 	
+	//nombre de la tabla
+	public static final String DB_TABLA_USUARIO = "usuario";
+	
 	//columnas de la tabla usuario
 	public static final String COL_ID = "id";
 	public static final String COL_USERNAME = "username";
@@ -28,8 +31,8 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 	Logger log = Logger.getLogger(UsuarioDaoImpl.class);
 	
 	//querys de la tabla usuario
-	public static final String SQL_SELECT_BY_USERNAME = "SELECT * FROM usuario WHERE username = ?";
-	public static final String SQL_INSERT = "INSERT INTO usuario (username, password, rol_id) VALUES (?,?,?)";
+	public static final String SQL_SELECT_BY_USERNAME = "SELECT * FROM " + DB_TABLA_USUARIO + " WHERE username = ?";
+	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_USUARIO + " (username, password, rol_id) VALUES (?,?,?)";
 	
 	@Override
 	public SuperGenericResponse insertar(Usuario usuario) {
