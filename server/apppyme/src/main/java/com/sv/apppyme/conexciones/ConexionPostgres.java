@@ -10,7 +10,7 @@ import com.sv.apppyme.utils.Constantes;
 
 public class ConexionPostgres {
 
-	private static final String URL = Constantes.DB_POSTGRES_JDBC + Constantes.DB_PUERTO + Constantes.DB_NAME;
+	private static final String URL = Constantes.JDBC_URL + Constantes.DB_PUERTO + Constantes.DB_NAME;
 	
 	public static Connection getConnecion() throws SQLException {
 		Connection con = DriverManager.getConnection(URL, Constantes.DB_USERNAME, Constantes.DB_PASSWORD);
