@@ -41,6 +41,7 @@ public class WebSecurityConfig {
 				.csrf()
 				.disable()
 				.authorizeRequests()
+				.requestMatchers("/apppyme/api/srv/obtener/usuarioByUsername").permitAll()
 				.anyRequest()
 				.authenticated()
 				.and()
