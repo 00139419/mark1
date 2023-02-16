@@ -10,6 +10,12 @@ public class Usuario {
 	public Usuario() {
 		super();
 	}
+	
+	public Usuario(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
 
 	public Usuario(int id, String username, String password, Rol rol) {
 		super();

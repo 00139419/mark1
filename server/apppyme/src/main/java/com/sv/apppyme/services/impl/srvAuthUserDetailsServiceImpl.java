@@ -1,6 +1,6 @@
 package com.sv.apppyme.services.impl;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.sv.apppyme.dao.IUsuarioDao;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvUsernameNotFoundException;
+import com.sv.apppyme.security.UserDetailsImpl;
 
 @Service
 public class srvAuthUserDetailsServiceImpl implements UserDetailsService{
@@ -22,16 +23,17 @@ public class srvAuthUserDetailsServiceImpl implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Usuario userFound = userDao.selectByUsername(username).getEntity();
-		
-		if(userFound == null || userFound.getUsername().isBlank() || userFound.getUsername().isEmpty())
-			throw new SrvUsernameNotFoundException("Usuario no encontrado");
-		
-		return new org.springframework.security.core.userdetails.User(
-				userFound.getUsername(),
-				userFound.getPassword(),
-				new ArrayList<>()
-				);
+		try {
+			Usuario userFound = userDao.selectByUsername(username).getEntity();
+			
+			if(userFound == null || userFound.getUsername().isBlank() || userFound.getUsername().isEmpty())
+				throw new SrvUsernameNotFoundException("Usuario no encontrado");
+			
+			return new UserDetailsImpl(userFound);
+			
+		} catch (Exception e) {
+			throw new SrvUsernameNotFoundException("Usuario no encontrado!");
+		}
 	}
 
 }

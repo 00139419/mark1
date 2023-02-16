@@ -1,14 +1,17 @@
 package com.sv.apppyme.utils;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
 import com.sv.apppyme.entities.Usuario;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -44,13 +47,28 @@ public class TokenManager {
 		}
 	}
 	
-	public String obtenerSubjectByToken(String tokenJWT){
-		final Claims claims = Jwts.parser()
+	public UsernamePasswordAuthenticationToken getAuthentication(String token) {
+		Claims claims = Jwts.parser()
 				.setSigningKey(Constantes.JWT_SECRETKEY)
-				.parseClaimsJws(tokenJWT)
+				.parseClaimsJws(token)
 				.getBody();
 		
-		return claims.getSubject();
+		String subject = claims.getSubject();
+		
+		return new UsernamePasswordAuthenticationToken(subject,  null, Collections.emptyList());
+	}
+	
+	public String obtenerSubjectByToken(String tokenJWT){
+		try {
+			final Claims claims = Jwts.parser()
+					.setSigningKey(Constantes.JWT_SECRETKEY)
+					.parseClaimsJws(tokenJWT)
+					.getBody();
+			
+			return claims.getSubject();
+		} catch (JwtException e) {
+			return null;
+		}
 	}
 	
 	public String obtenerRolByToken(String tokenJWT){
