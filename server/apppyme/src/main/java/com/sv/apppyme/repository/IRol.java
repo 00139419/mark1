@@ -1,11 +1,11 @@
-package com.sv.apppyme.dao;
+package com.sv.apppyme.repository;
 
 import java.util.List;
 
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.entities.Rol;
 
-public interface IRolDao {
+public interface IRol {
 	
 	GenericEntityResponse<List<Rol>> getAll();
 	GenericEntityResponse<Rol> getRolByDescripcition(String descripcion);

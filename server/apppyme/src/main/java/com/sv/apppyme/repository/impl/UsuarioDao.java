@@ -1,4 +1,4 @@
-package com.sv.apppyme.dao.impl;
+package com.sv.apppyme.repository.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,15 +9,15 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.sv.apppyme.conexciones.ConexionPostgres;
-import com.sv.apppyme.dao.IUsuarioDao;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.repository.IUsuario;
 import com.sv.apppyme.utils.Constantes;
 
 @Service
-public class UsuarioDaoImpl implements IUsuarioDao {
+public class UsuarioDao implements IUsuario {
 	
 	//nombre de la tabla
 	public static final String DB_TABLA_USUARIO = "usuario";
@@ -28,7 +28,7 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 	public static final String COL_PASSWORD = "password";
 	public static final String COL_ROL_ID = "rol_id";
 	
-	Logger log = Logger.getLogger(UsuarioDaoImpl.class);
+	Logger log = Logger.getLogger(UsuarioDao.class);
 	
 	//querys de la tabla usuario
 	public static final String SQL_SELECT_BY_USERNAME = "SELECT * FROM " + DB_TABLA_USUARIO + " WHERE username = ?";

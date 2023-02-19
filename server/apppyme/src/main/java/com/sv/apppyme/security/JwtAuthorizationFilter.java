@@ -11,8 +11,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.sv.apppyme.dao.impl.UsuarioDaoImpl;
 import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.repository.impl.UsuarioDao;
 import com.sv.apppyme.services.impl.srvAuthUserDetailsServiceImpl;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.TokenManager;
@@ -34,7 +34,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	TokenManager tokenManager;
 
 	@Autowired
-	UsuarioDaoImpl userDao;
+	UsuarioDao userDao;
 
 	Logger log = Logger.getLogger(getClass());
 

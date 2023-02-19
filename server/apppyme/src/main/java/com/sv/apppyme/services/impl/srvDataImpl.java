@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sv.apppyme.controllers.dto.UsuarioDto;
-import com.sv.apppyme.dao.IRolDao;
-import com.sv.apppyme.dao.IUsuarioDao;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Rol;
@@ -21,6 +19,8 @@ import com.sv.apppyme.reports.dto.FormularioVinculacionDto;
 import com.sv.apppyme.reports.impl.srvReportManagerJasperimpl;
 import com.sv.apppyme.reports.repository.IReportManagerJasper;
 import com.sv.apppyme.reports.utils.DocumentTypesToGenerated;
+import com.sv.apppyme.repository.IRol;
+import com.sv.apppyme.repository.IUsuario;
 import com.sv.apppyme.services.IData;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Encriptacion;
@@ -30,9 +30,9 @@ import com.sv.apppyme.utils.Mensajeria;
 public class srvDataImpl implements IData {
 
 	@Autowired
-	IRolDao srvRolImpl;
+	IRol srvRolImpl;
 	@Autowired
-	IUsuarioDao srvUsuarioImpl;
+	IUsuario srvUsuarioImpl;
 	@Autowired
 	ObjectMapper mapper;
 	

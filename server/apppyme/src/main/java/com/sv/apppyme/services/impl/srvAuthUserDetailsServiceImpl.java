@@ -8,16 +8,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.sv.apppyme.dao.IUsuarioDao;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvUsernameNotFoundException;
+import com.sv.apppyme.repository.IUsuario;
 import com.sv.apppyme.security.UserDetailsImpl;
 
 @Service
 public class srvAuthUserDetailsServiceImpl implements UserDetailsService{
 
 	@Autowired
-	private IUsuarioDao userDao;
+	private IUsuario userDao;
 	
 	
 	@Override

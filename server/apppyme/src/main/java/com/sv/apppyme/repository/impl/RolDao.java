@@ -1,4 +1,4 @@
-package com.sv.apppyme.dao.impl;
+package com.sv.apppyme.repository.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,13 +11,13 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.sv.apppyme.conexciones.ConexionPostgres;
-import com.sv.apppyme.dao.IRolDao;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.entities.Rol;
+import com.sv.apppyme.repository.IRol;
 import com.sv.apppyme.utils.Constantes;
 
 @Service
-public class RolDaoImpl implements IRolDao {
+public class RolDao implements IRol {
 	
 	//nombre de la tabla
 	public static final String DB_TABLA_ROL = "rol";
@@ -27,7 +27,7 @@ public class RolDaoImpl implements IRolDao {
 	public static final String COL_DESCRIPCION = "descripcion";
 	
 
-	Logger log = Logger.getLogger(RolDaoImpl.class);
+	Logger log = Logger.getLogger(RolDao.class);
 	
 	//querys de la tabla rol
 	private String SQL_SELECT_BY_DESCRIPCION = "SELECT * FROM " + DB_TABLA_ROL + " WHERE descripcion = ?";
