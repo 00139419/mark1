@@ -27,3 +27,4 @@ CREATE TABLE public.usuario (
 -- public.usuario foreign keys
 
 ALTER TABLE public.usuario ADD CONSTRAINT usuario_fk FOREIGN KEY (rol_id) REFERENCES public.rol(id);
+
