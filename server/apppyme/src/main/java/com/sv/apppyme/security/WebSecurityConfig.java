@@ -33,15 +33,15 @@ public class WebSecurityConfig {
 		
 		JwtAuthenticationFilter authenticationFilter = new JwtAuthenticationFilter();
 		authenticationFilter.setAuthenticationManager(manager);
-		authenticationFilter.setFilterProcessesUrl("/login");
-		
+		authenticationFilter.setFilterProcessesUrl(Constantes.ROOT_CTRL + "/login");
 		
 		return 
 				http
 				.csrf()
 				.disable()
 				.authorizeRequests()
-				.requestMatchers("/apppyme/api/srv/obtener/usuarioByUsername").permitAll()
+				.requestMatchers(Constantes.ROOT_CTRL + "insertar/usuario").permitAll()
+				.requestMatchers(Constantes.ROOT_CTRL + "test").permitAll()
 				.anyRequest()
 				.authenticated()
 				.and()

@@ -1,5 +1,7 @@
 package com.sv.apppyme.services.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -15,6 +17,10 @@ import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
+import com.sv.apppyme.reports.dto.FormularioVinculacionDto;
+import com.sv.apppyme.reports.impl.srvReportManagerJasperimpl;
+import com.sv.apppyme.reports.repository.IReportManagerJasper;
+import com.sv.apppyme.reports.utils.DocumentTypesToGenerated;
 import com.sv.apppyme.services.IData;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Encriptacion;
@@ -25,12 +31,13 @@ public class srvDataImpl implements IData {
 
 	@Autowired
 	IRolDao srvRolImpl;
-
 	@Autowired
 	IUsuarioDao srvUsuarioImpl;
-	
 	@Autowired
 	ObjectMapper mapper;
+	
+	IReportManagerJasper reportManagerJasper = new srvReportManagerJasperimpl();
+		
 
 	Logger log = Logger.getLogger(srvDataImpl.class);
 	
@@ -54,6 +61,9 @@ public class srvDataImpl implements IData {
 	@Override
 	public SuperGenericResponse insertarUsuario(UsuarioDto userInfo) throws SrvValidacionException {
 		SuperGenericResponse resServicio = new SuperGenericResponse();
+		FormularioVinculacionDto vinculacionDto = null;
+			
+			//mostrando data recibida del request
 			log.info("::::[INICIO]::::[insertarUsuario]:::Iniciando proceso de insertar nuevo usuario::::");
 			GenericEntityResponse<Rol> resObtenerRol = null;
 			Usuario usuario = new Usuario();
@@ -68,6 +78,7 @@ public class srvDataImpl implements IData {
 			if( userInfo.getPassword() == null ||userInfo.getPassword().isBlank() || userInfo.getPassword().isEmpty())
 				throw new SrvValidacionException(Constantes.ERROR, "Campo contraseña viene vacio!");
 			
+			//encriptando contraseña
 			log.info("::::[insertarUsuario]:::Inicio proceso de encriptar contraseña::::");
 			String encryptedPassword = "";
 			try {
@@ -77,8 +88,9 @@ public class srvDataImpl implements IData {
 			}
 			userInfo.setPassword(encryptedPassword);
 			log.info("::::[insertarUsuario]:::Fin proceso de encriptar contraseña::::ContraseñaEncriptada:::" + encryptedPassword + "::::");
-			log.info("::::[insertarUsuario]:::llamando servicio para obtener los roles::::");
 			
+			//obteniendo el codigo del rol del usuario
+			log.info("::::[insertarUsuario]:::llamando servicio para obtener los roles::::");
 			if (userInfo.getRol() != null)
 				resObtenerRol = srvRolImpl.getRolByDescripcition(userInfo.getRol());
 			
@@ -95,11 +107,14 @@ public class srvDataImpl implements IData {
 				throw new SrvValidacionException(Constantes.ERROR, "Error obteniendo rol" + userInfo.getRol());
 			}
 			
+			//Creando el Usuario
 			log.info("::::[insertarUsuario]:::Creando objeto Usuario::::");
 			usuario.setUsername(userInfo.getUsername());
 			usuario.setPassword(userInfo.getPassword());
 			usuario.setRol(resObtenerRol.getEntity());
 			log.info("::::[insertarUsuario]:::Usuario creado::::" + usuario.toString() + "::::");
+			
+			//insertando al usuario en la base de datos, a traves del DAO
 			log.info("::::[insertarUsuario]:::Llamando al DAO para insertar usuario:::");
 			resServicio = srvUsuarioImpl.insertar(usuario);
 			
@@ -112,7 +127,30 @@ public class srvDataImpl implements IData {
 			log.info("::::FIN[]::::[insertarUsuario]::::retornando repsuesta del implementacion del servicio::::");
 			resServicio.setCodigo(Constantes.SUCCES);
 			resServicio.setMensaje(Constantes.OK);
+			
+			//Creando el formulario de vinculacion
+			log.info("::::[insertarUsuario]::::Inicio al servicio para generar report4e de vinculacion::::" + usuario.toString() + "::::");
+			Usuario userAux = obtenerUsuarioByUsername(userInfo).getEntity();
+			vinculacionDto = new FormularioVinculacionDto();
+			vinculacionDto.setId(userAux.getId());
+			vinculacionDto.setNombres(userAux.getUsername());
+			vinculacionDto.setPassword(userAux.getPassword());
+			vinculacionDto.setRol(userAux.getRol().getDescripcion());
+			vinculacionDto.setDateVinculation((new Date()).toString());
+			log.info("::::[insertarUsuario]::::data interpretada para generar el reported");
+			List<Object> ls = new ArrayList<>();
+			ls.add(vinculacionDto);
+			
+			log.info("::::[insertarUsuario]::::LLamando al servicio para generar report4e de vinculacion::::" + usuario.toString() + "::::");
+			String pdf = reportManagerJasper.generatedJasperReport(ls, DocumentTypesToGenerated.FV);
+			log.info("::::[insertarUsuario]::::Fin llamado de  servicio para generar report4e de vinculacion::::" + usuario.toString() + "::::");
+			
+			if(pdf.equals(""))
+				throw new SrvValidacionException(Constantes.ERROR, "Error creando el formulario de vinculacion");
 		
+			log.info("::::[insertarUsuario]::::Reporte generado exitosamente:::");
+			log.info(pdf);
+			
 			return resServicio;
 	}
 
