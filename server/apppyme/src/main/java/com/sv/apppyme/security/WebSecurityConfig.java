@@ -40,6 +40,7 @@ public class WebSecurityConfig {
 				.csrf()
 				.disable()
 				.authorizeRequests()
+				.requestMatchers(Constantes.ROOT_CTRL + "crear/tokenOTP").permitAll()
 				.requestMatchers(Constantes.ROOT_CTRL + "insertar/usuario").permitAll()
 				.requestMatchers(Constantes.ROOT_CTRL + "test").permitAll()
 				.anyRequest()

@@ -13,13 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sv.apppyme.controllers.dto.TokenDto;
 import com.sv.apppyme.controllers.dto.UsuarioDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
+import com.sv.apppyme.repository.ITokenOTP;
 import com.sv.apppyme.services.IData;
+import com.sv.apppyme.services.IToken;
 import com.sv.apppyme.utils.Constantes;
 
 @RestController
@@ -28,6 +31,9 @@ public class CtrlData {
 	
 	@Autowired
 	IData srvDataImpl;
+	
+	@Autowired
+	IToken srvToken;
 	
 	Logger log = Logger.getLogger(CtrlData.class);
 	
@@ -79,6 +85,23 @@ public class CtrlData {
 			return new ResponseEntity<GenericEntityResponse<Usuario>>(new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
 		} finally {
 			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
+		}
+	}
+	
+	@PostMapping(value = "crear/tokenOTP", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<TokenDto> crearTokenOTP(){
+		log.info("***************** Inicio Servicio obtener tokenOTP *****************");
+		log.info("::::[INCIO]::::[crearTokenOTP]::::Iniciando controlador de data::::");
+		TokenDto res = new TokenDto();
+		try {
+			res = srvToken.creaToken(null);
+			log.info("::::[FIN]::::[crearTokenOTP]::::fin controlador de data::::");
+			return new ResponseEntity<TokenDto>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[crearTokenOTP]::::fin controlador de data::::");
+			return new ResponseEntity<TokenDto>(new TokenDto(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+		} finally {
+			log.info("***************** Fin Servicio obtener tokenOTP *****************");
 		}
 	}
 

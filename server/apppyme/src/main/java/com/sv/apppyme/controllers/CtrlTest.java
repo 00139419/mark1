@@ -64,7 +64,4 @@ public class CtrlTest {
 		}
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("Mensaje 0" + CodigosErrorManager.getDescripcionError(0));
-	}
 }
