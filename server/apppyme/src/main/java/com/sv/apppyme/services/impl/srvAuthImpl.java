@@ -15,9 +15,9 @@ import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.IAuth;
 import com.sv.apppyme.services.IData;
 import com.sv.apppyme.utils.Constantes;
-import com.sv.apppyme.utils.Encriptacion;
 import com.sv.apppyme.utils.Mensajeria;
 import com.sv.apppyme.utils.TokenManager;
+import com.sv.apppyme.utils.encriptacion.MD5;
 
 @Service
 public class srvAuthImpl implements IAuth {
@@ -55,11 +55,11 @@ public class srvAuthImpl implements IAuth {
 			log.info(":::Login]::::Verificando contraseña::::");
 			String encriptedPassword = "";
 			try {
-				encriptedPassword = Encriptacion.encriptar(userinfo.getPassword());
+				encriptedPassword = MD5.encriptar(userinfo.getPassword());
 			} catch (Exception e) {
 				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_ERROR_ENCRIPTAR_TEXTO);
 			}
-			SuperGenericResponse resEncriptacion = Encriptacion.comparePasswords(encriptedPassword, resDaoUsario.getEntity().getPassword());
+			SuperGenericResponse resEncriptacion = MD5.comparePasswords(encriptedPassword, resDaoUsario.getEntity().getPassword());
 			
 			if(resEncriptacion.getCodigo() != Constantes.SUCCES) 
 				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_CONTRASEÑA_INCORRECTA);

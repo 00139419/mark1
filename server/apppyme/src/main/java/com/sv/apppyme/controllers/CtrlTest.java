@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sv.apppyme.controllers.dto.EncriptarDto;
 import com.sv.apppyme.dto.SuperGenericResponse;
+import com.sv.apppyme.utils.CodigosErrorManager;
 import com.sv.apppyme.utils.Constantes;
-import com.sv.apppyme.utils.Encriptacion;
+import com.sv.apppyme.utils.encriptacion.MD5;
 
 @RestController
 @RequestMapping(value = Constantes.ROOT_CTRL)
@@ -30,7 +31,7 @@ public class CtrlTest {
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
 			res.setCodigo(Constantes.SUCCES);
-			res.setMensaje(Encriptacion.encriptar(texto.getTexto()));
+			res.setMensaje(MD5.encriptar(texto.getTexto()));
 			log.info("::::[FIN]::::[encriptar]::::Fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (NoSuchAlgorithmException e) {
@@ -61,5 +62,9 @@ public class CtrlTest {
 		} finally {
 			log.info("***************** Fin test *****************");
 		}
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("Mensaje 0" + CodigosErrorManager.getDescripcionError(0));
 	}
 }

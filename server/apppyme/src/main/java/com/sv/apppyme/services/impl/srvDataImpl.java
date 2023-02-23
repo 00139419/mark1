@@ -23,8 +23,8 @@ import com.sv.apppyme.repository.IRol;
 import com.sv.apppyme.repository.IUsuario;
 import com.sv.apppyme.services.IData;
 import com.sv.apppyme.utils.Constantes;
-import com.sv.apppyme.utils.Encriptacion;
 import com.sv.apppyme.utils.Mensajeria;
+import com.sv.apppyme.utils.encriptacion.MD5;
 
 @Service
 public class srvDataImpl implements IData {
@@ -82,7 +82,7 @@ public class srvDataImpl implements IData {
 			log.info("::::[insertarUsuario]:::Inicio proceso de encriptar contraseña::::");
 			String encryptedPassword = "";
 			try {
-				encryptedPassword = Encriptacion.encriptar(userInfo.getPassword());
+				encryptedPassword = MD5.encriptar(userInfo.getPassword());
 			} catch (Exception e) {
 				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_ERROR_ENCRIPTAR_TEXTO);
 			}
