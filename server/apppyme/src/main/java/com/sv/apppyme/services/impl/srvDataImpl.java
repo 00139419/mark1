@@ -75,10 +75,17 @@ public class srvDataImpl implements IData {
 			} catch (Exception e) {
 				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_ERROR_PARSEAR_OBJECT_TO_STRING);
 			}
+			
+			//verifiando que no exista ese username en la base de datos
+			Usuario userregistered = obtenerUsuarioByUsername(userInfo).getEntity();
+			
+			if(userregistered != null)
+				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_ERROR_USUARIO_YA_REGISTRADO);
+			
+			//encriptando contraseña
 			if( userInfo.getPassword() == null ||userInfo.getPassword().isBlank() || userInfo.getPassword().isEmpty())
 				throw new SrvValidacionException(Constantes.ERROR, "Campo contraseña viene vacio!");
 			
-			//encriptando contraseña
 			log.info("::::[insertarUsuario]:::Inicio proceso de encriptar contraseña::::");
 			String encryptedPassword = "";
 			try {
@@ -168,23 +175,26 @@ public class srvDataImpl implements IData {
 			if (resServicio.getCodigo() != Constantes.SUCCES)
 				throw new SrvValidacionException(Constantes.ERROR, resServicio.getMensaje());
 			
-			log.info("::::[obtenerUsuarioByUsername]:::Llamando al DAO para ontener el rol:::");
-			GenericEntityResponse<Rol> rol = srvRolImpl.getRolById(resServicio.getEntity().getRol().getId());
-			log.info("::::[obtenerUsuarioByUsername]:::Respuesta obtenida del DAO::::");
-			log.info("::::[obtenerUsuarioByUsername]:::codigo::::" + rol.getCodigo() + "::::");
-			log.info("::::[obtenerUsuarioByUsername]:::mensaje::::" + rol.getMensaje() + "::::");
-			log.info("::::[obtenerUsuarioByUsername]:::entity::::" + rol.getEntity() + "::::");
+			if(resServicio.getEntity() != null) {
+				log.info("::::[obtenerUsuarioByUsername]:::Llamando al DAO para ontener el rol:::");
+				GenericEntityResponse<Rol> rol = srvRolImpl.getRolById(resServicio.getEntity().getRol().getId());
+				log.info("::::[obtenerUsuarioByUsername]:::Respuesta obtenida del DAO::::");
+				log.info("::::[obtenerUsuarioByUsername]:::codigo::::" + rol.getCodigo() + "::::");
+				log.info("::::[obtenerUsuarioByUsername]:::mensaje::::" + rol.getMensaje() + "::::");
+				log.info("::::[obtenerUsuarioByUsername]:::entity::::" + rol.getEntity() + "::::");
+				
+				if(rol.getCodigo() != Constantes.SUCCES)
+					throw new SrvValidacionException(Constantes.ERROR, rol.getMensaje());
+				
+				log.info("::::[obtenerUsuarioByUsername]:::Seteando rol al usuario:::");
+				Usuario usuarioFinal = resServicio.getEntity();
+				usuarioFinal.setRol(rol.getEntity());
+				resServicio.setEntity(usuarioFinal);
+				log.info("::::[FIN]::::[obtenerUsuarioByUsername]::::retornando repsuesta del implementacion del servicio::::");
+				resServicio.setCodigo(Constantes.SUCCES);
+				resServicio.setMensaje(Constantes.OK);
+			}
 			
-			if(rol.getCodigo() != Constantes.SUCCES)
-				throw new SrvValidacionException(Constantes.ERROR, rol.getMensaje());
-			
-			log.info("::::[obtenerUsuarioByUsername]:::Seteando rol al usuario:::");
-			Usuario usuarioFinal = resServicio.getEntity();
-			usuarioFinal.setRol(rol.getEntity());
-			resServicio.setEntity(usuarioFinal);
-			log.info("::::[FIN]::::[obtenerUsuarioByUsername]::::retornando repsuesta del implementacion del servicio::::");
-			resServicio.setCodigo(Constantes.SUCCES);
-			resServicio.setMensaje(Constantes.OK);
 			
 			return resServicio;
 	}

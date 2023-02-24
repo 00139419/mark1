@@ -6,11 +6,17 @@ public class Usuario {
 	private String username;
 	private String password;
 	private Rol rol;
+	private Boolean cuentaActiva;
 
 	public Usuario() {
 		super();
 	}
-	
+
+	public Usuario(int id) {
+		super();
+		this.id = id;
+	}
+
 	public Usuario(String username, String password) {
 		super();
 		this.username = username;
@@ -23,6 +29,15 @@ public class Usuario {
 		this.username = username;
 		this.password = password;
 		this.rol = rol;
+	}
+
+	public Usuario(int id, String username, String password, Rol rol, Boolean cuentaActiva) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.rol = rol;
+		this.cuentaActiva = cuentaActiva;
 	}
 
 	public int getId() {
@@ -57,6 +72,14 @@ public class Usuario {
 		this.rol = rol;
 	}
 
+	public Boolean getCuentaActiva() {
+		return cuentaActiva;
+	}
+
+	public void setCuentaActiva(Boolean cuentaActiva) {
+		this.cuentaActiva = cuentaActiva;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -71,7 +94,5 @@ public class Usuario {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
 
 }

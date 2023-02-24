@@ -8,4 +8,6 @@ public interface IUsuario {
 
 	SuperGenericResponse insertar(Usuario usuario); 
 	GenericEntityResponse<Usuario> selectByUsername(String username);
+	GenericEntityResponse<Usuario> selectById(int id);
+	SuperGenericResponse update(Usuario usuario);
 }

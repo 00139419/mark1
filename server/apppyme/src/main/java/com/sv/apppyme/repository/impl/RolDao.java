@@ -48,6 +48,7 @@ public class RolDao implements IRol {
 			log.info("::::[getAll]::::Conexion CREADO correctamente::::");
 			stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT);
 			log.info("::::[getAll]::::PreparedStatment CREADO correctamente::::");
+			log.info("::::[getRolById]:::SQL generado:::" + stmt.toString() + "::::");
 			rs = ConexionPostgres.executeQuery(stmt);
 			log.info("::::[getAll]::::ResultSet CREADO correctamente::::");
 			log.info("::::[getAll]::::Interpretando Data recibida::::");
@@ -104,6 +105,7 @@ public class RolDao implements IRol {
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_DESCRIPCION);
 			log.info("::::[getRolByDescripcition]::::PreparedStatment CREADO correctamente::::");
 			log.info("::::[getRolByDescripcition]::::Seteando datos al PreparedStatment::::");
+			log.info("::::[getRolById]:::SQL generado:::" + stmt.toString() + "::::");
 			stmt.setString(1, descripcion);
 			log.info("::::[getRolByDescripcition]::::Valor -> 1::::descripcion:::Value:::" + descripcion + "Seteado CORRECTAMENTE:::");
 			ResultSet rs = ConexionPostgres.executeQuery(stmt);
@@ -117,7 +119,7 @@ public class RolDao implements IRol {
 			rs.close();
 			log.info("::::[getRolByDescripcition]::::ResultSet CERRADO correctamente::::");
 			stmt.close();
-			log.info("::::[getRolByDescripcition]::::PreparedStatement CERRADO correctamente::::");
+			log.info("::::[getRolById]::::PreparedStatement CERRADO correctamente::::");
 			conn.close();
 			log.info("::::[getRolByDescripcition]::::Conexion CERRADO correctamente::::");
 			log.info("::::[getRolByDescripcition]::::Enviando repsuesta del implementacion del DAO::::");
@@ -161,6 +163,7 @@ public class RolDao implements IRol {
 			log.info("::::[getRolById]::::Seteando datos al PreparedStatment::::");
 			stmt.setInt(1, id);
 			log.info("::::[getRolById]::::Valor -> 1::::descripcion:::Value:::" + id + "Seteado CORRECTAMENTE:::");
+			log.info("::::[getRolById]:::SQL generado:::" + stmt.toString() + "::::");
 			ResultSet rs = ConexionPostgres.executeQuery(stmt);
 			log.info("::::[getRolById]::::ResultSet CREADO correctamente::::");
 			log.info("::::[getRolById]::::Interpretando Data recibida::::");

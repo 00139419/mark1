@@ -12,5 +12,13 @@ public class DateUtils {
 		return res;
 	}
 	
+	public static java.util.Date convertirDateSQLToDateJava(Date dateSql) {
+		java.util.Date res = null;
+		if(dateSql != null) {
+			res = new java.util.Date(dateSql.getTime());
+		}
+		return res;
+	}
+	
 
 }

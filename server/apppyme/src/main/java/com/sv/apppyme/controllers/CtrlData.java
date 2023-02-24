@@ -88,21 +88,5 @@ public class CtrlData {
 		}
 	}
 	
-	@PostMapping(value = "crear/tokenOTP", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TokenDto> crearTokenOTP(){
-		log.info("***************** Inicio Servicio obtener tokenOTP *****************");
-		log.info("::::[INCIO]::::[crearTokenOTP]::::Iniciando controlador de data::::");
-		TokenDto res = new TokenDto();
-		try {
-			res = srvToken.creaToken(null);
-			log.info("::::[FIN]::::[crearTokenOTP]::::fin controlador de data::::");
-			return new ResponseEntity<TokenDto>(res, HttpStatus.OK);
-		} catch (SrvValidacionException e) {
-			log.info("::::[FIN]:::[ERROR]::::[crearTokenOTP]::::fin controlador de data::::");
-			return new ResponseEntity<TokenDto>(new TokenDto(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
-		} finally {
-			log.info("***************** Fin Servicio obtener tokenOTP *****************");
-		}
-	}
 
 }
