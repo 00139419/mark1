@@ -117,6 +117,7 @@ public class UsuarioDao implements IUsuario {
 				usuario.setUsername(rs.getString(COL_USERNAME));
 				usuario.setRol(new Rol(rs.getInt(COL_ROL_ID)));
 				usuario.setPassword(rs.getString(COL_PASSWORD));
+				usuario.setCuentaActiva(rs.getBoolean(COL_CUENTA_ACTIVA));
 			}
 			log.info("::::[selectByUsername]::::Fin interpretando Data recibida::::");
 			rs.close();

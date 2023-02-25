@@ -23,7 +23,9 @@ import com.sv.apppyme.reports.repository.IReportManagerJasper;
 import com.sv.apppyme.reports.utils.DocumentTypesToGenerated;
 import com.sv.apppyme.repository.IRol;
 import com.sv.apppyme.repository.IUsuario;
+import com.sv.apppyme.repository.impl.UsuarioDao;
 import com.sv.apppyme.services.IData;
+import com.sv.apppyme.services.ITokenOTP;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Mensajeria;
 import com.sv.apppyme.utils.encriptacion.MD5;
@@ -37,6 +39,9 @@ public class srvDataImpl implements IData {
 	IUsuario srvUsuarioImpl;
 	@Autowired
 	ObjectMapper mapper;
+	
+	@Autowired
+	ITokenOTP srvTokenOTP;
 	
 	PasswordEncoder encoder;
 	
@@ -202,6 +207,23 @@ public class srvDataImpl implements IData {
 			
 			
 			return resServicio;
+	}
+
+	@Override
+	public SuperGenericResponse esCuentaActiva(String username) throws SrvValidacionException {
+		log.info("::::[INICIO]::::[obtenerUsuarioByUsername]:::Iniciando servicio para verificar que la cuenta del usuario este activa::::");
+		
+		srvUsuarioImpl = new UsuarioDao();
+		Usuario user = srvUsuarioImpl.selectByUsername(username).getEntity();
+		log.info("::::[obtenerUsuarioByUsername]:::Usuario encontrado::::value::::" + user.toString()  + "::::");
+		
+		if(user.getCuentaActiva()) {
+			log.info("::::[obtenerUsuarioByUsername]:::Cuenta ACTIVA::::");
+			return new SuperGenericResponse(Constantes.SUCCES, Constantes.OK);
+		}else {
+			log.info("::::[obtenerUsuarioByUsername]:::Cuenta NO ACTIVA::::");
+			return new SuperGenericResponse(Constantes.ERROR, Constantes.FAIL);
+		}
 	}
 
 }

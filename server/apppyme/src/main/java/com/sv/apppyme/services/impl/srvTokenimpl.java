@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.sv.apppyme.controllers.dto.TokenDto;
@@ -37,6 +38,8 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 	@Override
 	public TokenDto creaToken(Usuario usuario) throws SrvValidacionException {
 		log.info("::::[Inicio]::::[creaToken]::::Iniciando servicio de crearToken::::");
+		log.info("::::[Inicio]::::[creaToken]::::Datos Recibidos::::value::::" + ObjectMapperUtils.ObjectToJsonString(usuario));
+		
 		TokenDto res = null;
 		TokenOTP tokenOTP = new TokenOTP();
 		tokenOTP.setToken(generarTokenValido());
@@ -44,8 +47,20 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 		tokenOTP.setFechaDeCreacion(new Date(System.currentTimeMillis()));
 		tokenOTP.setFechaDeVencimiento(new Date(System.currentTimeMillis() + EXP_TOKE_OTP_MILLIS));
 		tokenOTP.setEstaVerificado(false);
-		Usuario user = srvUser.selectByUsername("DAnielito2").getEntity();
-		tokenOTP.setUsuario(user);
+		
+		try {
+			if(usuario.getUsername() == null)
+				usuario = srvUser.selectByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getEntity();
+			
+			if(usuario.getUsername() !=  null)
+				usuario = srvUser.selectByUsername(usuario.getUsername()).getEntity();
+		} catch (Exception e) {
+			throw new SrvValidacionException(Constantes.ERROR, "Usuario no encontrado");
+		}
+		
+		tokenOTP.setUsuario(usuario);
+
+			
 		srvTokenOTP.insert(tokenOTP);
 
 		log.info("::::[creaToken]::::LLamando al metodo para guardar tokenOTP::::");

@@ -11,7 +11,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.exception.SrvValidacionException;
+import com.sv.apppyme.services.IData;
 import com.sv.apppyme.services.ITokenOTP;
+import com.sv.apppyme.services.impl.srvDataImpl;
 import com.sv.apppyme.services.impl.srvTokenimpl;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.TokenManager;
@@ -23,10 +26,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 	
-	@Autowired
 	TokenManager tokeManager;
 	
-
+	IData srvDaraImpl;
+	
+	ITokenOTP srvTokenOTP;
 	
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -58,7 +62,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		
-		ITokenOTP srvTokenOTP = new srvTokenimpl();
+		srvTokenOTP = new srvTokenimpl();
+		srvDaraImpl = new srvDataImpl();
 		
 		srvTokenOTP.eliminarTokensObsoletos();
 		
@@ -69,12 +74,30 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String username = userDetails.getUsername();
 		String password = userDetails.getPassword();
 		
-		String token = tokeManager.generarToken(new Usuario(username, password));
-		
-		response.addHeader(Constantes.HEADER_AUTHORIZATION_KEY,Constantes.TOKEN_BEARER_PREFIX + token);
-		response.getWriter().flush();
-	
-		
-		super.successfulAuthentication(request, response, chain, authResult);
+		try {
+			if(srvDaraImpl.esCuentaActiva(username).getCodigo() ==  Constantes.SUCCES) {
+				String token = tokeManager.generarToken(new Usuario(username, password));
+				
+				response.addHeader("codigo", "0");
+				response.addHeader("descripcionm", "OK");
+				response.addHeader(Constantes.HEADER_AUTHORIZATION_KEY,Constantes.TOKEN_BEARER_PREFIX + token);
+				response.getWriter().flush();
+			
+				
+				super.successfulAuthentication(request, response, chain, authResult);
+			}else {
+				response.addHeader("codigo", "-2");
+				response.addHeader("descripcionm", "Cuenta Inactiva");
+				response.getWriter().flush();
+				
+				super.successfulAuthentication(request, response, chain, authResult);
+			}
+		} catch (SrvValidacionException e) {
+			response.addHeader("codigo", "-1");
+			response.addHeader("descripcionm", "Error generico " + e.getMessage());
+			response.getWriter().flush();
+			
+			super.successfulAuthentication(request, response, chain, authResult);
+		}
 	}
 }

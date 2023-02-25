@@ -17,4 +17,5 @@ public interface IData {
 	//motodos para usuarios
 	SuperGenericResponse insertarUsuario(UsuarioDto userInfo) throws SrvValidacionException;
 	GenericEntityResponse<Usuario> obtenerUsuarioByUsername(UsuarioDto userInfo) throws SrvValidacionException;
+	SuperGenericResponse esCuentaActiva(String username) throws SrvValidacionException;
 }

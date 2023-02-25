@@ -2,12 +2,15 @@ package com.sv.apppyme.controllers.dto;
 
 import com.sv.apppyme.dto.SuperGenericResponse;
 
+import lombok.ToString;
 
+@ToString
 public class TokenDto extends SuperGenericResponse{
 	
 	private static final long serialVersionUID = 1L;
 	private String token;
 	private boolean esValido;
+	private String username;
 
 	public TokenDto() {
 		super();
@@ -39,15 +42,16 @@ public class TokenDto extends SuperGenericResponse{
 	public void setEsValido(boolean esValido) {
 		this.esValido = esValido;
 	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("TokenDto [token=");
-		builder.append(token);
-		builder.append("]");
-		return builder.toString();
+	
+	public String getUsername() {
+		return username;
 	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	
 	
 	
 

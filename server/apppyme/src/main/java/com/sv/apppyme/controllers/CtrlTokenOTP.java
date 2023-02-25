@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sv.apppyme.controllers.dto.TokenDto;
 import com.sv.apppyme.controllers.dto.ValidarTokenOTPDto;
 import com.sv.apppyme.dto.SuperGenericResponse;
+import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.IData;
 import com.sv.apppyme.services.ITokenOTP;
 import com.sv.apppyme.utils.Constantes;
+import com.sv.apppyme.utils.ObjectMapperUtils;
 
 @RestController
 @RequestMapping(Constantes.ROOT_CTRL)
@@ -31,12 +33,16 @@ public class CtrlTokenOTP {
 	ITokenOTP srvToken;
 	
 	@PostMapping(value = "crear/tokenOTP", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TokenDto> crearTokenOTP(){
+	public ResponseEntity<TokenDto> crearTokenOTP(@RequestBody TokenDto tokenInfo){
 		log.info("***************** Inicio Servicio obtener tokenOTP *****************");
 		log.info("::::[INCIO]::::[crearTokenOTP]::::Iniciando controlador de data::::");
 		TokenDto res = new TokenDto();
 		try {
-			res = srvToken.creaToken(null);
+			if(tokenInfo.getUsername() !=  null) {
+				res = srvToken.creaToken(new Usuario(tokenInfo.getUsername()));
+			}else {
+				res = srvToken.creaToken(new Usuario());
+			}
 			log.info("::::[FIN]::::[crearTokenOTP]::::fin controlador de data::::");
 			return new ResponseEntity<TokenDto>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
@@ -51,7 +57,7 @@ public class CtrlTokenOTP {
 	public ResponseEntity<SuperGenericResponse> validarTokenOTP(@RequestBody ValidarTokenOTPDto tokenInfo){
 		log.info("***************** Inicio Servicio validar tokenOTP *****************");
 		log.info("::::[INCIO]::::[validarTokenOTP]::::Iniciando controlador de data::::");
-		SuperGenericResponse res =  null;
+		SuperGenericResponse res = null;
 		try {
 			log.info("::::[FIN]::::[validarTokenOTP]::::fin controlador de data::::");
 			res = srvToken.validarToken(tokenInfo);
