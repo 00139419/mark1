@@ -15,7 +15,7 @@ import com.sv.apppyme.controllers.dto.ValidarTokenOTPDto;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.IData;
-import com.sv.apppyme.services.IToken;
+import com.sv.apppyme.services.ITokenOTP;
 import com.sv.apppyme.utils.Constantes;
 
 @RestController
@@ -28,7 +28,7 @@ public class CtrlTokenOTP {
 	IData srvDataImpl;
 	
 	@Autowired
-	IToken srvToken;
+	ITokenOTP srvToken;
 	
 	@PostMapping(value = "crear/tokenOTP", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TokenDto> crearTokenOTP(){

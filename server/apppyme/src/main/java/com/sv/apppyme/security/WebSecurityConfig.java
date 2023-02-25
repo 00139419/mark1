@@ -33,7 +33,7 @@ public class WebSecurityConfig {
 		
 		JwtAuthenticationFilter authenticationFilter = new JwtAuthenticationFilter();
 		authenticationFilter.setAuthenticationManager(manager);
-		authenticationFilter.setFilterProcessesUrl(Constantes.ROOT_CTRL + "/login");
+		authenticationFilter.setFilterProcessesUrl("/apppyme/api/srv/login");
 		
 		return 
 				http
@@ -71,5 +71,4 @@ public class WebSecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 	
-
 }

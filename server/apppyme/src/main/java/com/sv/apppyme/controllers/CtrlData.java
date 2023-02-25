@@ -13,16 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sv.apppyme.controllers.dto.TokenDto;
 import com.sv.apppyme.controllers.dto.UsuarioDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
-import com.sv.apppyme.repository.ITokenOTP;
 import com.sv.apppyme.services.IData;
-import com.sv.apppyme.services.IToken;
+import com.sv.apppyme.services.ITokenOTP;
 import com.sv.apppyme.utils.Constantes;
 
 @RestController
@@ -33,7 +31,7 @@ public class CtrlData {
 	IData srvDataImpl;
 	
 	@Autowired
-	IToken srvToken;
+	ITokenOTP srvToken;
 	
 	Logger log = Logger.getLogger(CtrlData.class);
 	

@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,6 +37,8 @@ public class srvDataImpl implements IData {
 	IUsuario srvUsuarioImpl;
 	@Autowired
 	ObjectMapper mapper;
+	
+	PasswordEncoder encoder;
 	
 	IReportManagerJasper reportManagerJasper = new srvReportManagerJasperimpl();
 		
@@ -89,7 +93,8 @@ public class srvDataImpl implements IData {
 			log.info("::::[insertarUsuario]:::Inicio proceso de encriptar contraseña::::");
 			String encryptedPassword = "";
 			try {
-				encryptedPassword = MD5.encriptar(userInfo.getPassword());
+				 encoder = new BCryptPasswordEncoder();
+				encryptedPassword = encoder.encode(userInfo.getPassword());
 			} catch (Exception e) {
 				throw new SrvValidacionException(Constantes.ERROR, Mensajeria.MJS_ERROR_ENCRIPTAR_TEXTO);
 			}

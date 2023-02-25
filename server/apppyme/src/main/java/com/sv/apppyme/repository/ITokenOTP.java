@@ -1,5 +1,7 @@
 package com.sv.apppyme.repository;
 
+import java.util.List;
+
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.TokenOTP;
@@ -11,5 +13,7 @@ public interface ITokenOTP {
 	GenericEntityResponse<TokenOTP> verificarTokenOTP(String numero);
 	SuperGenericResponse insert(TokenOTP tokenOTP);
 	SuperGenericResponse update(TokenOTP tokenOTP);
+	SuperGenericResponse delete(TokenOTP tokenOTP);
+	GenericEntityResponse<List<TokenOTP>> getAll();
 
 }

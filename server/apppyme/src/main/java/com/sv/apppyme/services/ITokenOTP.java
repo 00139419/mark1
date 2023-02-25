@@ -6,9 +6,10 @@ import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
 
-public interface IToken {
+public interface ITokenOTP {
 	
 	TokenDto creaToken(Usuario usuario) throws SrvValidacionException;
 	SuperGenericResponse validarToken(ValidarTokenOTPDto tokenOtp) throws SrvValidacionException;
-
+	void eliminarTokensObsoletos();
+	
 }

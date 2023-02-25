@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class TokenOTP {
-	
+	int id;
 	Usuario usuario;
 	String token;
 	Date fechaDeCreacion;

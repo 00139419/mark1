@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.sv.apppyme.conexciones.ConexionPostgres;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
+import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.entities.TokenOTP;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.repository.ITokenOTP;
@@ -28,6 +30,7 @@ public class TokenOTPDao implements ITokenOTP {
 	public static final String DB_TABLA_TOKENOPT = "tokenotp";
 
 	// nombres de las columnas
+	public static final String COL_ID = "id";
 	public static final String COL_USER_ID = "user_id";
 	public static final String COL_TOKEN = "token";
 	public static final String COL_FECHA_CREACION = "fechadecreacion";
@@ -38,8 +41,10 @@ public class TokenOTPDao implements ITokenOTP {
 	// consultas para la tabla token
 	public static final String SQL_SELECT_BY_TOKEN = "SELECT * FROM tokenotp WHERE token = ?";
 	public static final String SQL_INSERT = "INSERT INTO tokenotp (user_id, token, fechadecreacion, fechadevencimiento, esvalido, estaverificado) values (?,?,?,?,?,?)";
-	public static final String SQL_UPDATE = "UPDATE "  + DB_TABLA_TOKENOPT + " SET " + COL_USER_ID + "  = ?, " + COL_TOKEN + " = ?, " + COL_FECHA_CREACION + " = ?, " + COL_FECHA_VENCIMIENTO + " = ?, " + COL_ES_VALIDO + " = ?, " + COL_ESTA_VERIFICADO + " = ? WHERE " + COL_USER_ID  + " = ?";
-
+	public static final String SQL_UPDATE = "UPDATE "  + DB_TABLA_TOKENOPT + " SET " + COL_USER_ID + "  = ?, " + COL_TOKEN + " = ?, " + COL_FECHA_CREACION + " = ?, " + COL_FECHA_VENCIMIENTO + " = ?, " + COL_ES_VALIDO + " = ?, " + COL_ESTA_VERIFICADO + " = ? WHERE " + COL_ID  + " = ?";
+	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_TOKENOPT;
+	public static final String SQL_DELETE = "DELETE FROM  " + DB_TABLA_TOKENOPT + " WHERE " + COL_ID + " = ?";
+	
 	@Override
 	public GenericEntityResponse<TokenOTP> verificarTokenOTP(String numero) {
 		log.info("::::[INCIO]::::[verificarTokenOTP]::::Incio de DAO TokenOTP::::");
@@ -62,12 +67,14 @@ public class TokenOTPDao implements ITokenOTP {
 			log.info("::::[verificarTokenOTP]::::InterpretandoData::::");
 			while (rs.next()) {
 				tokenOtp = new TokenOTP();
+				tokenOtp.setId(rs.getInt(COL_ID));
 				tokenOtp.setToken(rs.getString(COL_TOKEN));
 				tokenOtp.setEsValido(rs.getBoolean(COL_ES_VALIDO));
 				tokenOtp.setFechaDeCreacion(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_CREACION)));
 				tokenOtp.setFechaDeVencimiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_VENCIMIENTO)));
 				tokenOtp.setEstaVerificado(rs.getBoolean(COL_ESTA_VERIFICADO));
 				tokenOtp.setUsuario(new Usuario(rs.getInt(COL_USER_ID)));
+				
 				ls.add(tokenOtp);
 			}
 			resDao.setListaEntity(ls);
@@ -133,7 +140,7 @@ public class TokenOTPDao implements ITokenOTP {
 			log.info("::::[insert]::::Cantidad de datos guardados::::value::::" + resultado + "::::");
 			resDao.setCodigo(Constantes.SUCCES);
 			resDao.setMensaje(Constantes.OK);
-			log.info("::::[numeroExiste]::::Respuesta creada correctamente::::");
+			log.info("::::[insert]::::Respuesta creada correctamente::::");
 		} catch (Exception e) {
 			log.info("::::[ERROR]::::[insert]::::Error generico en insertar nuevo token::::");
 			log.info("::::[ERROR]::::[insert]::::Mensaje::::" + e.getMessage() + "::::");
@@ -177,8 +184,8 @@ public class TokenOTPDao implements ITokenOTP {
 			stmt.setBoolean(6, tokenOTP.getEstaVerificado());
 			log.info("::::[update]::::Valor -> 6::::token:::Value:::" + tokenOTP.getEstaVerificado()
 					+ "Seteado CORRECTAMENTE::::");
-			stmt.setInt(7, tokenOTP.getUsuario().getId());
-			log.info("::::[update]::::Valor -> 6::::userID:::Value:::" + tokenOTP.getUsuario().getId()
+			stmt.setInt(7, tokenOTP.getId());
+			log.info("::::[update]::::Valor -> 7::::ID:::Value:::" + tokenOTP.getId()
 					+ "Seteado CORRECTAMENTE::::");log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 
 			int resultado = ConexionPostgres.updateQuery(stmt);
@@ -196,6 +203,106 @@ public class TokenOTPDao implements ITokenOTP {
 		}
 
 		log.info("::::[FIN]::::[update]::::Fin de DAO TokenOTP::::");
+		return resDao;
+	}
+
+	@Override
+	public GenericEntityResponse<List<TokenOTP>> getAll() {
+		log.info("::::[Incio]::::[getAll]::::Iniciando implementacion del DAO para los roles::::");
+		TokenOTP token;
+		List<TokenOTP> ls = new ArrayList<>();
+		GenericEntityResponse<List<TokenOTP>> resEntity = new GenericEntityResponse<>();
+		Connection conn;
+		PreparedStatement stmt;
+		ResultSet rs;
+		try {
+			conn = ConexionPostgres.getConnecion();
+			log.info("::::[getAll]::::Conexion CREADO correctamente::::");
+			stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT);
+			log.info("::::[getAll]::::PreparedStatment CREADO correctamente::::");
+			log.info("::::[getAll]:::SQL generado:::" + stmt.toString() + "::::");
+			rs = ConexionPostgres.executeQuery(stmt);
+			log.info("::::[getAll]::::ResultSet CREADO correctamente::::");
+			log.info("::::[getAll]::::Interpretando Data recibida::::");
+			while (rs.next()) {
+				token = new TokenOTP();
+				token.setId(rs.getInt(COL_ID));
+				token.setUsuario(new Usuario(rs.getInt(COL_USER_ID)));
+				token.setEstaVerificado(rs.getBoolean(COL_ESTA_VERIFICADO));
+				token.setFechaDeCreacion(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_CREACION)));
+				token.setFechaDeVencimiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_VENCIMIENTO)));
+				token.setEsValido(rs.getBoolean(COL_ES_VALIDO));
+				token.setToken(rs.getString(COL_TOKEN));
+				ls.add(token);
+			}
+			log.info("::::[getAll]::::Fin interpretando Data recibida::::");
+			rs.close();
+			log.info("::::[getAll]::::ResultSet CERRADO correctamente::::");
+			stmt.close();
+			log.info("::::[getAll]::::PreparedStatement CERRADO correctamente::::");
+			conn.close();
+			log.info("::::[getAll]::::Conexion CERRADO correctamente::::");
+			log.info("::::[getAll]::::Enviando repsuesta del implementacion del DAO::::");
+			resEntity.setCodigo(Constantes.SUCCES);
+			resEntity.setMensaje(Constantes.OK);
+			resEntity.setEntity(ls);
+		} catch (SQLException e) {
+			log.info("::::[ERROR]::::[getAll]::::Error de SQL en la implementacion del DAO Rol::::");
+			log.info("::::[ERROR]::::[getAll]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getAll]::::Imprimiendo stacktrace::::");
+			log.info("--------------------------------------------");
+			e.printStackTrace();
+			log.info("--------------------------------------------");
+			log.info("::::[ERROR]::::[getAll]::::Enviando repsuesta del implementacion del DAO::::");
+			resEntity.setCodigo(Constantes.ERROR);
+			resEntity.setMensaje(e.getMessage());
+		} catch (Exception e) {
+			log.info("::::[ERROR]::::[getAll]::::Error de generico en la implementacion del DAO Rol::::");
+			log.info("::::[ERROR]::::[getAll]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getAll]::::Imprimiendo stacktrace::::");
+			log.info("--------------------------------------------");
+			e.printStackTrace();
+			log.info("--------------------------------------------");
+			log.info("::::[ERROR]::::[getAll]::::Enviando repsuesta del implementacion del DAO::::");
+			resEntity.setCodigo(Constantes.ERROR);
+			resEntity.setMensaje(e.getMessage());
+		}
+		log.info("::::[FIN]::::[getAll]::::Fin implementacion del DAO para los roles::::");
+		return resEntity;
+	}
+
+	@Override
+	public SuperGenericResponse delete(TokenOTP tokenOTP) {
+		log.info("::::[INCIO]::::[delete]::::Incio de DAO TokenOTP::::");
+		SuperGenericResponse resDao = new SuperGenericResponse(Constantes.ERROR, Constantes.FAIL);
+
+		try {
+			Connection conn = ConexionPostgres.getConnecion();
+			log.info("::::[delete]::::Conexcion creada correctamente::::");
+			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_DELETE);
+
+			log.info("::::[delete]::::PreparedStatment creado correctamente::::");
+			stmt.setInt(1, tokenOTP.getId());
+			log.info("::::[delete]::::Valor -> 1::::token:::Value:::" + tokenOTP.getId()
+					+ "Seteado CORRECTAMENTE::::");
+			
+			log.info("::::[delete]:::SQL generado:::" + stmt.toString() + "::::");
+
+			ResultSet rs = ConexionPostgres.executeQuery(stmt);
+			log.info("::::[delete]::::Datos guardado correctamente::::");
+			log.info("::::[delete]::::Cantidad de datos eliminados::::value::::" + rs.getFetchSize() + "::::");
+			resDao.setCodigo(Constantes.SUCCES);
+			resDao.setMensaje(Constantes.OK);
+			log.info("::::[delete]::::Respuesta creada correctamente::::");
+		} catch (Exception e) {
+			log.info("::::[ERROR]::::[delete]::::Error generico en insertar nuevo token::::");
+			log.info("::::[ERROR]::::[delete]::::Mensaje::::" + e.getMessage() + "::::");
+			e.printStackTrace();
+			resDao.setCodigo(Constantes.ERROR);
+			resDao.setMensaje(Constantes.FAIL);
+		}
+
+		log.info("::::[FIN]::::[insertToken]::::Fin de DAO TokenOTP::::");
 		return resDao;
 	}
 

@@ -11,6 +11,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.services.ITokenOTP;
+import com.sv.apppyme.services.impl.srvTokenimpl;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.TokenManager;
 
@@ -24,9 +26,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Autowired
 	TokenManager tokeManager;
 	
+
+	
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
+		
+		ITokenOTP srvTokenOTP = new srvTokenimpl();
+		
+		srvTokenOTP.eliminarTokensObsoletos();
 		
 		AuthCredentials authCredentials = new AuthCredentials();
 		
@@ -42,8 +50,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				Collections.emptyList()
 				);
 		
-		
-		
 		return getAuthenticationManager().authenticate(usernamePAT);
 	}
 
@@ -51,6 +57,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
+		
+		ITokenOTP srvTokenOTP = new srvTokenimpl();
+		
+		srvTokenOTP.eliminarTokensObsoletos();
 		
 		tokeManager = new TokenManager();
 		

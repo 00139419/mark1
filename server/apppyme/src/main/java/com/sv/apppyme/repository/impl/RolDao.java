@@ -48,7 +48,7 @@ public class RolDao implements IRol {
 			log.info("::::[getAll]::::Conexion CREADO correctamente::::");
 			stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT);
 			log.info("::::[getAll]::::PreparedStatment CREADO correctamente::::");
-			log.info("::::[getRolById]:::SQL generado:::" + stmt.toString() + "::::");
+			log.info("::::[getAll]:::SQL generado:::" + stmt.toString() + "::::");
 			rs = ConexionPostgres.executeQuery(stmt);
 			log.info("::::[getAll]::::ResultSet CREADO correctamente::::");
 			log.info("::::[getAll]::::Interpretando Data recibida::::");
