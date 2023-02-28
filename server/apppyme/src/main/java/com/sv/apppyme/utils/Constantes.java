@@ -34,5 +34,9 @@ public class Constantes {
 	public static final String JWT_SECRETKEY = "ultraSecret123ultraSecret123ultraSecret123ultraSecret123";
 	public static final int JWT_EXP_TIME_MILLIS = 1000 * 60 * 60; // 60 minutos
 	public static final String JWT_SECRET_CLAIMS = "12345";
+	
+	//constantes para envio de mensajes
+	public static final String EMAIL_HOST_ISSUER = "danielmorales.dm931@gmail.com";
+	public static final String EMAIL_HOST_PASSWORD = "uknapwpvlygxwxch";
 
 }
