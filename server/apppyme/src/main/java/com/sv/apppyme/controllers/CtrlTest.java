@@ -1,6 +1,7 @@
 package com.sv.apppyme.controllers;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class CtrlTest {
 		}
 	}
 	
-	@PostMapping(value = "test", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "test/getConnection", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SuperGenericResponse> ComprobarConeccionConLaApi(){
 		log.info("***************** Inicio test  *****************");
 		log.info("::::[INCIO]::::[ComprobarConeccionConLaApi]::::Iniciando controlador de test::::");
@@ -76,7 +77,8 @@ public class CtrlTest {
 		log.info("::::[INCIO]::::[sendEmails]::::Iniciando controlador de test::::");
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
-			res = srvEmails.sendEmail(emailInfo);
+			emailInfo.setExpirationDate(new Date());
+			res = srvEmails.sendEmail(emailInfo, emailInfo.getEmailType());
 			log.info("::::[FIN]::::[sendEmails]::::Fin controlador de test enviar correo::::");
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (Exception e) {

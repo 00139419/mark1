@@ -18,8 +18,8 @@ import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.reports.dto.FormularioVinculacionDto;
-import com.sv.apppyme.reports.impl.srvReportManagerJasperimpl;
 import com.sv.apppyme.reports.repository.IReportManagerJasper;
+import com.sv.apppyme.reports.repository.impl.srvReportManagerJasperimpl;
 import com.sv.apppyme.reports.utils.DocumentTypesToGenerated;
 import com.sv.apppyme.repository.IRol;
 import com.sv.apppyme.repository.IUsuario;
@@ -159,7 +159,7 @@ public class srvDataImpl implements IData {
 			ls.add(vinculacionDto);
 			
 			log.info("::::[insertarUsuario]::::LLamando al servicio para generar report4e de vinculacion::::" + usuario.toString() + "::::");
-			String pdf = reportManagerJasper.generatedJasperReport(ls, DocumentTypesToGenerated.FV);
+			String pdf = reportManagerJasper.generatedBase64JasperReport(ls, DocumentTypesToGenerated.FV);
 			log.info("::::[insertarUsuario]::::Fin llamado de  servicio para generar report4e de vinculacion::::" + usuario.toString() + "::::");
 			
 			if(pdf.equals(""))

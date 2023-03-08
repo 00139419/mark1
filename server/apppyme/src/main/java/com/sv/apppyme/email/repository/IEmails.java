@@ -8,6 +8,6 @@ import com.sv.apppyme.email.dto.SendEmailDto;
 
 public interface IEmails {
 	
-	SuperGenericResponse sendEmail(SendEmailDto emailInfo) throws AddressException, MessagingException;
+	SuperGenericResponse sendEmail(Object emailInfo, String emailType) throws AddressException, MessagingException;
 
 }
