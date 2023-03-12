@@ -17,12 +17,12 @@ import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.entities.TokenOTP;
 import com.sv.apppyme.entities.Usuario;
-import com.sv.apppyme.repository.ITokenOTP;
+import com.sv.apppyme.repository.IRepoTokenOTP;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.DateUtils;
 
 @Service
-public class TokenOTPDao implements ITokenOTP {
+public class TokenOTPDao implements IRepoTokenOTP {
 
 	Logger log = Logger.getLogger(getClass());
 
@@ -38,10 +38,28 @@ public class TokenOTPDao implements ITokenOTP {
 	public static final String COL_ES_VALIDO = "esvalido";
 	public static final String COL_ESTA_VERIFICADO = "estaverificado";
 
-	// consultas para la tabla token
+	// consultas para la tabla
 	public static final String SQL_SELECT_BY_TOKEN = "SELECT * FROM tokenotp WHERE token = ?";
-	public static final String SQL_INSERT = "INSERT INTO tokenotp (user_id, token, fechadecreacion, fechadevencimiento, esvalido, estaverificado) values (?,?,?,?,?,?)";
-	public static final String SQL_UPDATE = "UPDATE "  + DB_TABLA_TOKENOPT + " SET " + COL_USER_ID + "  = ?, " + COL_TOKEN + " = ?, " + COL_FECHA_CREACION + " = ?, " + COL_FECHA_VENCIMIENTO + " = ?, " + COL_ES_VALIDO + " = ?, " + COL_ESTA_VERIFICADO + " = ? WHERE " + COL_ID  + " = ?";
+	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_TOKENOPT 
+			+ " ( "
+				+ COL_USER_ID + ", "
+				+ COL_TOKEN + ", "
+				+ COL_FECHA_CREACION + ", "
+				+ COL_FECHA_VENCIMIENTO + ", "
+				+ COL_ES_VALIDO + ", "
+				+ COL_ESTA_VERIFICADO + " "
+			+ ")"
+			+ " values (?,?,?,?,?,?)";
+	public static final String SQL_UPDATE = "UPDATE "  + DB_TABLA_TOKENOPT 
+			+ " SET " 
+				+ COL_USER_ID + "  = ?, " 
+				+ COL_TOKEN + " = ?, " 
+				+ COL_FECHA_CREACION + " = ?, " 
+				+ COL_FECHA_VENCIMIENTO + " = ?, " 
+				+ COL_ES_VALIDO + " = ?, " 
+				+ COL_ESTA_VERIFICADO + " = ?"
+			+ " WHERE " 
+				+ COL_ID  + " = ?";
 	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_TOKENOPT;
 	public static final String SQL_DELETE = "DELETE FROM  " + DB_TABLA_TOKENOPT + " WHERE " + COL_ID + " = ?";
 	

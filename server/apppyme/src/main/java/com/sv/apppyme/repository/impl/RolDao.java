@@ -13,25 +13,25 @@ import org.springframework.stereotype.Service;
 import com.sv.apppyme.conexciones.ConexionPostgres;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.entities.Rol;
-import com.sv.apppyme.repository.IRol;
+import com.sv.apppyme.repository.IRepoRol;
 import com.sv.apppyme.utils.Constantes;
 
 @Service
-public class RolDao implements IRol {
+public class RolDao implements IRepoRol {
 	
 	//nombre de la tabla
 	public static final String DB_TABLA_ROL = "rol";
 	
-	//columnas de la tabla Rol
+	//columnas de la tabla
 	public static final String COL_ID = "id";
 	public static final String COL_DESCRIPCION = "descripcion";
 	
 
 	Logger log = Logger.getLogger(RolDao.class);
 	
-	//querys de la tabla rol
-	private String SQL_SELECT_BY_DESCRIPCION = "SELECT * FROM " + DB_TABLA_ROL + " WHERE descripcion = ?";
-	private String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_ROL + " WHERE id = ?";
+	//querys de la tabla
+	private String SQL_SELECT_BY_DESCRIPCION = "SELECT * FROM " + DB_TABLA_ROL + " WHERE " + COL_DESCRIPCION + " = ?";
+	private String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_ROL + " WHERE " + COL_ID + " = ?";
 	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_ROL;
 
 	@Override

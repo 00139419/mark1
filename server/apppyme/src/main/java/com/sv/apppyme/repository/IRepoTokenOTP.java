@@ -8,7 +8,7 @@ import com.sv.apppyme.entities.TokenOTP;
 
 import ch.qos.logback.core.subst.Token;
 
-public interface ITokenOTP {
+public interface IRepoTokenOTP {
 	
 	GenericEntityResponse<TokenOTP> verificarTokenOTP(String numero);
 	SuperGenericResponse insert(TokenOTP tokenOTP);

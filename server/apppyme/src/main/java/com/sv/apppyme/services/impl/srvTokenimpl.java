@@ -15,8 +15,8 @@ import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.TokenOTP;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
-import com.sv.apppyme.repository.ITokenOTP;
-import com.sv.apppyme.repository.IUsuario;
+import com.sv.apppyme.repository.IRepoTokenOTP;
+import com.sv.apppyme.repository.IRepoUsuario;
 import com.sv.apppyme.repository.impl.TokenOTPDao;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.ObjectMapperUtils;
@@ -25,10 +25,10 @@ import com.sv.apppyme.utils.ObjectMapperUtils;
 public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 
 	@Autowired
-	ITokenOTP srvTokenOTP;
+	IRepoTokenOTP srvTokenOTP;
 
 	@Autowired
-	IUsuario srvUser;
+	IRepoUsuario srvUser;
 
 	Logger log = Logger.getLogger(getClass());
 

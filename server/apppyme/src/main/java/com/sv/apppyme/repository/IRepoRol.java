@@ -5,7 +5,7 @@ import java.util.List;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.entities.Rol;
 
-public interface IRol {
+public interface IRepoRol {
 	
 	GenericEntityResponse<List<Rol>> getAll();
 	GenericEntityResponse<Rol> getRolByDescripcition(String descripcion);

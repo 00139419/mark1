@@ -13,29 +13,45 @@ import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.entities.Usuario;
-import com.sv.apppyme.repository.IUsuario;
+import com.sv.apppyme.repository.IRepoUsuario;
 import com.sv.apppyme.utils.Constantes;
 
 @Service
-public class UsuarioDao implements IUsuario {
+public class UsuarioDao implements IRepoUsuario {
 	
 	Logger log = Logger.getLogger(UsuarioDao.class);
 	
 	//nombre de la tabla
 	public static final String DB_TABLA_USUARIO = "usuario";
 	
-	//columnas de la tabla usuario
+	//columnas de la tabla
 	public static final String COL_ID = "id";
 	public static final String COL_USERNAME = "username";
 	public static final String COL_PASSWORD = "password";
 	public static final String COL_ROL_ID = "rol_id";
 	public static final String COL_CUENTA_ACTIVA = "cuentaactiva";
 	
-	//consultas de la tabla usuario
-	public static final String SQL_SELECT_BY_USERNAME = "SELECT * FROM " + DB_TABLA_USUARIO + " WHERE " + COL_USERNAME +" = ?";
-	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_USUARIO + " WHERE " +  COL_ID + "= ?";
-	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_USUARIO + " (" +  COL_USERNAME +  ", " + COL_PASSWORD +", " + COL_ROL_ID + ", " + COL_CUENTA_ACTIVA + ") VALUES (?,?,?,?)";
-	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_USUARIO + " SET " +  COL_USERNAME +  "= ?, "  +  COL_PASSWORD +  "= ?, "  +  COL_ROL_ID +  "= ?, "  +  COL_CUENTA_ACTIVA +  "= ?" ;
+	//consultas de la tabla
+	public static final String SQL_SELECT_BY_USERNAME = "SELECT * FROM " + DB_TABLA_USUARIO 
+			+ " WHERE " 
+				+ COL_USERNAME + " = ?";
+	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_USUARIO + " WHERE " +  COL_ID + "= ? ";
+	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_USUARIO 
+			+ "( " 
+				+  COL_USERNAME +  ", " 
+				+ COL_PASSWORD +", " 
+				+ COL_ROL_ID + ", " 
+				+ COL_CUENTA_ACTIVA
+			+ " )"
+			+ " VALUES (?,?,?,?)";
+	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_USUARIO 
+			+ " SET " 
+				+  COL_USERNAME +  " = ?, "  
+				+  COL_PASSWORD +  " = ?, "  
+				+  COL_ROL_ID +  " = ?, "  
+				+  COL_CUENTA_ACTIVA +  " = ? "
+			+ "WHERE "
+				+ COL_USERNAME + " = ?" ;
 	
 	
 	@Override
@@ -226,6 +242,9 @@ public class UsuarioDao implements IUsuario {
 			log.info("::::[update]::::Valor -> 3::::Rol:::Value:::" + usuario.getRol().getDescripcion() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setBoolean(4, usuario.getCuentaActiva());
 			log.info("::::[update]::::Valor -> 4::::cuentaActiva:::Value:::" + usuario.getCuentaActiva() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(5, usuario.getUsername());
+			log.info("::::[update]::::Valor -> 5::::usuario:::Value:::" + usuario.getUsername() + "::::" + "Seteado CORRECTAMENTE:::");
+			
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");

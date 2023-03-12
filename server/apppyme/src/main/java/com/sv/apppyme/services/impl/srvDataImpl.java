@@ -21,8 +21,8 @@ import com.sv.apppyme.reports.dto.FormularioVinculacionDto;
 import com.sv.apppyme.reports.repository.IReportManagerJasper;
 import com.sv.apppyme.reports.repository.impl.srvReportManagerJasperimpl;
 import com.sv.apppyme.reports.utils.DocumentTypesToGenerated;
-import com.sv.apppyme.repository.IRol;
-import com.sv.apppyme.repository.IUsuario;
+import com.sv.apppyme.repository.IRepoRol;
+import com.sv.apppyme.repository.IRepoUsuario;
 import com.sv.apppyme.repository.impl.UsuarioDao;
 import com.sv.apppyme.services.IData;
 import com.sv.apppyme.services.ITokenOTP;
@@ -34,9 +34,9 @@ import com.sv.apppyme.utils.encriptacion.MD5;
 public class srvDataImpl implements IData {
 
 	@Autowired
-	IRol srvRolImpl;
+	IRepoRol srvRolImpl;
 	@Autowired
-	IUsuario srvUsuarioImpl;
+	IRepoUsuario srvUsuarioImpl;
 	@Autowired
 	ObjectMapper mapper;
 	
