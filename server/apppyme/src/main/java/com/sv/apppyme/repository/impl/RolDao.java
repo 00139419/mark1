@@ -39,7 +39,7 @@ public class RolDao implements IRepoRol {
 		log.info("::::[Incio]::::[getAll]::::Iniciando implementacion del DAO para los roles::::");
 		Rol rol;
 		List<Rol> ls = new ArrayList<>();
-		GenericEntityResponse<List<Rol>> resEntity = new GenericEntityResponse<>();
+		GenericEntityResponse<List<Rol>> res = new GenericEntityResponse<>();
 		Connection conn;
 		PreparedStatement stmt;
 		ResultSet rs;
@@ -66,9 +66,9 @@ public class RolDao implements IRepoRol {
 			conn.close();
 			log.info("::::[getAll]::::Conexion CERRADO correctamente::::");
 			log.info("::::[getAll]::::Enviando repsuesta del implementacion del DAO::::");
-			resEntity.setCodigo(Constantes.SUCCES);
-			resEntity.setMensaje(Constantes.OK);
-			resEntity.setListaEntity(ls);
+			res.setCodigo(Constantes.SUCCES);
+			res.setMensaje(Constantes.OK);
+			res.setListaEntity(ls);
 		} catch (SQLException e) {
 			log.info("::::[ERROR]::::[getAll]::::Error de SQL en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[getAll]::::Mensaje::::" + e.getMessage() + "::::");
@@ -77,8 +77,8 @@ public class RolDao implements IRepoRol {
 			e.printStackTrace();
 			log.info("--------------------------------------------");
 			log.info("::::[ERROR]::::[getAll]::::Enviando repsuesta del implementacion del DAO::::");
-			resEntity.setCodigo(Constantes.ERROR);
-			resEntity.setMensaje(e.getMessage());
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
 		} catch (Exception e) {
 			log.info("::::[ERROR]::::[getAll]::::Error de generico en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[getAll]::::Mensaje::::" + e.getMessage() + "::::");
@@ -87,17 +87,17 @@ public class RolDao implements IRepoRol {
 			e.printStackTrace();
 			log.info("--------------------------------------------");
 			log.info("::::[ERROR]::::[getAll]::::Enviando repsuesta del implementacion del DAO::::");
-			resEntity.setCodigo(Constantes.ERROR);
-			resEntity.setMensaje(e.getMessage());
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
 		}
 		log.info("::::[FIN]::::[getAll]::::Fin implementacion del DAO para los roles::::");
-		return resEntity;
+		return res;
 	}
 
 	@Override
 	public GenericEntityResponse<Rol> getOneByDescripcition(String descripcion) {
 		log.info("::::[Incio]::::[getOneByDescripcition]::::Iniciando implementacion del DAO para los roles::::");
-		GenericEntityResponse<Rol> resEntity = new GenericEntityResponse<>();
+		GenericEntityResponse<Rol> res = new GenericEntityResponse<>();
 		try {
 			Rol rol = new Rol();
 			Connection conn = ConexionPostgres.getConnecion();
@@ -123,9 +123,9 @@ public class RolDao implements IRepoRol {
 			conn.close();
 			log.info("::::[getOneByDescripcition]::::Conexion CERRADO correctamente::::");
 			log.info("::::[getOneByDescripcition]::::Enviando repsuesta del implementacion del DAO::::");
-			resEntity.setCodigo(Constantes.SUCCES);
-			resEntity.setMensaje(Constantes.OK);
-			resEntity.setEntity(rol);
+			res.setCodigo(Constantes.SUCCES);
+			res.setMensaje(Constantes.OK);
+			res.setEntity(rol);
 		} catch (SQLException e) {
 			log.info("::::[ERROR]::::[getOneByDescripcition]::::Error de SQL en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[getOneByDescripcition]::::Mensaje::::" + e.getMessage() + "::::");
@@ -134,8 +134,8 @@ public class RolDao implements IRepoRol {
 			e.printStackTrace();
 			log.info("--------------------------------------------");
 			log.info("::::[ERROR]::::[getRolByDescripcition]::::Enviando repsuesta del implementacion del DAO::::");
-			resEntity.setCodigo(Constantes.ERROR);
-			resEntity.setMensaje(e.getMessage());
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
 		} catch (Exception e) {
 			log.info("::::[ERROR]::::[getOneByDescripcition]::::Error de generico en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[getOneByDescripcition]::::Mensaje::::" + e.getMessage() + "::::");
@@ -144,16 +144,16 @@ public class RolDao implements IRepoRol {
 			e.printStackTrace();
 			log.info("--------------------------------------------");
 			log.info("::::[ERROR]::::[getOneByDescripcition]::::Enviando repsuesta del implementacion del DAO::::");
-			resEntity.setCodigo(Constantes.ERROR);
-			resEntity.setMensaje(e.getMessage());
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
 		}
-		return resEntity;
+		return res;
 	}
 
 	@Override
 	public GenericEntityResponse<Rol> getOneById(int id) {
 		log.info("::::[Incio]::::[getOneById]::::Iniciando implementacion del DAO para los roles::::");
-		GenericEntityResponse<Rol> resEntity = new GenericEntityResponse<>();
+		GenericEntityResponse<Rol> res = new GenericEntityResponse<>();
 		try {
 			Rol rol = new Rol();
 			Connection conn = ConexionPostgres.getConnecion();
@@ -179,9 +179,9 @@ public class RolDao implements IRepoRol {
 			conn.close();
 			log.info("::::[getOneById]::::Conexion CERRADO correctamente::::");
 			log.info("::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
-			resEntity.setCodigo(Constantes.SUCCES);
-			resEntity.setMensaje(Constantes.OK);
-			resEntity.setEntity(rol);
+			res.setCodigo(Constantes.SUCCES);
+			res.setMensaje(Constantes.OK);
+			res.setEntity(rol);
 		} catch (SQLException e) {
 			log.info("::::[ERROR]::::[getOneById]::::Error de SQL en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
@@ -190,8 +190,8 @@ public class RolDao implements IRepoRol {
 			e.printStackTrace();
 			log.info("--------------------------------------------");
 			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
-			resEntity.setCodigo(Constantes.ERROR);
-			resEntity.setMensaje(e.getMessage());
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
 		} catch (Exception e) {
 			log.info("::::[ERROR]::::[getOneById]::::Error de generico en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
@@ -200,10 +200,10 @@ public class RolDao implements IRepoRol {
 			e.printStackTrace();
 			log.info("--------------------------------------------");
 			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
-			resEntity.setCodigo(Constantes.ERROR);
-			resEntity.setMensaje(e.getMessage());
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
 		}
-		return resEntity;
+		return res;
 	}
 
 }

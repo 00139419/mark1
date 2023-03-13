@@ -15,6 +15,7 @@ import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.repository.IRepoUsuario;
 import com.sv.apppyme.utils.Constantes;
+import com.sv.apppyme.utils.Log4jUtils;
 
 @Service
 public class UsuarioDao implements IRepoUsuario {
@@ -53,11 +54,10 @@ public class UsuarioDao implements IRepoUsuario {
 			+ "WHERE "
 				+ COL_USERNAME + " = ?" ;
 	
-	
 	@Override
 	public SuperGenericResponse insert(Usuario usuario) {
 		log.info("::::[Incio]::::[insert]::::Iniciando implementacion del DAO para los usuarios::::");
-		SuperGenericResponse resDao = new SuperGenericResponse();
+		SuperGenericResponse res = new SuperGenericResponse();
 		try {
 			Connection con = ConexionPostgres.getConnecion();
 			log.info("::::[insert]::::Conexion CREADO correctamente::::");
@@ -77,8 +77,8 @@ public class UsuarioDao implements IRepoUsuario {
 			log.info("::::[insert]::::stmt ejecutado correctamente::::");
 			log.info("::::[insert]::::Interpretando Data recibida::::");
 			if(resultado < 0) {
-				resDao.setCodigo(Constantes.SUCCES);
-				resDao.setMensaje(Constantes.OK);
+				res.setCodigo(Constantes.SUCCES);
+				res.setMensaje(Constantes.OK);
 				log.info("::::[insert]::::Se crearon " + resultado + " nuevos usuarios\"::::");
 				log.info("::::[insert]::::Enviando repsuesta del implementacion del DAO::::");
 			}
@@ -93,28 +93,28 @@ public class UsuarioDao implements IRepoUsuario {
 			log.info("::::[ERROR]::::[insert]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[insert]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
-			e.printStackTrace();
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
-			resDao.setCodigo(Constantes.ERROR);
-			resDao.setMensaje(Constantes.FAIL);
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(Constantes.FAIL);
 		} catch (Exception e) {
 			log.info("::::[ERROR]::::[insert]::::Error Generico en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[insert]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[insert]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
-			e.printStackTrace();
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
-			resDao.setCodigo(Constantes.ERROR);
-			resDao.setMensaje(Constantes.FAIL);
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(Constantes.FAIL);
 		}
 		log.info("::::[FIN]::::[insertar]::::Fin implementacion del DAO para los roles::::");
-		return resDao;
+		return res;
 	}
 
 	@Override
 	public GenericEntityResponse<Usuario> getOneByUsername(String username) {
 		log.info("::::[Incio]::::[getOneByUsername]::::Iniciando implementacion del DAO para los usuarios::::");
-		GenericEntityResponse<Usuario> resEntity = new GenericEntityResponse<>();
+		GenericEntityResponse<Usuario> res = new GenericEntityResponse<>();
 		try {
 			Usuario usuario = null;
 			Connection conn = ConexionPostgres.getConnecion();
@@ -143,35 +143,35 @@ public class UsuarioDao implements IRepoUsuario {
 			conn.close();
 			log.info("::::[getOneByUsername]::::Conexion CERRADO correctamente::::");
 			log.info("::::[getOneByUsername]::::Enviando repsuesta del implementacion del DAO::::");
-			resEntity.setCodigo(Constantes.SUCCES);
-			resEntity.setMensaje(Constantes.OK);
-			resEntity.setEntity(usuario);
+			res.setCodigo(Constantes.SUCCES);
+			res.setMensaje(Constantes.OK);
+			res.setEntity(usuario);
 		} catch (SQLException e) {
 			log.info("::::[ERROR]::::[getOneByUsername]::::Error Generico en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[getOneByUsername]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[getOneByUsername]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
-			e.printStackTrace();
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
-			resEntity.setCodigo(Constantes.ERROR);
-			resEntity.setMensaje(e.getMessage());
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
 		} catch (Exception e) {
 			log.info("::::[ERROR]::::[getOneByUsername]::::Error Generico en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[getOneByUsername]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[getOneByUsername]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
-			e.printStackTrace();
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
-			resEntity.setCodigo(Constantes.ERROR);
-			resEntity.setMensaje(e.getMessage());
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
 		}
-		return resEntity;
+		return res;
 	}
 
 	@Override
 	public GenericEntityResponse<Usuario> getOneById(int id) {
 		log.info("::::[Incio]::::[getOneById]::::Iniciando implementacion del DAO para los usuarios::::");
-		GenericEntityResponse<Usuario> resEntity = new GenericEntityResponse<>();
+		GenericEntityResponse<Usuario> res = new GenericEntityResponse<>();
 		try {
 			Usuario usuario = null;
 			Connection conn = ConexionPostgres.getConnecion();
@@ -199,35 +199,35 @@ public class UsuarioDao implements IRepoUsuario {
 			conn.close();
 			log.info("::::[getOneById]::::Conexion CERRADO correctamente::::");
 			log.info("::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
-			resEntity.setCodigo(Constantes.SUCCES);
-			resEntity.setMensaje(Constantes.OK);
-			resEntity.setEntity(usuario);
+			res.setCodigo(Constantes.SUCCES);
+			res.setMensaje(Constantes.OK);
+			res.setEntity(usuario);
 		} catch (SQLException e) {
 			log.info("::::[ERROR]::::[getOneById]::::Error Generico en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
-			e.printStackTrace();
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
-			resEntity.setCodigo(Constantes.ERROR);
-			resEntity.setMensaje(e.getMessage());
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
 		} catch (Exception e) {
 			log.info("::::[ERROR]::::[getOneById]::::Error Generico en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
-			e.printStackTrace();
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
-			resEntity.setCodigo(Constantes.ERROR);
-			resEntity.setMensaje(e.getMessage());
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
 		}
-		return resEntity;
+		return res;
 	}
 
 	@Override
 	public SuperGenericResponse update(Usuario usuario) {
 		log.info("::::[Incio]::::[update]::::Iniciando implementacion del DAO para los usuarios::::");
-		SuperGenericResponse resDao = new SuperGenericResponse();
+		SuperGenericResponse res = new SuperGenericResponse();
 		try {
 			Connection con = ConexionPostgres.getConnecion();
 			log.info("::::[update]::::Conexion CREADO correctamente::::");
@@ -250,8 +250,8 @@ public class UsuarioDao implements IRepoUsuario {
 			log.info("::::[update]::::stmt ejecutado correctamente::::");
 			log.info("::::[update]::::Interpretando Data recibida::::");
 			if(resultado < 0) {
-				resDao.setCodigo(Constantes.SUCCES);
-				resDao.setMensaje(Constantes.OK);
+				res.setCodigo(Constantes.SUCCES);
+				res.setMensaje(Constantes.OK);
 				log.info("::::[update]::::Se crearon " + resultado + " nuevos usuarios\"::::");
 				log.info("::::[update]::::Enviando repsuesta del implementacion del DAO::::");
 			}
@@ -266,22 +266,22 @@ public class UsuarioDao implements IRepoUsuario {
 			log.info("::::[ERROR]::::[update]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[update]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
-			e.printStackTrace();
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
-			resDao.setCodigo(Constantes.ERROR);
-			resDao.setMensaje(Constantes.FAIL);
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(Constantes.FAIL);
 		} catch (Exception e) {
 			log.info("::::[ERROR]::::[update]::::Error Generico en la implementacion del DAO Rol::::");
 			log.info("::::[ERROR]::::[update]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[update]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
-			e.printStackTrace();
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
-			resDao.setCodigo(Constantes.ERROR);
-			resDao.setMensaje(Constantes.FAIL);
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(Constantes.FAIL);
 		}
 		log.info("::::[FIN]::::[update]::::Fin implementacion del DAO para los roles::::");
-		return resDao;
+		return res;
 	}
 	
 	
