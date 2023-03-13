@@ -6,8 +6,8 @@ import com.sv.apppyme.entities.Usuario;
 
 public interface IRepoUsuario {
 
-	SuperGenericResponse insertar(Usuario usuario); 
-	GenericEntityResponse<Usuario> selectByUsername(String username);
-	GenericEntityResponse<Usuario> selectById(int id);
+	SuperGenericResponse insert(Usuario usuario); 
+	GenericEntityResponse<Usuario> getOneByUsername(String username);
+	GenericEntityResponse<Usuario> getOneById(int id);
 	SuperGenericResponse update(Usuario usuario);
 }

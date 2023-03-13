@@ -95,41 +95,41 @@ public class RolDao implements IRepoRol {
 	}
 
 	@Override
-	public GenericEntityResponse<Rol> getRolByDescripcition(String descripcion) {
-		log.info("::::[Incio]::::[getRolByDescripcition]::::Iniciando implementacion del DAO para los roles::::");
+	public GenericEntityResponse<Rol> getOneByDescripcition(String descripcion) {
+		log.info("::::[Incio]::::[getOneByDescripcition]::::Iniciando implementacion del DAO para los roles::::");
 		GenericEntityResponse<Rol> resEntity = new GenericEntityResponse<>();
 		try {
 			Rol rol = new Rol();
 			Connection conn = ConexionPostgres.getConnecion();
-			log.info("::::[getRolByDescripcition]::::Conexion CREADO correctamente::::");
+			log.info("::::[getOneByDescripcition]::::Conexion CREADO correctamente::::");
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_DESCRIPCION);
-			log.info("::::[getRolByDescripcition]::::PreparedStatment CREADO correctamente::::");
-			log.info("::::[getRolByDescripcition]::::Seteando datos al PreparedStatment::::");
-			log.info("::::[getRolById]:::SQL generado:::" + stmt.toString() + "::::");
+			log.info("::::[getOneByDescripcition]::::PreparedStatment CREADO correctamente::::");
+			log.info("::::[getOneByDescripcition]::::Seteando datos al PreparedStatment::::");
+			log.info("::::[getOneByDescripcition]:::SQL generado:::" + stmt.toString() + "::::");
 			stmt.setString(1, descripcion);
-			log.info("::::[getRolByDescripcition]::::Valor -> 1::::descripcion:::Value:::" + descripcion + "Seteado CORRECTAMENTE:::");
+			log.info("::::[getOneByDescripcition]::::Valor ____________________ 1::::descripcion:::Value:::" + descripcion + "Seteado CORRECTAMENTE:::");
 			ResultSet rs = ConexionPostgres.executeQuery(stmt);
-			log.info("::::[getRolByDescripcition]::::ResultSet CREADO correctamente::::");
-			log.info("::::[getRolByDescripcition]::::Interpretando Data recibida::::");
+			log.info("::::[getOneByDescripcition]::::ResultSet CREADO correctamente::::");
+			log.info("::::[getOneByDescripcition]::::Interpretando Data recibida::::");
 			while(rs.next()) {
 				rol.setId(rs.getInt(COL_ID));
 				rol.setDescripcion(rs.getString(COL_DESCRIPCION));
 			}
-			log.info("::::[getRolByDescripcition]::::Fin interpretando Data recibida::::");
+			log.info("::::[getOneByDescripcition]::::Fin interpretando Data recibida::::");
 			rs.close();
-			log.info("::::[getRolByDescripcition]::::ResultSet CERRADO correctamente::::");
+			log.info("::::[getOneByDescripcition]::::ResultSet CERRADO correctamente::::");
 			stmt.close();
-			log.info("::::[getRolById]::::PreparedStatement CERRADO correctamente::::");
+			log.info("::::[getOneByDescripcition]::::PreparedStatement CERRADO correctamente::::");
 			conn.close();
-			log.info("::::[getRolByDescripcition]::::Conexion CERRADO correctamente::::");
-			log.info("::::[getRolByDescripcition]::::Enviando repsuesta del implementacion del DAO::::");
+			log.info("::::[getOneByDescripcition]::::Conexion CERRADO correctamente::::");
+			log.info("::::[getOneByDescripcition]::::Enviando repsuesta del implementacion del DAO::::");
 			resEntity.setCodigo(Constantes.SUCCES);
 			resEntity.setMensaje(Constantes.OK);
 			resEntity.setEntity(rol);
 		} catch (SQLException e) {
-			log.info("::::[ERROR]::::[getRolByDescripcition]::::Error de SQL en la implementacion del DAO Rol::::");
-			log.info("::::[ERROR]::::[getRolByDescripcition]::::Mensaje::::" + e.getMessage() + "::::");
-			log.info("::::[ERROR]::::[getRolByDescripcition]::::Imprimiendo stacktrace::::");
+			log.info("::::[ERROR]::::[getOneByDescripcition]::::Error de SQL en la implementacion del DAO Rol::::");
+			log.info("::::[ERROR]::::[getOneByDescripcition]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getOneByDescripcition]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
 			e.printStackTrace();
 			log.info("--------------------------------------------");
@@ -137,13 +137,13 @@ public class RolDao implements IRepoRol {
 			resEntity.setCodigo(Constantes.ERROR);
 			resEntity.setMensaje(e.getMessage());
 		} catch (Exception e) {
-			log.info("::::[ERROR]::::[getRolByDescripcition]::::Error de generico en la implementacion del DAO Rol::::");
-			log.info("::::[ERROR]::::[getRolByDescripcition]::::Mensaje::::" + e.getMessage() + "::::");
-			log.info("::::[ERROR]::::[getRolByDescripcition]::::Imprimiendo stacktrace::::");
+			log.info("::::[ERROR]::::[getOneByDescripcition]::::Error de generico en la implementacion del DAO Rol::::");
+			log.info("::::[ERROR]::::[getOneByDescripcition]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getOneByDescripcition]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
 			e.printStackTrace();
 			log.info("--------------------------------------------");
-			log.info("::::[ERROR]::::[getRolByDescripcition]::::Enviando repsuesta del implementacion del DAO::::");
+			log.info("::::[ERROR]::::[getOneByDescripcition]::::Enviando repsuesta del implementacion del DAO::::");
 			resEntity.setCodigo(Constantes.ERROR);
 			resEntity.setMensaje(e.getMessage());
 		}
@@ -151,55 +151,55 @@ public class RolDao implements IRepoRol {
 	}
 
 	@Override
-	public GenericEntityResponse<Rol> getRolById(int id) {
-		log.info("::::[Incio]::::[getRolById]::::Iniciando implementacion del DAO para los roles::::");
+	public GenericEntityResponse<Rol> getOneById(int id) {
+		log.info("::::[Incio]::::[getOneById]::::Iniciando implementacion del DAO para los roles::::");
 		GenericEntityResponse<Rol> resEntity = new GenericEntityResponse<>();
 		try {
 			Rol rol = new Rol();
 			Connection conn = ConexionPostgres.getConnecion();
-			log.info("::::[getRolByDescripcition]::::Conexion CREADO correctamente::::");
+			log.info("::::[getOneById]::::Conexion CREADO correctamente::::");
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_ID);
-			log.info("::::[getRolById]::::PreparedStatment CREADO correctamente::::");
-			log.info("::::[getRolById]::::Seteando datos al PreparedStatment::::");
+			log.info("::::[getOneById]::::PreparedStatment CREADO correctamente::::");
+			log.info("::::[getOneById]::::Seteando datos al PreparedStatment::::");
 			stmt.setInt(1, id);
-			log.info("::::[getRolById]::::Valor -> 1::::descripcion:::Value:::" + id + "Seteado CORRECTAMENTE:::");
-			log.info("::::[getRolById]:::SQL generado:::" + stmt.toString() + "::::");
+			log.info("::::[getOneById]::::Valor ____________________ 1::::descripcion:::Value:::" + id + "Seteado CORRECTAMENTE:::");
+			log.info("::::[getOneById]:::SQL generado:::" + stmt.toString() + "::::");
 			ResultSet rs = ConexionPostgres.executeQuery(stmt);
-			log.info("::::[getRolById]::::ResultSet CREADO correctamente::::");
-			log.info("::::[getRolById]::::Interpretando Data recibida::::");
+			log.info("::::[getOneById]::::ResultSet CREADO correctamente::::");
+			log.info("::::[getOneById]::::Interpretando Data recibida::::");
 			while(rs.next()) {
 				rol.setId(rs.getInt(COL_ID));
 				rol.setDescripcion(rs.getString(COL_DESCRIPCION));
 			}
-			log.info("::::[getRolById]::::Fin interpretando Data recibida::::");
+			log.info("::::[getOneById]::::Fin interpretando Data recibida::::");
 			rs.close();
-			log.info("::::[getRolById]::::ResultSet CERRADO correctamente::::");
+			log.info("::::[getOneById]::::ResultSet CERRADO correctamente::::");
 			stmt.close();
-			log.info("::::[getRolById]::::PreparedStatement CERRADO correctamente::::");
+			log.info("::::[getOneById]::::PreparedStatement CERRADO correctamente::::");
 			conn.close();
-			log.info("::::[getRolById]::::Conexion CERRADO correctamente::::");
-			log.info("::::[getRolById]::::Enviando repsuesta del implementacion del DAO::::");
+			log.info("::::[getOneById]::::Conexion CERRADO correctamente::::");
+			log.info("::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
 			resEntity.setCodigo(Constantes.SUCCES);
 			resEntity.setMensaje(Constantes.OK);
 			resEntity.setEntity(rol);
 		} catch (SQLException e) {
-			log.info("::::[ERROR]::::[getRolById]::::Error de SQL en la implementacion del DAO Rol::::");
-			log.info("::::[ERROR]::::[getRolById]::::Mensaje::::" + e.getMessage() + "::::");
-			log.info("::::[ERROR]::::[getRolById]::::Imprimiendo stacktrace::::");
+			log.info("::::[ERROR]::::[getOneById]::::Error de SQL en la implementacion del DAO Rol::::");
+			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
 			e.printStackTrace();
 			log.info("--------------------------------------------");
-			log.info("::::[ERROR]::::[getRolByDescripcition]::::Enviando repsuesta del implementacion del DAO::::");
+			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
 			resEntity.setCodigo(Constantes.ERROR);
 			resEntity.setMensaje(e.getMessage());
 		} catch (Exception e) {
-			log.info("::::[ERROR]::::[getRolById]::::Error de generico en la implementacion del DAO Rol::::");
-			log.info("::::[ERROR]::::[getRolById]::::Mensaje::::" + e.getMessage() + "::::");
-			log.info("::::[ERROR]::::[getRolById]::::Imprimiendo stacktrace::::");
+			log.info("::::[ERROR]::::[getOneById]::::Error de generico en la implementacion del DAO Rol::::");
+			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
 			e.printStackTrace();
 			log.info("--------------------------------------------");
-			log.info("::::[ERROR]::::[getRolById]::::Enviando repsuesta del implementacion del DAO::::");
+			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
 			resEntity.setCodigo(Constantes.ERROR);
 			resEntity.setMensaje(e.getMessage());
 		}

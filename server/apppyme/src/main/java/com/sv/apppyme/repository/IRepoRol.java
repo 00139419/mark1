@@ -8,7 +8,7 @@ import com.sv.apppyme.entities.Rol;
 public interface IRepoRol {
 	
 	GenericEntityResponse<List<Rol>> getAll();
-	GenericEntityResponse<Rol> getRolByDescripcition(String descripcion);
-	GenericEntityResponse<Rol> getRolById(int id);
+	GenericEntityResponse<Rol> getOneByDescripcition(String descripcion);
+	GenericEntityResponse<Rol> getOneById(int id);
 
 }

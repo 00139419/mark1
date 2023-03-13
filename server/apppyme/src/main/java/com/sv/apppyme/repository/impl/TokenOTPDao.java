@@ -77,7 +77,7 @@ public class TokenOTPDao implements IRepoTokenOTP {
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_TOKEN);
 			log.info("::::[verificarTokenOTP]::::PreparedStatment creado correctamente::::");
 			stmt.setString(1, numero);
-			log.info("::::[verificarTokenOTP]::::Valor -> 1::::token:::Value:::" + numero
+			log.info("::::[verificarTokenOTP]::::Valor ____________________ 1::::token:::Value:::" + numero
 					+ "::::Seteado CORRECTAMENTE::::");
 			log.info("::::[verificarTokenOTP]:::SQL generado:::" + stmt.toString() + "::::");
 			ResultSet rs = ConexionPostgres.executeQuery(stmt);
@@ -132,24 +132,24 @@ public class TokenOTPDao implements IRepoTokenOTP {
 
 			log.info("::::[insert]::::PreparedStatment creado correctamente::::");
 			stmt.setInt(1, tokenOTP.getUsuario().getId());
-			log.info("::::[insert]::::Valor -> 1::::token:::Value:::" + tokenOTP.getUsuario().getId()
+			log.info("::::[insert]::::Valor ____________________ 1::::token:::Value:::" + tokenOTP.getUsuario().getId()
 					+ "Seteado CORRECTAMENTE::::");
 			stmt.setString(2, tokenOTP.getToken());
-			log.info("::::[insert]::::Valor -> 2::::token:::Value:::" + tokenOTP.getToken()
+			log.info("::::[insert]::::Valor ____________________ 2::::token:::Value:::" + tokenOTP.getToken()
 					+ "Seteado CORRECTAMENTE::::");
 			stmt.setDate(3, DateUtils.convertirDateJavaToDateSQL(tokenOTP.getFechaDeCreacion()));
-			log.info("::::[insert]::::Valor -> 3::::token:::Value:::"
+			log.info("::::[insert]::::Valor ____________________ 3::::token:::Value:::"
 					+ DateUtils.convertirDateJavaToDateSQL(tokenOTP.getFechaDeCreacion())
 					+ "Seteado CORRECTAMENTE::::");
 			stmt.setDate(4, DateUtils.convertirDateJavaToDateSQL(tokenOTP.getFechaDeVencimiento()));
-			log.info("::::[insert]::::Valor -> 4::::token:::Value:::"
+			log.info("::::[insert]::::Valor ____________________ 4::::token:::Value:::"
 					+ DateUtils.convertirDateJavaToDateSQL(tokenOTP.getFechaDeVencimiento())
 					+ "Seteado CORRECTAMENTE::::");
 			stmt.setBoolean(5, tokenOTP.getEsValido());
-			log.info("::::[insert]::::Valor -> 5::::token:::Value:::" + tokenOTP.getEsValido()
+			log.info("::::[insert]::::Valor ____________________ 5::::token:::Value:::" + tokenOTP.getEsValido()
 					+ "Seteado CORRECTAMENTE::::");
 			stmt.setBoolean(6, tokenOTP.getEstaVerificado());
-			log.info("::::[insert]::::Valor -> 6::::token:::Value:::" + tokenOTP.getEstaVerificado()
+			log.info("::::[insert]::::Valor ____________________ 6::::token:::Value:::" + tokenOTP.getEstaVerificado()
 					+ "Seteado CORRECTAMENTE::::");
 			log.info("::::[insert]:::SQL generado:::" + stmt.toString() + "::::");
 
@@ -183,27 +183,27 @@ public class TokenOTPDao implements IRepoTokenOTP {
 
 			log.info("::::[update]::::PreparedStatment creado correctamente::::");
 			stmt.setInt(1, tokenOTP.getUsuario().getId());
-			log.info("::::[update]::::Valor -> 1::::token:::Value:::" + tokenOTP.getUsuario().getId()
+			log.info("::::[update]::::Valor ____________________ 1::::token:::Value:::" + tokenOTP.getUsuario().getId()
 					+ "Seteado CORRECTAMENTE::::");
 			stmt.setString(2, tokenOTP.getToken());
-			log.info("::::[update]::::Valor -> 2::::token:::Value:::" + tokenOTP.getToken()
+			log.info("::::[update]::::Valor ____________________ 2::::token:::Value:::" + tokenOTP.getToken()
 					+ "Seteado CORRECTAMENTE::::");
 			stmt.setDate(3, DateUtils.convertirDateJavaToDateSQL(tokenOTP.getFechaDeCreacion()));
-			log.info("::::[numeroExiste]::::Valor -> 3::::token:::Value:::"
+			log.info("::::[numeroExiste]::::____________________ 3::::token:::Value:::"
 					+ DateUtils.convertirDateJavaToDateSQL(tokenOTP.getFechaDeCreacion())
 					+ "Seteado CORRECTAMENTE::::");
 			stmt.setDate(4, DateUtils.convertirDateJavaToDateSQL(tokenOTP.getFechaDeVencimiento()));
-			log.info("::::[update]::::Valor -> 4::::token:::Value:::"
+			log.info("::::[update]::::Valor ____________________ 4::::token:::Value:::"
 					+ DateUtils.convertirDateJavaToDateSQL(tokenOTP.getFechaDeVencimiento())
 					+ "Seteado CORRECTAMENTE::::");
 			stmt.setBoolean(5, tokenOTP.getEsValido());
-			log.info("::::[update]::::Valor -> 5::::token:::Value:::" + tokenOTP.getEsValido()
+			log.info("::::[update]::::Valor ____________________ 5::::token:::Value:::" + tokenOTP.getEsValido()
 					+ "Seteado CORRECTAMENTE::::");
 			stmt.setBoolean(6, tokenOTP.getEstaVerificado());
-			log.info("::::[update]::::Valor -> 6::::token:::Value:::" + tokenOTP.getEstaVerificado()
+			log.info("::::[update]::::Valor ____________________ 6::::token:::Value:::" + tokenOTP.getEstaVerificado()
 					+ "Seteado CORRECTAMENTE::::");
 			stmt.setInt(7, tokenOTP.getId());
-			log.info("::::[update]::::Valor -> 7::::ID:::Value:::" + tokenOTP.getId()
+			log.info("::::[update]::::Valor ____________________ 7::::ID:::Value:::" + tokenOTP.getId()
 					+ "Seteado CORRECTAMENTE::::");log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 
 			int resultado = ConexionPostgres.updateQuery(stmt);
@@ -301,7 +301,7 @@ public class TokenOTPDao implements IRepoTokenOTP {
 
 			log.info("::::[delete]::::PreparedStatment creado correctamente::::");
 			stmt.setInt(1, tokenOTP.getId());
-			log.info("::::[delete]::::Valor -> 1::::token:::Value:::" + tokenOTP.getId()
+			log.info("::::[delete]::::Valor ____________________ 1::::token:::Value:::" + tokenOTP.getId()
 					+ "Seteado CORRECTAMENTE::::");
 			
 			log.info("::::[delete]:::SQL generado:::" + stmt.toString() + "::::");

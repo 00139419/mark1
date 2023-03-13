@@ -109,10 +109,10 @@ public class srvDataImpl implements IData {
 			//obteniendo el codigo del rol del usuario
 			log.info("::::[insertarUsuario]:::llamando servicio para obtener los roles::::");
 			if (userInfo.getRol() != null)
-				resObtenerRol = srvRolImpl.getRolByDescripcition(userInfo.getRol());
+				resObtenerRol = srvRolImpl.getOneByDescripcition(userInfo.getRol());
 			
 			if (userInfo.getRol() == null)
-				resObtenerRol = srvRolImpl.getRolByDescripcition(Constantes.ROL_USER);
+				resObtenerRol = srvRolImpl.getOneByDescripcition(Constantes.ROL_USER);
 			
 			log.info("::::[insertarUsuario]:::Respuesta obtenida del DAO::::");
 			log.info("::::[insertarUsuario]:::codigo::::" + resObtenerRol.getCodigo() + "::::");
@@ -133,7 +133,7 @@ public class srvDataImpl implements IData {
 			
 			//insertando al usuario en la base de datos, a traves del DAO
 			log.info("::::[insertarUsuario]:::Llamando al DAO para insertar usuario:::");
-			resServicio = srvUsuarioImpl.insertar(usuario);
+			resServicio = srvUsuarioImpl.insert(usuario);
 			
 			if (resServicio.getCodigo() != Constantes.SUCCES) {
 				log.info("::::[ERROR]::::[insertarUsuario]::::Error insertando el usuario::::" + usuario.toString() + "::::");
@@ -176,7 +176,7 @@ public class srvDataImpl implements IData {
 		GenericEntityResponse<Usuario> resServicio = new GenericEntityResponse<>();
 			log.info("::::[INICIO]::::[obtenerUsuarioByUsername]:::Inicinado implementacion del servicio para obtener usuario::::");
 			log.info("::::[obtenerUsuarioByUsername]:::Llamando al DAO para obetner usuario:::");
-			resServicio = srvUsuarioImpl.selectByUsername(userInfo.getUsername());
+			resServicio = srvUsuarioImpl.getOneByUsername(userInfo.getUsername());
 			log.info("::::[obtenerUsuarioByUsername]:::Respuesta obtenida del DAO::::");
 			log.info("::::[obtenerUsuarioByUsername]:::codigo::::" + resServicio.getCodigo() + "::::");
 			log.info("::::[obtenerUsuarioByUsername]:::mensaje::::" + resServicio.getMensaje() + "::::");
@@ -187,7 +187,7 @@ public class srvDataImpl implements IData {
 			
 			if(resServicio.getEntity() != null) {
 				log.info("::::[obtenerUsuarioByUsername]:::Llamando al DAO para ontener el rol:::");
-				GenericEntityResponse<Rol> rol = srvRolImpl.getRolById(resServicio.getEntity().getRol().getId());
+				GenericEntityResponse<Rol> rol = srvRolImpl.getOneById(resServicio.getEntity().getRol().getId());
 				log.info("::::[obtenerUsuarioByUsername]:::Respuesta obtenida del DAO::::");
 				log.info("::::[obtenerUsuarioByUsername]:::codigo::::" + rol.getCodigo() + "::::");
 				log.info("::::[obtenerUsuarioByUsername]:::mensaje::::" + rol.getMensaje() + "::::");
@@ -214,7 +214,7 @@ public class srvDataImpl implements IData {
 		log.info("::::[INICIO]::::[obtenerUsuarioByUsername]:::Iniciando servicio para verificar que la cuenta del usuario este activa::::");
 		
 		srvUsuarioImpl = new UsuarioDao();
-		Usuario user = srvUsuarioImpl.selectByUsername(username).getEntity();
+		Usuario user = srvUsuarioImpl.getOneByUsername(username).getEntity();
 		log.info("::::[obtenerUsuarioByUsername]:::Usuario encontrado::::value::::" + user.toString()  + "::::");
 		
 		if(user.getCuentaActiva()) {

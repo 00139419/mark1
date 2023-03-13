@@ -24,7 +24,7 @@ public class srvAuthUserDetailsServiceImpl implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		try {
-			Usuario userFound = userDao.selectByUsername(username).getEntity();
+			Usuario userFound = userDao.getOneByUsername(username).getEntity();
 			
 			if(userFound == null || userFound.getUsername().isBlank() || userFound.getUsername().isEmpty())
 				throw new SrvUsernameNotFoundException("Usuario no encontrado");

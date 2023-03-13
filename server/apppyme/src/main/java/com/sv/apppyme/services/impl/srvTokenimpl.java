@@ -50,10 +50,10 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 		
 		try {
 			if(usuario.getUsername() == null)
-				usuario = srvUser.selectByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getEntity();
+				usuario = srvUser.getOneByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getEntity();
 			
 			if(usuario.getUsername() !=  null)
-				usuario = srvUser.selectByUsername(usuario.getUsername()).getEntity();
+				usuario = srvUser.getOneByUsername(usuario.getUsername()).getEntity();
 		} catch (Exception e) {
 			throw new SrvValidacionException(Constantes.ERROR, "Usuario no encontrado");
 		}
@@ -115,7 +115,7 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 		if (res.getCodigo() == Constantes.SUCCES && !res.getListaEntity().isEmpty()) {
 			for (TokenOTP objeto : res.getListaEntity()) {
 				token = objeto;
-				user = srvUser.selectById(token.getUsuario().getId()).getEntity();
+				user = srvUser.getOneById(token.getUsuario().getId()).getEntity();
 				token.setUsuario(user);
 			}
 			log.info("::::[verificarExistenciaToken]::::Token existe);:::");
