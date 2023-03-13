@@ -270,7 +270,7 @@ public class DesarrolladoraDao implements IRepoDesarrolladora {
 			log.info("::::[getAll]::::Enviando repsuesta del implementacion del DAO::::");
 			res.setCodigo(Constantes.SUCCES);
 			res.setMensaje(Constantes.OK);
-			res.setListaEntity(ls);
+			res.setEntity(ls);
 		} catch (SQLException e) {
 			log.info("::::[ERROR]::::[getAll]::::Error de SQL en la implementacion del DAO::::");
 			log.info("::::[ERROR]::::[getAll]::::Mensaje::::" + e.getMessage() + "::::");

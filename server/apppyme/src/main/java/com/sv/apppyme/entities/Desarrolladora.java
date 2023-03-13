@@ -9,6 +9,11 @@ public class Desarrolladora {
 		super();
 	}
 
+	public Desarrolladora(int id) {
+		super();
+		this.id = id;
+	}
+
 	public Desarrolladora(int id, String nombre) {
 		super();
 		this.id = id;

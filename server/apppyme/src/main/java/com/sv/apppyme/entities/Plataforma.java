@@ -9,6 +9,11 @@ public class Plataforma {
 		super();
 	}
 
+	public Plataforma(int id) {
+		super();
+		this.id = id;
+	}
+
 	public Plataforma(int id, String nombre) {
 		super();
 		this.id = id;

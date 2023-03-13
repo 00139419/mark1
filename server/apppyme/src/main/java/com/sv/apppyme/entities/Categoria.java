@@ -8,6 +8,11 @@ public class Categoria {
 	public Categoria() {
 		super();
 	}
+	
+	public Categoria(int id) {
+		super();
+		this.id = id;
+	}
 
 	public Categoria(int id, String nombre) {
 		super();

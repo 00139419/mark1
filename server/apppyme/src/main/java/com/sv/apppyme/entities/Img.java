@@ -10,6 +10,11 @@ public class Img {
 		super();
 	}
 
+	public Img(int id) {
+		super();
+		this.id = id;
+	}
+
 	public Img(int id, String base64) {
 		super();
 		this.id = id;
