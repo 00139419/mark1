@@ -1,7 +1,6 @@
 package com.sv.apppyme.repository.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.sv.apppyme.conexciones.ConexionPostgres;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.entities.TokenOTP;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.repository.IRepoTokenOTP;
@@ -109,8 +107,7 @@ public class TokenOTPDao implements IRepoTokenOTP {
 			}
 			log.info("::::[verificarTokenOTP]::::Respuesta creada correctamente::::");
 		} catch (Exception e) {
-			log.info(
-					"::::[ERROR]::::[verificarTokenOTP]::::Error generico en la verificacion si existe ese tokenOTP::::");
+			log.info("::::[ERROR]::::[verificarTokenOTP]::::Error genericoen el DAO::::");
 			log.info("::::[ERROR]::::[verificarTokenOTP]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[update]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
@@ -163,9 +160,9 @@ public class TokenOTPDao implements IRepoTokenOTP {
 			res.setMensaje(Constantes.OK);
 			log.info("::::[insert]::::Respuesta creada correctamente::::");
 		} catch (Exception e) {
-			log.info("::::[ERROR]::::[insert]::::Error generico en insertar nuevo token::::");
+			log.info("::::[ERROR]::::[insert]::::Error generico en el DAO::::");
 			log.info("::::[ERROR]::::[insert]::::Mensaje::::" + e.getMessage() + "::::");
-			log.info("::::[ERROR]::::[update]::::Imprimiendo stacktrace::::");
+			log.info("::::[ERROR]::::[insert]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
 			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
@@ -173,7 +170,7 @@ public class TokenOTPDao implements IRepoTokenOTP {
 			res.setMensaje(Constantes.FAIL);
 		}
 
-		log.info("::::[FIN]::::[insertToken]::::Fin de DAO TokenOTP::::");
+		log.info("::::[FIN]::::[insert]::::Fin de DAO::::");
 		return res;
 	}
 
@@ -214,12 +211,12 @@ public class TokenOTPDao implements IRepoTokenOTP {
 
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::Datos guardado correctamente::::");
-			log.info("::::[update]::::Cantidad de datos guardados::::value::::" + resultado + "::::");
+			log.info("::::[update]::::Se modificaron " + resultado + " registros::::");
 			res.setCodigo(Constantes.SUCCES);
 			res.setMensaje(Constantes.OK);
 			log.info("::::[update]::::Respuesta creada correctamente::::");
 		} catch (Exception e) {
-			log.info("::::[ERROR]::::[update]::::Error generico en insertar nuevo token::::");
+			log.info("::::[ERROR]::::[update]::::Error generico en el DAO::::");
 			log.info("::::[ERROR]::::[update]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[update]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
@@ -229,13 +226,13 @@ public class TokenOTPDao implements IRepoTokenOTP {
 			res.setMensaje(Constantes.FAIL);
 		}
 
-		log.info("::::[FIN]::::[update]::::Fin de DAO TokenOTP::::");
+		log.info("::::[FIN]::::[update]::::Fin de DAO::::");
 		return res;
 	}
 
 	@Override
 	public GenericEntityResponse<List<TokenOTP>> getAll() {
-		log.info("::::[Incio]::::[getAll]::::Iniciando implementacion del DAO para los roles::::");
+		log.info("::::[Incio]::::[getAll]::::Iniciando implementacion del DAO::::");
 		TokenOTP token;
 		List<TokenOTP> ls = new ArrayList<>();
 		GenericEntityResponse<List<TokenOTP>> res = new GenericEntityResponse<>();
@@ -274,7 +271,7 @@ public class TokenOTPDao implements IRepoTokenOTP {
 			res.setMensaje(Constantes.OK);
 			res.setEntity(ls);
 		} catch (SQLException e) {
-			log.info("::::[ERROR]::::[getAll]::::Error de SQL en la implementacion del DAO Rol::::");
+			log.info("::::[ERROR]::::[getAll]::::Error de SQL en la implementacion del DAO::::");
 			log.info("::::[ERROR]::::[getAll]::::Mensaje::::" + e.getMessage() + "::::");
 			log.info("::::[ERROR]::::[update]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
@@ -284,9 +281,9 @@ public class TokenOTPDao implements IRepoTokenOTP {
 			res.setCodigo(Constantes.ERROR);
 			res.setMensaje(e.getMessage());
 		} catch (Exception e) {
-			log.info("::::[ERROR]::::[getAll]::::Error de generico en la implementacion del DAO Rol::::");
+			log.info("::::[ERROR]::::[getAll]::::Error de generico en la implementacion del DAO::::");
 			log.info("::::[ERROR]::::[getAll]::::Mensaje::::" + e.getMessage() + "::::");
-			log.info("::::[ERROR]::::[update]::::Imprimiendo stacktrace::::");
+			log.info("::::[ERROR]::::[getAll]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
 			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
@@ -294,13 +291,13 @@ public class TokenOTPDao implements IRepoTokenOTP {
 			res.setCodigo(Constantes.ERROR);
 			res.setMensaje(e.getMessage());
 		}
-		log.info("::::[FIN]::::[getAll]::::Fin implementacion del DAO para los roles::::");
+		log.info("::::[FIN]::::[getAll]::::Fin implementacion del DAO::::");
 		return res;
 	}
 
 	@Override
 	public SuperGenericResponse delete(TokenOTP tokenOTP) {
-		log.info("::::[INCIO]::::[delete]::::Incio de DAO TokenOTP::::");
+		log.info("::::[INCIO]::::[delete]::::Incio de DAO::::");
 		SuperGenericResponse res = new SuperGenericResponse(Constantes.ERROR, Constantes.FAIL);
 
 		try {
@@ -322,9 +319,9 @@ public class TokenOTPDao implements IRepoTokenOTP {
 			res.setMensaje(Constantes.OK);
 			log.info("::::[delete]::::Respuesta creada correctamente::::");
 		} catch (Exception e) {
-			log.info("::::[ERROR]::::[delete]::::Error generico en insertar nuevo token::::");
+			log.info("::::[ERROR]::::[delete]::::Error generico en el DAO::::");
 			log.info("::::[ERROR]::::[delete]::::Mensaje::::" + e.getMessage() + "::::");
-			log.info("::::[ERROR]::::[update]::::Imprimiendo stacktrace::::");
+			log.info("::::[ERROR]::::[delete]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
 			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
@@ -332,7 +329,7 @@ public class TokenOTPDao implements IRepoTokenOTP {
 			res.setMensaje(Constantes.FAIL);
 		}
 
-		log.info("::::[FIN]::::[insertToken]::::Fin de DAO TokenOTP::::");
+		log.info("::::[FIN]::::[delete]::::Fin de DAO::::");
 		return res;
 	}
 

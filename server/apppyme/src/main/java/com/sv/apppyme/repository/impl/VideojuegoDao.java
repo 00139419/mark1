@@ -29,7 +29,7 @@ public class VideojuegoDao implements IRepoVideojuego {
 	public static final String COL_DESCRIPCION = "descripcion";
 
 	// Consultas de la tabla
-	public static final String INSERT = "INSERT INTO " + DB_TABLA_VIDEOJUEGO
+	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_VIDEOJUEGO
 			+ "(" 
 				+ COL_NOMBRE + ", " 
 				+ COL_CATEGORIA + ", " 
@@ -43,15 +43,15 @@ public class VideojuegoDao implements IRepoVideojuego {
 				+ COL_DESCRIPCION 
 			+ ")"
 		+ " VALUES (?,?,?,?,?,?,?,?,?,?)";
-	public static final String SELECT = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO;
-	public static final String SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO + " WHERE " + COL_ID + " = ?";
-	public static final String UPDATE = "UPDATE " + DB_TABLA_VIDEOJUEGO 
+	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO;
+	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO + " WHERE " + COL_ID + " = ?";
+	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_VIDEOJUEGO 
 			+ " SET " 
 				+ COL_ID + " = ?, " 
 				+ COL_NOMBRE + " = ? "
 			+ "WHERE " 
 				+ COL_ID + " = ?";
-	public static final String DELETE = "DELETE FROM " + DB_TABLA_VIDEOJUEGO + " WHERE " + COL_ID + " = ?";
+	public static final String SQL_DELETE = "DELETE FROM " + DB_TABLA_VIDEOJUEGO + " WHERE " + COL_ID + " = ?";
 
 	@Override
 	public SuperGenericResponse insert(Videojuego videojuego) {
