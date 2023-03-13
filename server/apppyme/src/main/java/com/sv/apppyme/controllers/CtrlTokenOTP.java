@@ -15,7 +15,7 @@ import com.sv.apppyme.controllers.dto.ValidarTokenOTPDto;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
-import com.sv.apppyme.services.IData;
+import com.sv.apppyme.services.ISignUp;
 import com.sv.apppyme.services.ITokenOTP;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.ObjectMapperUtils;
@@ -27,7 +27,7 @@ public class CtrlTokenOTP {
 	Logger log = Logger.getLogger(getClass());
 	
 	@Autowired
-	IData srvDataImpl;
+	ISignUp srvDataImpl;
 	
 	@Autowired
 	ITokenOTP srvToken;
@@ -39,9 +39,9 @@ public class CtrlTokenOTP {
 		TokenDto res = new TokenDto();
 		try {
 			if(tokenInfo.getUsername() !=  null) {
-				res = srvToken.creaToken(new Usuario(tokenInfo.getUsername()));
+				res = srvToken.creaTokenOTP(new Usuario(tokenInfo.getUsername()));
 			}else {
-				res = srvToken.creaToken(new Usuario());
+				res = srvToken.creaTokenOTP(new Usuario());
 			}
 			log.info("::::[FIN]::::[crearTokenOTP]::::fin controlador de data::::");
 			return new ResponseEntity<TokenDto>(res, HttpStatus.OK);

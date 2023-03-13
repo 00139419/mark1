@@ -36,7 +36,7 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 	public static int EXP_TOKE_OTP_MILLIS = 1000 * 60 * 60 * 10000;
 
 	@Override
-	public TokenDto creaToken(Usuario usuario) throws SrvValidacionException {
+	public TokenDto creaTokenOTP(Usuario usuario) throws SrvValidacionException {
 		log.info("::::[Inicio]::::[creaToken]::::Iniciando servicio de crearToken::::");
 		log.info("::::[Inicio]::::[creaToken]::::Datos Recibidos::::value::::" + ObjectMapperUtils.ObjectToJsonString(usuario));
 		

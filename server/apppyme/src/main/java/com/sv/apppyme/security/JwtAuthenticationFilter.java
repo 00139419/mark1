@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
-import com.sv.apppyme.services.IData;
+import com.sv.apppyme.services.ISignUp;
 import com.sv.apppyme.services.ITokenOTP;
 import com.sv.apppyme.services.impl.srvDataImpl;
 import com.sv.apppyme.services.impl.srvTokenimpl;
@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	
 	TokenManager tokeManager;
 	
-	IData srvDaraImpl;
+	ISignUp srvDaraImpl;
 	
 	ITokenOTP srvTokenOTP;
 	

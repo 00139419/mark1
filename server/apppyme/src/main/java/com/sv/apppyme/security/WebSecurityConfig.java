@@ -44,7 +44,6 @@ public class WebSecurityConfig {
 				.requestMatchers(Constantes.ROOT_CTRL + "validar/tokenOTP").permitAll()
 				.requestMatchers(Constantes.ROOT_CTRL + "crear/tokenOTP").permitAll()
 				.requestMatchers(Constantes.ROOT_CTRL + "test").permitAll()
-				.requestMatchers("apppyme/api/srv/email/test").permitAll()
 				.anyRequest()
 				.authenticated()
 				.and()

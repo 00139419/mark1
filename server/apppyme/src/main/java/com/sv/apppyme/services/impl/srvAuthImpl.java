@@ -13,7 +13,7 @@ import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.IAuth;
-import com.sv.apppyme.services.IData;
+import com.sv.apppyme.services.ISignUp;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Mensajeria;
 import com.sv.apppyme.utils.TokenManager;
@@ -28,7 +28,7 @@ public class srvAuthImpl implements IAuth {
 	Logger log = Logger.getLogger(getClass());
 	
 	@Autowired
-	IData srvDataimpl;
+	ISignUp srvDataimpl;
 	
 	@Autowired
 	TokenManager tokenManager;
