@@ -46,7 +46,7 @@ public class srvTestTablasImpl implements ITestTablas {
 		// insertando en la base de datos
 		if (!insertCategoriaSuccess(aux))
 			throw new SrvValidacionException(Constantes.ERROR, "No se pudo insertar en la base de datos°!");
-
+		aux.setId(6);
 		// actualizando en la base de datos
 		if (!updateCategoriaSuccess(aux))
 			throw new SrvValidacionException(Constantes.ERROR, "No se pudo actualizar en la base de datos°!");
@@ -84,7 +84,6 @@ public class srvTestTablasImpl implements ITestTablas {
 	}
 
 	public boolean deleteCategoriaSuccess(Categoria aux) {
-		aux.setId(1);
 		return categoriaDao.delete(aux).getCodigo() == Constantes.SUCCES;
 	}
 

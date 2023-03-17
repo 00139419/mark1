@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.sv.apppyme.conexciones.ConexionPostgres;
@@ -17,7 +18,7 @@ import com.sv.apppyme.repository.IRepoUsuario;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Log4jUtils;
 
-@Service
+@Repository
 public class UsuarioDao implements IRepoUsuario {
 	
 	Logger log = Logger.getLogger(UsuarioDao.class);

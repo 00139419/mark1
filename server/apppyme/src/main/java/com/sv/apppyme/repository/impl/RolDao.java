@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.sv.apppyme.conexciones.ConexionPostgres;
@@ -16,7 +17,7 @@ import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.repository.IRepoRol;
 import com.sv.apppyme.utils.Constantes;
 
-@Service
+@Repository
 public class RolDao implements IRepoRol {
 	
 	//nombre de la tabla

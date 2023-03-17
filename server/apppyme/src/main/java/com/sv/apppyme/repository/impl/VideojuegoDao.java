@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.sv.apppyme.conexciones.ConexionPostgres;
@@ -23,7 +24,7 @@ import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.DateUtils;
 import com.sv.apppyme.utils.Log4jUtils;
 
-@Service
+@Repository
 public class VideojuegoDao implements IRepoVideojuego {
 
 	Logger log = Logger.getLogger(getClass());
