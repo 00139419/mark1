@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sv.apppyme.dto.SuperGenericResponse;
 
 public class ObjectMapperUtils {
 
