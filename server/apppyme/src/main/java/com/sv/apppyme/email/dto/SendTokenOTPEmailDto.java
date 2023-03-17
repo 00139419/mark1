@@ -2,9 +2,6 @@ package com.sv.apppyme.email.dto;
 
 import java.util.Date;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 public class SendTokenOTPEmailDto extends SendEmailDto{
 	private String token;
 	private Date expirationDate;

@@ -12,7 +12,7 @@ public class Log4jUtils {
 	public static String getStackTrace(Exception exception) {
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
-		e.printStackTrace(pw);
+		exception.printStackTrace(pw);
 		return sw.toString();
 	}
 

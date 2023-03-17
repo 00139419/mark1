@@ -6,8 +6,6 @@ import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.TokenOTP;
 
-import ch.qos.logback.core.subst.Token;
-
 public interface IRepoTokenOTP {
 	
 	

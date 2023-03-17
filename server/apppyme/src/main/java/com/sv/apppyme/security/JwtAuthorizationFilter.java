@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.sv.apppyme.repository.impl.UsuarioDao;
-import com.sv.apppyme.services.ITokenOTP;
 import com.sv.apppyme.services.impl.srvAuthUserDetailsServiceImpl;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.TokenManager;

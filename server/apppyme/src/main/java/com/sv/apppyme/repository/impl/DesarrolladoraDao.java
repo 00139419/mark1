@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import com.sv.apppyme.conexciones.ConexionPostgres;
 import com.sv.apppyme.dto.GenericEntityResponse;
@@ -17,6 +18,7 @@ import com.sv.apppyme.repository.IRepoDesarrolladora;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Log4jUtils;
 
+@Service
 public class DesarrolladoraDao implements IRepoDesarrolladora {
 
 	Logger log = Logger.getLogger(getClass());
@@ -160,9 +162,9 @@ public class DesarrolladoraDao implements IRepoDesarrolladora {
 			stmt.setInt(1, desarrolladora.getId());
 			log.info("::::[delete]::::Valor ____________________ 1::::categoria:::Value:::" + desarrolladora.getId() + "Seteado CORRECTAMENTE::::");
 			log.info("::::[delete]:::SQL generado:::" + stmt.toString() + "::::");
-			ResultSet rs = ConexionPostgres.executeQuery(stmt);
+			int rs = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[delete]::::Datos guardado correctamente::::");
-			log.info("::::[delete]::::Cantidad de datos eliminados::::value::::" + rs.getFetchSize() + "::::");
+			log.info("::::[delete]::::Cantidad de datos eliminados::::value::::" + rs + "::::");
 			res.setCodigo(Constantes.SUCCES);
 			res.setMensaje(Constantes.OK);
 			log.info("::::[delete]::::Respuesta creada correctamente::::");

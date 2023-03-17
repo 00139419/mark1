@@ -13,69 +13,72 @@ import org.springframework.stereotype.Service;
 import com.sv.apppyme.conexciones.ConexionPostgres;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Categoria;
-import com.sv.apppyme.entities.Desarrolladora;
-import com.sv.apppyme.entities.Img;
-import com.sv.apppyme.entities.Plataforma;
-import com.sv.apppyme.entities.Videojuego;
-import com.sv.apppyme.repository.IRepoVideojuego;
+import com.sv.apppyme.entities.Reporte;
+import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.repository.IRepoReporte;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.DateUtils;
 import com.sv.apppyme.utils.Log4jUtils;
 
 @Service
-public class VideojuegoDao implements IRepoVideojuego {
-
+public class ReporteDao implements IRepoReporte{
+	
 	Logger log = Logger.getLogger(getClass());
 
 	// Nombre de la tabla
-	public static final String DB_TABLA_VIDEOJUEGO = "videojuego";
-
+	public static final String DB_TABLA_REPORTE = "reporte";
+	
 	// Columnas de la tabla
 	public static final String COL_ID = "id";
+	public static final String COL_BASE64 = "base64";
+	public static final String COL_FECHA = "fecha";
 	public static final String COL_NOMBRE = "nombre";
-	public static final String COL_CATEGORIA = "categoria_id";
-	public static final String COL_PRECIO = "precio";
-	public static final String COL_FECHA_LANZAMIENTO = "fechalanzamiento";
-	public static final String COL_DESARROLLADORA = "desarrolladora_id";
-	public static final String COL_IMG = "img_id";
-	public static final String COL_CANTIDAD_DISPONIBLE = "cantidaddisponible";
-	public static final String COL_PLATAFORMA = "plataforma_id";
-	public static final String COL_DESCRIPCION = "descripcion";
-
+	public static final String COL_USER_ID = "user_id";
+	public static final String COL_TIPODOC = "tipodoc";
+	public static final String COL_NUMDOC = "numdoc";
+	public static final String COL_TOTAL = "total";
+	public static final String COL_TOTALREC = "totalrec";
+	public static final String COL_TOTALCAM = "totalcam";
+	public static final String COL_METPAG = "metpag";
+	public static final String COL_LV = "lv";
+	
 	// Consultas de la tabla
-	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_VIDEOJUEGO
+	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_REPORTE 
 			+ "(" 
-				+ COL_NOMBRE + ", " 
-				+ COL_CATEGORIA + ", " 
-				+ COL_PRECIO + ", " 
-				+ COL_FECHA_LANZAMIENTO + ", " 
-				+ COL_DESARROLLADORA + ", " 
-				+ COL_IMG + ", " 
-				+ COL_CANTIDAD_DISPONIBLE + ", "
-				+ COL_PLATAFORMA + ", " 
-				+ COL_DESCRIPCION 
+				+ COL_BASE64 + ", "
+				+ COL_FECHA + ", "
+				+ COL_NOMBRE + ", "
+				+ COL_USER_ID + ", "
+				+ COL_TIPODOC + ", "
+				+ COL_NUMDOC + ", "
+				+ COL_TOTAL + ", "
+				+ COL_TOTALREC + ", "
+				+ COL_TOTALCAM + ", "
+				+ COL_METPAG + ", "
+				+ COL_LV
 			+ ")"
-		+ " VALUES (?,?,?,?,?,?,?,?,?)";
-	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO;
-	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO + " WHERE " + COL_ID + " = ?";
-	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_VIDEOJUEGO 
-			+ " SET " 
-				+ COL_NOMBRE + " = ?, "
-				+ COL_CATEGORIA + " = ?, "
-				+ COL_PRECIO + " = ?, "
-				+ COL_FECHA_LANZAMIENTO + " = ?, "
-				+ COL_DESARROLLADORA + " = ?, "
-				+ COL_IMG + " = ?, "
-				+ COL_CANTIDAD_DISPONIBLE + " = ?, "
-				+ COL_PLATAFORMA + " = ?, "
-				+ COL_DESCRIPCION + " = ? "
-			+ "WHERE " 
-				+ COL_ID + " = ?";
-	public static final String SQL_DELETE = "DELETE FROM " + DB_TABLA_VIDEOJUEGO + " WHERE " + COL_ID + " = ?";
-
+			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_REPORTE;
+	public static final String SQL_DELETE = "DELETE FROM " + DB_TABLA_REPORTE + " WHERE " + COL_ID + " = ?";
+	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_REPORTE + " WHERE " + COL_ID + " = ?";
+	public static final String SQL_SELECT_BY_NUM_DOC = "SELECT * FROM " + DB_TABLA_REPORTE + " WHERE " + COL_NUMDOC + " = ?";
+	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_REPORTE
+			+ " SET "
+				+ COL_BASE64 + " = ?,"
+				+ COL_FECHA + " = ?,"
+				+ COL_NOMBRE + " = ?,"
+				+ COL_USER_ID + " = ?,"
+				+ COL_TIPODOC + " = ?,"
+				+ COL_NUMDOC + " = ?,"
+				+ COL_TOTAL + " = ?,"
+				+ COL_TOTALREC + " = ?,"
+				+ COL_TOTALCAM + " = ?,"
+				+ COL_METPAG + " = ?,"
+				+ COL_LV + " = ? "
+			+ "WHERE " + COL_ID + " = ?";
+	
 	@Override
-	public SuperGenericResponse insert(Videojuego videojuego) {
+	public SuperGenericResponse insert(Reporte reporte) {
 		log.info("::::[Incio]::::[insert]::::Iniciando implementacion del DAO::::");
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
@@ -84,24 +87,28 @@ public class VideojuegoDao implements IRepoVideojuego {
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, SQL_INSERT);
 			log.info("::::[insert]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[insert]:::: Seteando valores al PreparedStatment... ::::");
-			stmt.setString(1, videojuego.getNombre());
-			log.info("::::[insert]::::Valor ____________________ 1::::Nombre:::Value:::" + videojuego.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(2, videojuego.getCategoria().getId());
-			log.info("::::[insert]::::Valor ____________________ 2::::Categoria_id:::Value:::" + videojuego.getCategoria().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setFloat(3, (float) videojuego.getPrecio());
-			log.info("::::[insert]::::Valor ____________________ 3::::Precio:::Value:::" + videojuego.getPrecio() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setDate(4, DateUtils.convertirDateJavaToDateSQL(videojuego.getFechaDeLanzamiento()));
-			log.info("::::[insert]::::Valor ____________________ 4::::Fecha de lanzamiento:::Value:::" + DateUtils.convertirDateJavaToDateSQL(videojuego.getFechaDeLanzamiento()) + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(5, videojuego.getDesarrolladora().getId());
-			log.info("::::[insert]::::Valor ____________________ 5::::Desarrolladora_id:::Value:::" + videojuego.getDesarrolladora().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(6, videojuego.getImg().getId());
-			log.info("::::[insert]::::Valor ____________________ 6::::Img_id:::Value:::" + videojuego.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(7, videojuego.getCantidadDisponible());
-			log.info("::::[insert]::::Valor ____________________ 7::::Cantidad disponible:::Value:::" + videojuego.getCantidadDisponible() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(8, videojuego.getPlataforma().getId());
-			log.info("::::[insert]::::Valor ____________________ 8::::Plataforma_id:::Value:::" + videojuego.getPlataforma().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setString(9, videojuego.getDescripcion());
-			log.info("::::[insert]::::Valor ____________________ 9::::Descripcion:::Value:::" + videojuego.getDescripcion() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(1, reporte.getBase64());
+			log.info("::::[insert]::::Valor ____________________ 1::::base64:::Value:::" + reporte.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setDate(2, DateUtils.convertirDateJavaToDateSQL(reporte.getFecha()));
+			log.info("::::[insert]::::Valor ____________________ 2::::fecha:::Value:::" + DateUtils.convertirDateJavaToDateSQL(reporte.getFecha()) + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(3, reporte.getNombre());
+			log.info("::::[insert]::::Valor ____________________ 3::::nombre:::Value:::" + reporte.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(4, reporte.getUserId().getId());
+			log.info("::::[insert]::::Valor ____________________ 4::::user_id:::Value:::" + reporte.getUserId().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(5, reporte.getTipoDoc());
+			log.info("::::[insert]::::Valor ____________________ 5::::tipo documento:::Value:::" + reporte.getTipoDoc() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(6, reporte.getNumDoc());
+			log.info("::::[insert]::::Valor ____________________ 6::::numero documento:::Value:::" + reporte.getNumDoc() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setDouble(7, reporte.getTotal());
+			log.info("::::[insert]::::Valor ____________________ 7::::total:::Value:::" + reporte.getTotal() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setDouble(8, reporte.getTotalrec());
+			log.info("::::[insert]::::Valor ____________________ 8::::total dinero recibido:::Value:::" + reporte.getTotalrec() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setDouble(9, reporte.getTotalcam());
+			log.info("::::[insert]::::Valor ____________________ 9::::total dinero cambio:::Value:::" + reporte.getTotalcam() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(10, reporte.getMetpag());
+			log.info("::::[insert]::::Valor ____________________ 10::::metodo de pago:::Value:::" + reporte.getMetpag() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(11, reporte.getLv());
+			log.info("::::[insert]::::Valor ____________________ 11::::lv:::Value:::" + reporte.getLv() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[insert]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[insert]::::stmt ejecutado correctamente::::");
@@ -109,7 +116,7 @@ public class VideojuegoDao implements IRepoVideojuego {
 			if(resultado < 0) {
 				res.setCodigo(Constantes.SUCCES);
 				res.setMensaje(Constantes.OK);
-				log.info("::::[insert]::::Se crearon " + resultado + " nuevos registros\"::::");
+				log.info("::::[insert]::::Se crearon " + resultado + " nuevos registros::::");
 			}
 			log.info("::::[insert]::::Fin interpretando Data recibida::::");
 			stmt.close();
@@ -141,7 +148,7 @@ public class VideojuegoDao implements IRepoVideojuego {
 	}
 
 	@Override
-	public SuperGenericResponse update(Videojuego videojuego) {
+	public SuperGenericResponse update(Reporte reporte) {
 		log.info("::::[Incio]::::[update]::::Iniciando implementacion del DAO::::");
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
@@ -150,26 +157,30 @@ public class VideojuegoDao implements IRepoVideojuego {
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, SQL_UPDATE);
 			log.info("::::[update]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[update]:::: Seteando valores al PreparedStatment... ::::");
-			stmt.setString(1, videojuego.getNombre());
-			log.info("::::[insert]::::Valor ____________________ 1::::Nombre:::Value:::" + videojuego.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(2, videojuego.getCategoria().getId());
-			log.info("::::[insert]::::Valor ____________________ 2::::Categoria_id:::Value:::" + videojuego.getCategoria().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setDouble(3, videojuego.getPrecio());
-			log.info("::::[insert]::::Valor ____________________ 3::::Precio:::Value:::" + videojuego.getPrecio() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setDate(4, DateUtils.convertirDateJavaToDateSQL(videojuego.getFechaDeLanzamiento()));
-			log.info("::::[insert]::::Valor ____________________ 4::::Fecha de lanzamiento:::Value:::" + DateUtils.convertirDateJavaToDateSQL(videojuego.getFechaDeLanzamiento()) + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(5, videojuego.getDesarrolladora().getId());
-			log.info("::::[insert]::::Valor ____________________ 5::::Desarrolladora_id:::Value:::" + videojuego.getDesarrolladora().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(6, videojuego.getImg().getId());
-			log.info("::::[insert]::::Valor ____________________ 6::::Img_id:::Value:::" + videojuego.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(7, videojuego.getCantidadDisponible());
-			log.info("::::[insert]::::Valor ____________________ 7::::Cantidad disponible:::Value:::" + videojuego.getCantidadDisponible() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(8, videojuego.getPlataforma().getId());
-			log.info("::::[insert]::::Valor ____________________ 8::::Plataforma_id:::Value:::" + videojuego.getPlataforma().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setString(9, videojuego.getDescripcion());
-			log.info("::::[insert]::::Valor ____________________ 9::::Descripcion:::Value:::" + videojuego.getDescripcion() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(10, videojuego.getId());
-			log.info("::::[insert]::::Valor ____________________ 9::::Descripcion:::Value:::" + videojuego.getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(1, reporte.getBase64());
+			log.info("::::[insert]::::Valor ____________________ 1::::base64:::Value:::" + reporte.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setDate(2, DateUtils.convertirDateJavaToDateSQL(reporte.getFecha()));
+			log.info("::::[insert]::::Valor ____________________ 2::::fecha:::Value:::" + DateUtils.convertirDateJavaToDateSQL(reporte.getFecha()) + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(3, reporte.getNombre());
+			log.info("::::[insert]::::Valor ____________________ 3::::nombre:::Value:::" + reporte.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(4, reporte.getUserId().getId());
+			log.info("::::[insert]::::Valor ____________________ 4::::user_id:::Value:::" + reporte.getUserId().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(5, reporte.getTipoDoc());
+			log.info("::::[insert]::::Valor ____________________ 5::::tipo documento:::Value:::" + reporte.getTipoDoc() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(6, reporte.getNumDoc());
+			log.info("::::[insert]::::Valor ____________________ 6::::numero documento:::Value:::" + reporte.getNumDoc() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setDouble(7, reporte.getTotal());
+			log.info("::::[insert]::::Valor ____________________ 7::::total:::Value:::" + reporte.getTotal() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setDouble(8, reporte.getTotalrec());
+			log.info("::::[insert]::::Valor ____________________ 8::::total dinero recibido:::Value:::" + reporte.getTotalrec() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setDouble(9, reporte.getTotalcam());
+			log.info("::::[insert]::::Valor ____________________ 9::::total dinero cambio:::Value:::" + reporte.getTotalcam() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(10, reporte.getMetpag());
+			log.info("::::[insert]::::Valor ____________________ 10::::metodo de pago:::Value:::" + reporte.getMetpag() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(11, reporte.getLv());
+			log.info("::::[insert]::::Valor ____________________ 11::::lv:::Value:::" + reporte.getLv() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(12, reporte.getId());
+			log.info("::::[insert]::::Valor ____________________ 12::::Id:::Value:::" + reporte.getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");
@@ -210,7 +221,7 @@ public class VideojuegoDao implements IRepoVideojuego {
 	}
 
 	@Override
-	public SuperGenericResponse delete(Videojuego videojuego) {
+	public SuperGenericResponse delete(Reporte reporte) {
 		log.info("::::[INCIO]::::[delete]::::Incio de DAO::::");
 		SuperGenericResponse res = new SuperGenericResponse(Constantes.ERROR, Constantes.FAIL);
 
@@ -219,8 +230,8 @@ public class VideojuegoDao implements IRepoVideojuego {
 			log.info("::::[delete]::::Conexcion creada correctamente::::");
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_DELETE);
 			log.info("::::[delete]::::PreparedStatment creado correctamente::::");
-			stmt.setInt(1, videojuego.getId());
-			log.info("::::[delete]::::Valor ____________________ 1::::categoria:::Value:::" + videojuego.getId() + "Seteado CORRECTAMENTE::::");
+			stmt.setInt(1, reporte.getId());
+			log.info("::::[delete]::::Valor ____________________ 1::::id:::Value:::" + reporte.getId() + "Seteado CORRECTAMENTE::::");
 			log.info("::::[delete]:::SQL generado:::" + stmt.toString() + "::::");
 			int rs = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[delete]::::Datos guardado correctamente::::");
@@ -243,11 +254,11 @@ public class VideojuegoDao implements IRepoVideojuego {
 	}
 
 	@Override
-	public GenericEntityResponse<Videojuego> getOneById(int id) {
+	public GenericEntityResponse<Reporte> getOneById(int id) {
 		log.info("::::[Incio]::::[getOneById]::::Iniciando implementacion del DAO::::");
-		GenericEntityResponse<Videojuego> res = new GenericEntityResponse<>();
+		GenericEntityResponse<Reporte> res = new GenericEntityResponse<>();
 		try {
-			Videojuego videojuego = new Videojuego();
+			Reporte reporte = new Reporte();
 			Connection conn = ConexionPostgres.getConnecion();
 			log.info("::::[getOneById]::::Conexion CREADO correctamente::::");
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_ID);
@@ -260,16 +271,18 @@ public class VideojuegoDao implements IRepoVideojuego {
 			log.info("::::[getOneById]::::ResultSet CREADO correctamente::::");
 			log.info("::::[getOneById]::::Interpretando Data recibida::::");
 			while(rs.next()) {
-				videojuego.setId(rs.getInt(COL_ID));
-				videojuego.setNombre(rs.getString(COL_NOMBRE));
-				videojuego.setCategoria(new Categoria(rs.getInt(COL_CATEGORIA)));
-				videojuego.setPrecio( (float) rs.getDouble(COL_PRECIO));
-				videojuego.setFechaDeLanzamiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_LANZAMIENTO)));
-				videojuego.setDesarrolladora(new Desarrolladora(rs.getInt(COL_DESARROLLADORA)));
-				videojuego.setImg(new Img(rs.getInt(rs.getInt(COL_IMG))));
-				videojuego.setCantidadDisponible(rs.getInt(COL_CANTIDAD_DISPONIBLE));
-				videojuego.setPlataforma(new Plataforma(rs.getInt(COL_PLATAFORMA)));
-				videojuego.setDescripcion(rs.getString(COL_DESCRIPCION));
+				reporte.setId(rs.getInt(COL_ID));
+				reporte.setBase64(rs.getString(COL_BASE64));
+				reporte.setFecha(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA)));
+				reporte.setNombre(rs.getString(COL_NOMBRE));
+				reporte.setUserId(new Usuario(rs.getInt(COL_USER_ID)));
+				reporte.setTipoDoc(rs.getString(COL_TIPODOC));
+				reporte.setNumDoc(rs.getString(COL_NUMDOC));
+				reporte.setTotal( (float) rs.getDouble(COL_TOTAL));
+				reporte.setTotalrec( (float) rs.getDouble(COL_TOTALREC));
+				reporte.setTotalcam( (float) rs.getDouble(COL_TOTALCAM));
+				reporte.setMetpag(rs.getString(COL_METPAG));
+				reporte.setLv(rs.getString(COL_LV));
 			}
 			log.info("::::[getOneById]::::Fin interpretando Data recibida::::");
 			rs.close();
@@ -281,7 +294,7 @@ public class VideojuegoDao implements IRepoVideojuego {
 			log.info("::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
 			res.setCodigo(Constantes.SUCCES);
 			res.setMensaje(Constantes.OK);
-			res.setEntity(videojuego);
+			res.setEntity(reporte);
 		} catch (SQLException e) {
 			log.info("::::[ERROR]::::[getOneById]::::Error de SQL en la implementacion del DAO::::");
 			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
@@ -307,11 +320,11 @@ public class VideojuegoDao implements IRepoVideojuego {
 	}
 
 	@Override
-	public GenericEntityResponse<List<Videojuego>> getAll() {
+	public GenericEntityResponse<List<Reporte>> getAll() {
 		log.info("::::[Incio]::::[getAll]::::Iniciando implementacion del DAO para los roles::::");
-		Videojuego videojuego;
-		List<Videojuego> ls = new ArrayList<>();
-		GenericEntityResponse<List<Videojuego>> res = new GenericEntityResponse<>();
+		Reporte reporte;
+		List<Reporte> ls = new ArrayList<>();
+		GenericEntityResponse<List<Reporte>> res = new GenericEntityResponse<>();
 		Connection conn;
 		PreparedStatement stmt;
 		ResultSet rs;
@@ -325,18 +338,20 @@ public class VideojuegoDao implements IRepoVideojuego {
 			log.info("::::[getAll]::::ResultSet CREADO correctamente::::");
 			log.info("::::[getAll]::::Interpretando Data recibida::::");
 			while (rs.next()) {
-				videojuego = new Videojuego();
-				videojuego.setId(rs.getInt(COL_ID));
-				videojuego.setNombre(rs.getString(COL_NOMBRE));
-				videojuego.setCategoria(new Categoria(rs.getInt(COL_CATEGORIA)));
-				videojuego.setPrecio( (float) rs.getDouble(COL_PRECIO));
-				videojuego.setFechaDeLanzamiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_LANZAMIENTO)));
-				videojuego.setDesarrolladora(new Desarrolladora(rs.getInt(COL_DESARROLLADORA)));
-				videojuego.setImg(new Img(rs.getInt(rs.getInt(COL_IMG))));
-				videojuego.setCantidadDisponible(rs.getInt(COL_CANTIDAD_DISPONIBLE));
-				videojuego.setPlataforma(new Plataforma(rs.getInt(COL_PLATAFORMA)));
-				videojuego.setDescripcion(rs.getString(COL_DESCRIPCION));
-				ls.add(videojuego);
+				reporte = new Reporte();
+				reporte.setId(rs.getInt(COL_ID));
+				reporte.setBase64(rs.getString(COL_BASE64));
+				reporte.setFecha(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA)));
+				reporte.setNombre(rs.getString(COL_NOMBRE));
+				reporte.setUserId(new Usuario(rs.getInt(COL_USER_ID)));
+				reporte.setTipoDoc(rs.getString(COL_TIPODOC));
+				reporte.setNumDoc(rs.getString(COL_NUMDOC));
+				reporte.setTotal( (float) rs.getDouble(COL_TOTAL));
+				reporte.setTotalrec( (float) rs.getDouble(COL_TOTALREC));
+				reporte.setTotalcam( (float) rs.getDouble(COL_TOTALCAM));
+				reporte.setMetpag(rs.getString(COL_METPAG));
+				reporte.setLv(rs.getString(COL_LV));
+				ls.add(reporte);
 			}
 			log.info("::::[getAll]::::Fin interpretando Data recibida::::");
 			rs.close();
@@ -371,6 +386,72 @@ public class VideojuegoDao implements IRepoVideojuego {
 			res.setMensaje(e.getMessage());
 		}
 		log.info("::::[FIN]::::[getAll]::::Fin implementacion del DAO::::");
+		return res;
+	}
+
+	@Override
+	public GenericEntityResponse<Reporte> getOneByNumDoc(String numdoc) {
+		log.info("::::[Incio]::::[getOneById]::::Iniciando implementacion del DAO::::");
+		GenericEntityResponse<Reporte> res = new GenericEntityResponse<>();
+		try {
+			Reporte reporte = new Reporte();
+			Connection conn = ConexionPostgres.getConnecion();
+			log.info("::::[getOneById]::::Conexion CREADO correctamente::::");
+			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_NUM_DOC);
+			log.info("::::[getOneById]::::PreparedStatment CREADO correctamente::::");
+			log.info("::::[getOneById]::::Seteando datos al PreparedStatment::::");
+			stmt.setString(1, numdoc);
+			log.info("::::[getOneById]::::Valor ____________________ 1::::Numero de documento:::Value:::" + numdoc + "Seteado CORRECTAMENTE:::");
+			log.info("::::[getOneById]:::SQL generado:::" + stmt.toString() + "::::");
+			ResultSet rs = ConexionPostgres.executeQuery(stmt);
+			log.info("::::[getOneById]::::ResultSet CREADO correctamente::::");
+			log.info("::::[getOneById]::::Interpretando Data recibida::::");
+			while(rs.next()) {
+				reporte.setId(rs.getInt(COL_ID));
+				reporte.setBase64(rs.getString(COL_BASE64));
+				reporte.setFecha(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA)));
+				reporte.setNombre(rs.getString(COL_NOMBRE));
+				reporte.setUserId(new Usuario(rs.getInt(COL_USER_ID)));
+				reporte.setTipoDoc(rs.getString(COL_TIPODOC));
+				reporte.setNumDoc(rs.getString(COL_NUMDOC));
+				reporte.setTotal( (float) rs.getDouble(COL_TOTAL));
+				reporte.setTotalrec( (float) rs.getDouble(COL_TOTALREC));
+				reporte.setTotalcam( (float) rs.getDouble(COL_TOTALCAM));
+				reporte.setMetpag(rs.getString(COL_METPAG));
+				reporte.setLv(rs.getString(COL_LV));
+			}
+			log.info("::::[getOneById]::::Fin interpretando Data recibida::::");
+			rs.close();
+			log.info("::::[getOneById]::::ResultSet CERRADO correctamente::::");
+			stmt.close();
+			log.info("::::[getOneById]::::PreparedStatement CERRADO correctamente::::");
+			conn.close();
+			log.info("::::[getOneById]::::Conexion CERRADO correctamente::::");
+			log.info("::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
+			res.setCodigo(Constantes.SUCCES);
+			res.setMensaje(Constantes.OK);
+			res.setEntity(reporte);
+		} catch (SQLException e) {
+			log.info("::::[ERROR]::::[getOneById]::::Error de SQL en la implementacion del DAO::::");
+			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
+			log.info("--------------------------------------------");
+			e.printStackTrace();
+			log.info("--------------------------------------------");
+			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
+		} catch (Exception e) {
+			log.info("::::[ERROR]::::[getOneById]::::Error de generico en la implementacion del DAO::::");
+			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
+			log.info("--------------------------------------------");
+			e.printStackTrace();
+			log.info("--------------------------------------------");
+			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
+		}
 		return res;
 	}
 

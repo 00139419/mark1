@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sv.apppyme.dto.SuperGenericResponse;
 
 public class ObjectMapperUtils {
 
@@ -16,17 +17,32 @@ public class ObjectMapperUtils {
 		
 		ToJson = new ObjectMapper();
 		Object objeto = entity;
-		log.info("::::[INICIO]::::[ObjectToJsonString]::::Inicio metodo leer valor como String::::");
-		log.info("::::[INICIO]::::[ObjectToJsonString]::::Datos recibidos::::value::::"  + objeto.toString() + "::::");
 		String json = "";
 		try {
 			json =  ToJson.writeValueAsString(objeto);
-			log.info("::::[ObjectToJsonString]::::Datos convertidos correctamente::::!");
+			log.info("::::[ObjectToJsonString]::::Datos convertidos correctamente a String Json::::!");
 		} catch (Exception e) {
-			log.info("::::[ERROR]::::[ObjectToJsonString]::::Error en parsear datos a Json String::::");
-			log.info("::::[ERROR]::::[ObjectToJsonString]::::Mensaje::::value:::::" + e.getMessage() + "::::");
-			e.printStackTrace();
+			log.info("::::[ERROR]::::[ObjectToJsonString]::::Error en parsear datos a Json String::::Message::::" + e.getMessage() + "::::");
+			log.info(Log4jUtils.getStackTrace(e));
 		}
 		return json;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public static <E> Object JsonToObject(String json, E entity) {
+		
+		ToJson = new ObjectMapper();
+		Object res = null;
+		
+		try {
+			res = ToJson.readValue(json, (Class<E>) entity);
+			log.info("::::[ObjectToJsonString]::::Datos convertidos correctamente a object::::!");
+		} catch (Exception e) {
+			log.info("::::[ERROR]::::[ObjectToJsonString]::::Error en parsear datos a object::::Message::::" + e.getMessage() + "::::");
+			log.info(Log4jUtils.getStackTrace(e));
+		}
+		
+		return res;
 	}
 }

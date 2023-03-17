@@ -3,7 +3,6 @@ package com.sv.apppyme.security;
 import java.io.IOException;
 import java.util.Collections;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -14,7 +13,7 @@ import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.ISignUp;
 import com.sv.apppyme.services.ITokenOTP;
-import com.sv.apppyme.services.impl.srvDataImpl;
+import com.sv.apppyme.services.impl.srvSignUpImpl;
 import com.sv.apppyme.services.impl.srvTokenimpl;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.TokenManager;
@@ -63,7 +62,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			Authentication authResult) throws IOException, ServletException {
 		
 		srvTokenOTP = new srvTokenimpl();
-		srvDaraImpl = new srvDataImpl();
+		srvDaraImpl = new srvSignUpImpl();
 		
 		srvTokenOTP.eliminarTokensObsoletos();
 		

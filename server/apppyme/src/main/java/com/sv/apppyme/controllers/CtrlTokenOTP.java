@@ -18,7 +18,6 @@ import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.ISignUp;
 import com.sv.apppyme.services.ITokenOTP;
 import com.sv.apppyme.utils.Constantes;
-import com.sv.apppyme.utils.ObjectMapperUtils;
 
 @RestController
 @RequestMapping(Constantes.ROOT_CTRL)
@@ -32,9 +31,9 @@ public class CtrlTokenOTP {
 	@Autowired
 	ITokenOTP srvToken;
 	
-	@PostMapping(value = "crear/tokenOTP", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/crear/tokenOTP", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TokenDto> crearTokenOTP(@RequestBody TokenDto tokenInfo){
-		log.info("***************** Inicio Servicio obtener tokenOTP *****************");
+		log.info("***************** Inicio Servicio crear tokenOTP *****************");
 		log.info("::::[INCIO]::::[crearTokenOTP]::::Iniciando controlador de data::::");
 		TokenDto res = new TokenDto();
 		try {
@@ -49,11 +48,11 @@ public class CtrlTokenOTP {
 			log.info("::::[FIN]:::[ERROR]::::[crearTokenOTP]::::fin controlador de data::::");
 			return new ResponseEntity<TokenDto>(new TokenDto(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
 		} finally {
-			log.info("***************** Fin Servicio obtener tokenOTP *****************");
+			log.info("***************** Fin Servicio crear tokenOTP *****************");
 		}
 	}
 	
-	@PostMapping(value = "validar/tokenOTP", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/validar/tokenOTP", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SuperGenericResponse> validarTokenOTP(@RequestBody ValidarTokenOTPDto tokenInfo){
 		log.info("***************** Inicio Servicio validar tokenOTP *****************");
 		log.info("::::[INCIO]::::[validarTokenOTP]::::Iniciando controlador de data::::");
@@ -66,7 +65,7 @@ public class CtrlTokenOTP {
 			log.info("::::[FIN]:::[ERROR]::::[validarTokenOTP]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new TokenDto(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
 		} finally {
-			log.info("***************** Fin Servicio obtener tokenOTP *****************");
+			log.info("***************** Fin Servicio validar tokenOTP *****************");
 		}
 	}
 

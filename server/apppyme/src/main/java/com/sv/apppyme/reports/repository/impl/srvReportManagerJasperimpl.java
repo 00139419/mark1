@@ -64,6 +64,7 @@ public class srvReportManagerJasperimpl implements IReportManagerJasper {
 		return base64;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public File generatedFileJasperReport(List<Object> list, String typedocument) {
 		log.info("::::[Incio]::::[generatedFileJasperReport]::::Iniciando proceso de crear reporteria::::");

@@ -26,7 +26,7 @@ public class CrtlAuthentication {
 	@Autowired
 	IAuth srvAuthImpl;
 
-	@PostMapping(value = "login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GenericEntityResponse<TokenDto>> login(@RequestBody UsuarioDto userInfo){
 		log.info("***************** Inicio Servicio Authentication *****************");
 		log.info("::::[INCIO]::::[login]::::Iniciando controlador de auth::::");
@@ -40,6 +40,8 @@ public class CrtlAuthentication {
 			return new ResponseEntity<GenericEntityResponse<TokenDto>>(new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		} finally {
+			log.info("***************** Inicio Servicio Authentication *****************");
 		}
 	}
 }

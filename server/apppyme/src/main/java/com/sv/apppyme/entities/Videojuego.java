@@ -7,7 +7,7 @@ public class Videojuego {
 	private int id;
 	private String nombre;
 	private Categoria categoria;
-	private double precio;
+	private float precio;
 	private Date fechaDeLanzamiento;
 	private Desarrolladora desarrolladora;
 	private Img img;
@@ -19,7 +19,7 @@ public class Videojuego {
 		super();
 	}
 
-	public Videojuego(int id, String nombre, Categoria categoria, double precio, Date fechaDeLanzamiento,
+	public Videojuego(int id, String nombre, Categoria categoria, float precio, Date fechaDeLanzamiento,
 			Desarrolladora desarrolladora, Img img, int cantidadDisponible, Plataforma plataforma, String descripcion) {
 		super();
 		this.id = id;
@@ -62,7 +62,7 @@ public class Videojuego {
 		return precio;
 	}
 
-	public void setPrecio(double precio) {
+	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
 

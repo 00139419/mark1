@@ -28,7 +28,7 @@ public class Constantes {
 
 
 	//constantes para los controladores
-	public static final String ROOT_CTRL = "/apppyme/api/srv/";
+	public static final String ROOT_CTRL = "/apppyme/api/srv";
 	
 	//constantes para JWT
 	public static final String JWT_SECRETKEY = "ultraSecret123ultraSecret123ultraSecret123ultraSecret123";

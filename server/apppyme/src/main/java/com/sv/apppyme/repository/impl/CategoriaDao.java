@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import com.sv.apppyme.conexciones.ConexionPostgres;
 import com.sv.apppyme.dto.GenericEntityResponse;
@@ -17,6 +18,7 @@ import com.sv.apppyme.repository.IRepoCategoria;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Log4jUtils;
 
+@Service
 public class CategoriaDao implements IRepoCategoria {
 
 	Logger log = Logger.getLogger(getClass());
@@ -34,7 +36,6 @@ public class CategoriaDao implements IRepoCategoria {
 	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_CATEGORIA + " WHERE " + COL_ID + " = ?";
 	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_CATEGORIA 
 			+ " SET " 
-				+ COL_ID + " = ?, " 
 				+ COL_NOMBRE + " = ? "
 			+ "WHERE " 
 				+ COL_ID + " = ?";
@@ -100,12 +101,10 @@ public class CategoriaDao implements IRepoCategoria {
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, SQL_UPDATE);
 			log.info("::::[update]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[update]:::: Seteando valores al PreparedStatment... ::::");
-			stmt.setInt(1, categoria.getId());
-			log.info("::::[update]::::Valor ____________________ 1::::ID:::Value:::" + categoria.getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setString(2, categoria.getNombre());
-			log.info("::::[update]::::Valor ____________________ 2::::Nombre:::Value:::" + categoria.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(3, categoria.getId());
-			log.info("::::[update]::::Valor ____________________ 3::::ID:::Value:::" + categoria.getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(1, categoria.getNombre());
+			log.info("::::[update]::::Valor ____________________ 1::::Nombre:::Value:::" + categoria.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(2, categoria.getId());
+			log.info("::::[update]::::Valor ____________________ 2::::ID:::Value:::" + categoria.getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");
@@ -156,11 +155,11 @@ public class CategoriaDao implements IRepoCategoria {
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_DELETE);
 			log.info("::::[delete]::::PreparedStatment creado correctamente::::");
 			stmt.setInt(1, categoria.getId());
-			log.info("::::[delete]::::Valor ____________________ 1::::categoria:::Value:::" + categoria.getId() + "Seteado CORRECTAMENTE::::");
+			log.info("::::[delete]::::Valor ____________________ 1::::id:::Value:::" + categoria.getId() + "Seteado CORRECTAMENTE::::");
 			log.info("::::[delete]:::SQL generado:::" + stmt.toString() + "::::");
-			ResultSet rs = ConexionPostgres.executeQuery(stmt);
+			int rs = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[delete]::::Datos guardado correctamente::::");
-			log.info("::::[delete]::::Cantidad de datos eliminados::::value::::" + rs.getFetchSize() + "::::");
+			log.info("::::[delete]::::Cantidad de datos eliminados::::value::::" + rs + "::::");
 			res.setCodigo(Constantes.SUCCES);
 			res.setMensaje(Constantes.OK);
 			log.info("::::[delete]::::Respuesta creada correctamente::::");
