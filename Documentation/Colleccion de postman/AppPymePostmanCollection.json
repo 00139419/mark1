@@ -1,0 +1,477 @@
+{
+	"info": {
+		"_postman_id": "a4217b91-138d-41cb-a94c-6d38a3782d2f",
+		"name": "App pyme",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24892434"
+	},
+	"item": [
+		{
+			"name": "findRoles",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/test/getAllRoles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"test",
+						"getAllRoles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testCategoria",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/test/tablaCategoria",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"test",
+						"tablaCategoria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testVideoJuego",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/test/tablaVideoJuego",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"test",
+						"tablaVideoJuego"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testReporte",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/test/tablaReporte",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"test",
+						"tablaReporte"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signUp",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"adonay\",\n    \"password\":\"1234\",\n    \"rol\":\"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/insertar/usuario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"insertar",
+						"usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testConnecion",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findOneByUsername",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"Danadsasd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/obtener/usuarioByUsername",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"obtener",
+						"usuarioByUsername"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "encryption",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"texto\":\"Holis\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/encriptar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"encriptar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signIn",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"ale\",\n    \"password\":\"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createTokenOTP",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"usermame\":\"asdasd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/crear/tokenOTP",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"crear",
+						"tokenOTP"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validateTokenOTP",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"token\":\"563451\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/validar/tokenOTP",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"validar",
+						"tokenOTP"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sendEmails",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzZWNyZXRfY2xhaW0iOiIxMjM0NSIsInN1YiI6ImFsZSIsImlhdCI6MTY3Nzk4MTUxMCwiZXhwIjoxNjc3OTg1MTEwfQ.mXtP6iMZsR7V1HMt7KpIm7T9soFHHGy-QjII8EqlsUs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"emailReceptor\":\"dm00139419@gmail.com\",\n    \"subject\":\"MUAAAAAAAAAk\",\n    \"message\":\"Maje ya puedo enviar correos desde java, te puedo hacer spam?\",\n    \"emailType\":\"TokenOTP\",\n    \"token\": \"9235678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/email/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"email",
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
