@@ -36,6 +36,9 @@ public class ImgDao implements IRepoImg{
 	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_IMG 
 			+ " WHERE " 
 				+ COL_ID + " = ?";
+	public static final String SQL_SELECT_BY_BASE64 = "SELECT * FROM " + DB_TABLA_IMG 
+			+ " WHERE " 
+				+ COL_BASE64 + " = ?";
 	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_IMG 
 			+ " SET " 
 				+ COL_ID + " = ?, " 
@@ -295,6 +298,62 @@ public class ImgDao implements IRepoImg{
 			res.setMensaje(e.getMessage());
 		}
 		log.info("::::[FIN]::::[getAll]::::Fin implementacion del DAO::::");
+		return res;
+	}
+
+	@Override
+	public GenericEntityResponse<Img> getOneByBase64(String base64) {
+		log.info("::::[Incio]::::[getOneById]::::Iniciando implementacion del DAO::::");
+		GenericEntityResponse<Img> res = new GenericEntityResponse<>();
+		try {
+			Img img = new Img();
+			Connection conn = ConexionPostgres.getConnecion();
+			log.info("::::[getOneById]::::Conexion CREADO correctamente::::");
+			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_BASE64);
+			log.info("::::[getOneById]::::PreparedStatment CREADO correctamente::::");
+			log.info("::::[getOneById]::::Seteando datos al PreparedStatment::::");
+			stmt.setString(1, base64);
+			log.info("::::[getOneById]::::Valor ____________________ 1::::Id:::Value:::" + "BASE64" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[getOneById]:::SQL generado:::" + stmt.toString() + "::::");
+			ResultSet rs = ConexionPostgres.executeQuery(stmt);
+			log.info("::::[getOneById]::::ResultSet CREADO correctamente::::");
+			log.info("::::[getOneById]::::Interpretando Data recibida::::");
+			while(rs.next()) {
+				img.setId(rs.getInt(COL_ID));
+				img.setBase64(rs.getString(COL_BASE64));
+			}
+			log.info("::::[getOneById]::::Fin interpretando Data recibida::::");
+			rs.close();
+			log.info("::::[getOneById]::::ResultSet CERRADO correctamente::::");
+			stmt.close();
+			log.info("::::[getOneById]::::PreparedStatement CERRADO correctamente::::");
+			conn.close();
+			log.info("::::[getOneById]::::Conexion CERRADO correctamente::::");
+			log.info("::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
+			res.setCodigo(Constantes.SUCCES);
+			res.setMensaje(Constantes.OK);
+			res.setEntity(img);
+		} catch (SQLException e) {
+			log.info("::::[ERROR]::::[getOneById]::::Error de SQL en la implementacion del DAO::::");
+			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
+			log.info("--------------------------------------------");
+			e.printStackTrace();
+			log.info("--------------------------------------------");
+			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
+		} catch (Exception e) {
+			log.info("::::[ERROR]::::[getOneById]::::Error de generico en la implementacion del DAO::::");
+			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
+			log.info("--------------------------------------------");
+			e.printStackTrace();
+			log.info("--------------------------------------------");
+			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
+		}
 		return res;
 	}
 

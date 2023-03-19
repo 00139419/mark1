@@ -38,5 +38,8 @@ public class Constantes {
 	//constantes para envio de mensajes
 	public static final String EMAIL_HOST_ISSUER = "danielmorales.dm931@gmail.com";
 	public static final String EMAIL_HOST_PASSWORD = "uknapwpvlygxwxch";
+	
+	//constante para el formato de fecha general
+	public static final String FORMATO_DE_FECHA = "dd-M-yyyy hh:mm:ss";
 
 }

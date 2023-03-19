@@ -4,7 +4,7 @@ import com.sv.apppyme.controllers.dto.ComprarVideojuegoReqDto;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.exception.SrvValidacionException;
 
-public interface IData {
+public interface IComprarVideoJuego {
 	
 	/**
 	 * 

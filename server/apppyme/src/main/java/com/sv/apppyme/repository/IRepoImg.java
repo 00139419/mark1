@@ -36,9 +36,17 @@ public interface IRepoImg {
 	 * 
 	 * @param
 	 * @author dm420
-	 * @return una respuesta con el status de la operacion DELETE en la base de datos para cierto registro
+	 * @return una respuesta con el status de la operacion SELECT en la base de datos para cierto registro
 	 */
 	GenericEntityResponse<Img> getOneById(int id);
+	
+	/**
+	 * 
+	 * @param
+	 * @author dm420
+	 * @return una respuesta con el status de la operacion SELECT en la base de datos para cierto registro
+	 */
+	GenericEntityResponse<Img> getOneByBase64(String base64);
 	
 	/**
 	 * 
