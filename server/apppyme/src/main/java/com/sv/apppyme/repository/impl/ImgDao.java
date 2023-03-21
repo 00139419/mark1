@@ -41,7 +41,6 @@ public class ImgDao implements IRepoImg{
 				+ COL_BASE64 + " = ?";
 	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_IMG 
 			+ " SET " 
-				+ COL_ID + " = ?, " 
 				+ COL_BASE64 + " = ?"
 			+ " WHERE " 
 				+ COL_ID + " = ?";
@@ -107,12 +106,10 @@ public class ImgDao implements IRepoImg{
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, SQL_UPDATE);
 			log.info("::::[update]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[update]:::: Seteando valores al PreparedStatment... ::::");
-			stmt.setInt(1, img.getId());
-			log.info("::::[update]::::Valor ____________________ 1::::ID:::Value:::" + img.getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setString(2, img.getBase64());
-			log.info("::::[update]::::Valor ____________________ 2::::base64:::Value:::" + img.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(3, img.getId());
-			log.info("::::[update]::::Valor ____________________ 3::::ID:::Value:::" + img.getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(1, img.getBase64());
+			log.info("::::[update]::::Valor ____________________ 1::::base64:::Value:::" + img.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(2, img.getId());
+			log.info("::::[update]::::Valor ____________________ 2::::ID:::Value:::" + img.getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");

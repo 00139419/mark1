@@ -266,7 +266,7 @@ public class VideojuegoDao implements IRepoVideojuego {
 				videojuego.setPrecio( (float) rs.getDouble(COL_PRECIO));
 				videojuego.setFechaDeLanzamiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_LANZAMIENTO)));
 				videojuego.setDesarrolladora(new Desarrolladora(rs.getInt(COL_DESARROLLADORA)));
-				videojuego.setImg(new Img(rs.getInt(rs.getInt(COL_IMG))));
+				videojuego.setImg(new Img(rs.getInt(COL_IMG)));
 				videojuego.setCantidadDisponible(rs.getInt(COL_CANTIDAD_DISPONIBLE));
 				videojuego.setPlataforma(new Plataforma(rs.getInt(COL_PLATAFORMA)));
 				videojuego.setDescripcion(rs.getString(COL_DESCRIPCION));
@@ -283,23 +283,21 @@ public class VideojuegoDao implements IRepoVideojuego {
 			res.setMensaje(Constantes.OK);
 			res.setEntity(videojuego);
 		} catch (SQLException e) {
-			log.info("::::[ERROR]::::[getOneById]::::Error de SQL en la implementacion del DAO::::");
-			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
-			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
+			log.info("::::[ERROR]::::[insert]::::Error de SQL en la implementacion del DAO::::");
+			log.info("::::[ERROR]::::[insert]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[insert]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
-			e.printStackTrace();
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
-			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
 			res.setCodigo(Constantes.ERROR);
 			res.setMensaje(e.getMessage());
 		} catch (Exception e) {
-			log.info("::::[ERROR]::::[getOneById]::::Error de generico en la implementacion del DAO::::");
-			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
-			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
+			log.info("::::[ERROR]::::[insert]::::Error Generico en la implementacion del DAO::::");
+			log.info("::::[ERROR]::::[insert]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[insert]::::Imprimiendo stacktrace::::");
 			log.info("--------------------------------------------");
-			e.printStackTrace();
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
 			log.info("--------------------------------------------");
-			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
 			res.setCodigo(Constantes.ERROR);
 			res.setMensaje(e.getMessage());
 		}
@@ -332,7 +330,7 @@ public class VideojuegoDao implements IRepoVideojuego {
 				videojuego.setPrecio( (float) rs.getDouble(COL_PRECIO));
 				videojuego.setFechaDeLanzamiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_LANZAMIENTO)));
 				videojuego.setDesarrolladora(new Desarrolladora(rs.getInt(COL_DESARROLLADORA)));
-				videojuego.setImg(new Img(rs.getInt(rs.getInt(COL_IMG))));
+				videojuego.setImg(new Img(rs.getInt(COL_IMG)));
 				videojuego.setCantidadDisponible(rs.getInt(COL_CANTIDAD_DISPONIBLE));
 				videojuego.setPlataforma(new Plataforma(rs.getInt(COL_PLATAFORMA)));
 				videojuego.setDescripcion(rs.getString(COL_DESCRIPCION));

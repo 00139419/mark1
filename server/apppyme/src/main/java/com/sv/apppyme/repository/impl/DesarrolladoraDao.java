@@ -38,7 +38,6 @@ public class DesarrolladoraDao implements IRepoDesarrolladora {
 				+ COL_ID + " = ?";
 	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_DESARROLLADORA 
 			+ " SET " 
-				+ COL_ID + " = ?, " 
 				+ COL_NOMBRE + " = ? "
 			+ " WHERE " 
 				+ COL_ID + " = ?";
@@ -104,12 +103,10 @@ public class DesarrolladoraDao implements IRepoDesarrolladora {
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, SQL_UPDATE);
 			log.info("::::[update]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[update]:::: Seteando valores al PreparedStatment... ::::");
-			stmt.setInt(1, desarrolladora.getId());
-			log.info("::::[update]::::Valor ____________________ 1::::ID:::Value:::" + desarrolladora.getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setString(2, desarrolladora.getNombre());
-			log.info("::::[update]::::Valor ____________________ 2::::Nombre:::Value:::" + desarrolladora.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(3, desarrolladora.getId());
-			log.info("::::[update]::::Valor ____________________ 3::::ID:::Value:::" + desarrolladora.getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(1, desarrolladora.getNombre());
+			log.info("::::[update]::::Valor ____________________ 1::::Nombre:::Value:::" + desarrolladora.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(2, desarrolladora.getId());
+			log.info("::::[update]::::Valor ____________________ 2::::ID:::Value:::" + desarrolladora.getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");

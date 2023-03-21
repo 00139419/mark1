@@ -45,18 +45,78 @@ public class CtrlData {
 		}
 	}
 	
-	@PostMapping(value = "/insetar/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<SuperGenericResponse> insertarVideojuego(@RequestBody VideoJuegoDto videojuegoInfo){
+	@PostMapping(value = "/insert/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<SuperGenericResponse> insertVideojuego(@RequestBody VideoJuegoDto videojuegoInfo){
 		log.info("***************** Inicio insertar Videojuego *****************");
 		SuperGenericResponse res;
 		try {
 			res = srvCrudVideojuegoImpl.insertVideojuego(videojuegoInfo);
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
-			log.info("::::[FIN]:::[ERROR]::::[insertarVideojuego]::::fin controlador de data::::");
+			log.info("::::[FIN]:::[ERROR]::::[insertVideojuego]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
 		} finally {
-			log.info("***************** Fin comprar Videojuego *****************");
+			log.info("***************** Fin insertar Videojuego *****************");
+		}
+	}
+	
+	@PostMapping(value = "/update/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<SuperGenericResponse> updateVideojuego(@RequestBody VideoJuegoDto videojuegoInfo){
+		log.info("***************** Inicio actualizar Videojuego *****************");
+		SuperGenericResponse res;
+		try {
+			res = srvCrudVideojuegoImpl.UpdateVideojuego(videojuegoInfo);
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[updateVideojuego]::::fin controlador de data::::");
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+		} finally {
+			log.info("***************** Fin actualizar Videojuego *****************");
+		}
+	}
+	
+	@PostMapping(value = "/delete/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<SuperGenericResponse> deleteVideojuego(@RequestBody VideoJuegoDto videojuegoInfo){
+		log.info("***************** Inicio eliminar Videojuego *****************");
+		SuperGenericResponse res;
+		try {
+			res = srvCrudVideojuegoImpl.DeleteVideojuego(videojuegoInfo);
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[deleteVideojuego]::::fin controlador de data::::");
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+		} finally {
+			log.info("***************** Fin eliminar Videojuego *****************");
+		}
+	}
+	
+	@PostMapping(value = "/getOneById/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<SuperGenericResponse> getOneByIdVideojuego(@RequestBody VideoJuegoDto videojuegoInfo){
+		log.info("***************** Inicio obtener por id Videojuego *****************");
+		SuperGenericResponse res;
+		try {
+			res = srvCrudVideojuegoImpl.getOneByIDVideojuego(videojuegoInfo);
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[getOneByIdVideojuego]::::fin controlador de data::::");
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+		} finally {
+			log.info("***************** Fin obtener por id Videojuego *****************");
+		}
+	}
+	
+	@PostMapping(value = "/getAll/videojuego", produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<SuperGenericResponse> getAllVideojuego(){
+		log.info("***************** Inicio obtener todos los Videojuego *****************");
+		SuperGenericResponse res;
+		try {
+			res = srvCrudVideojuegoImpl.getAllVideojuego();
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[getAllVideojuego]::::fin controlador de data::::");
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+		} finally {
+			log.info("***************** Fin obtener todos los Videojuego *****************");
 		}
 	}
 	

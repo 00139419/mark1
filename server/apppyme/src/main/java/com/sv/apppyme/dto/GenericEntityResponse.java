@@ -27,7 +27,6 @@ public class GenericEntityResponse<E> extends SuperGenericResponse implements Se
 		this.setMensaje(mensaje);
 	}
 	
-	
 	public E getEntity() {
 		return entity;
 	}

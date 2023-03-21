@@ -38,7 +38,6 @@ public class PlataformaDao implements IRepoPlataforma{
 				+ COL_ID + " = ?";
 	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_PLATAFORMA 
 			+ " SET " 
-				+ COL_ID + " = ?, " 
 				+ COL_NOMBRE + " = ?"
 			+ " WHERE " 
 				+ COL_ID + " = ?";
@@ -105,12 +104,10 @@ public class PlataformaDao implements IRepoPlataforma{
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, SQL_UPDATE);
 			log.info("::::[update]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[update]:::: Seteando valores al PreparedStatment... ::::");
-			stmt.setInt(1, plataforma.getId());
-			log.info("::::[update]::::Valor ____________________ 1::::ID:::Value:::" + plataforma.getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setString(2, plataforma.getNombre());
-			log.info("::::[update]::::Valor ____________________ 2::::Nombre:::Value:::" + plataforma.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(3, plataforma.getId());
-			log.info("::::[update]::::Valor ____________________ 3::::ID:::Value:::" + plataforma.getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(1, plataforma.getNombre());
+			log.info("::::[update]::::Valor ____________________ 1::::Nombre:::Value:::" + plataforma.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(2, plataforma.getId());
+			log.info("::::[update]::::Valor ____________________ 2::::ID:::Value:::" + plataforma.getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");
