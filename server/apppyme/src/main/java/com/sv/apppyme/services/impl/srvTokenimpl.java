@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.sv.apppyme.controllers.dto.JwtRes;
 import com.sv.apppyme.controllers.dto.TokenDto;
 import com.sv.apppyme.controllers.dto.ValidarTokenOTPDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
@@ -20,6 +21,7 @@ import com.sv.apppyme.repository.IRepoUsuario;
 import com.sv.apppyme.repository.impl.TokenOTPDao;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.ObjectMapperUtils;
+import com.sv.apppyme.utils.TokenManager;
 
 @Service
 public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
@@ -29,6 +31,9 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 
 	@Autowired
 	IRepoUsuario userDao;
+	
+	@Autowired
+	TokenManager tokenManager;
 
 	Logger log = Logger.getLogger(getClass());
 
@@ -40,7 +45,7 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 		log.info("::::[Inicio]::::[creaToken]::::Iniciando servicio de crearToken::::");
 		log.info("::::[Inicio]::::[creaToken]::::Datos Recibidos::::value::::" + ObjectMapperUtils.ObjectToJsonString(usuario));
 		
-		TokenDto res = null;
+		TokenDto res = new TokenDto();
 		TokenOTP tokenOTP = new TokenOTP();
 		tokenOTP.setToken(generarTokenValido());
 		tokenOTP.setEsValido(true);
@@ -48,22 +53,18 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 		tokenOTP.setFechaDeVencimiento(new Date(System.currentTimeMillis() + EXP_TOKE_OTP_MILLIS));
 		tokenOTP.setEstaVerificado(false);
 		
-		try {
-			if(usuario.getUsername() == null)
-				usuario = userDao.getOneByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getEntity();
-			
-			if(usuario.getUsername() !=  null)
-				usuario = userDao.getOneByUsername(usuario.getUsername()).getEntity();
-		} catch (Exception e) {
-			throw new SrvValidacionException(Constantes.ERROR, "Usuario no encontrado");
-		}
+		if(usuario.getUsername() == null)
+			usuario = userDao.getOneByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getEntity();
+		
+		if(usuario.getUsername() !=  null)
+			usuario = userDao.getOneByUsername(usuario.getUsername()).getEntity();
 		
 		tokenOTP.setUsuario(usuario);
-
 			
 		srvTokenOTP.insert(tokenOTP);
-
-		log.info("::::[creaToken]::::LLamando al metodo para guardar tokenOTP::::");
+		
+		res.setCodigo(Constantes.SUCCES);
+		res.setMensaje(Constantes.OK);
 		return res;
 	}
 
@@ -100,11 +101,6 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 		if (res.getCodigo() != Constantes.SUCCES)
 			throw new SrvValidacionException(Constantes.ERROR, "Error en el proceso de verificar existencia del token");
 
-		log.info("::::[verificarExistenciaToken]::::Token creado y verificado::::");
-		log.info("::::[verificarExistenciaToken]::::Interpretando respuesta del DAO::::");
-		log.info("::::[verificarExistenciaToken]::::Codigo::::" + res.getCodigo());
-		log.info("::::[verificarExistenciaToken]::::lista::::" + res.getListaEntity().toString());
-
 		if (res.getCodigo() == Constantes.SUCCES && res.getListaEntity().isEmpty()) {
 			token.setToken(numero);
 			token.setEsValido(true);
@@ -126,35 +122,38 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 
 	@Override
 	public SuperGenericResponse validarToken(ValidarTokenOTPDto tokenOtp) throws SrvValidacionException {
+		
+		JwtRes res = new JwtRes();
+		res.setCodigo(Constantes.ERROR);
+		res.setMensaje(Constantes.FAIL);
+		
 		log.info(
 				"::::[INICIO]::::[esTokenVencidoOrValidado]::::Incio de servicio para validar token y activar cuenta::::");
 
 		log.info("::::[esTokenVencidoOrValidado]::::Datos recibidoss::::value::::"
 				+ ObjectMapperUtils.ObjectToJsonString(tokenOtp));
 
-		SuperGenericResponse res = new SuperGenericResponse(Constantes.ERROR, "tokenOTP invalido");
-
 		TokenOTP token = verificarExistenciaToken(tokenOtp.getToken());
 
 		if (token == null)
 			throw new SrvValidacionException(Constantes.ERROR, "Error token no encontrado");
-		log.info("::::[esTokenVencidoOrValidado]::::Token existe en la base de datos::::");
 
 		if (esTokenVencidoOrValidado(token))
 			throw new SrvValidacionException(Constantes.ERROR, "Error token invalido");
-		log.info("::::[esTokenVencidoOrValidado]::::Token es valido::::");
 
 		if (validacionDeToken(token).getCodigo() != Constantes.SUCCES)
 			throw new SrvValidacionException(Constantes.ERROR, "Error interno en el proceso de validacion de token");
-		log.info("::::[esTokenVencidoOrValidado]::::Se valido el token::::value::::" + token.getToken() + ":::::");
 
 		if (activarCuenta(token.getUsuario()).getCodigo() != Constantes.SUCCES)
 			throw new SrvValidacionException(Constantes.ERROR, "Error interno en el proceso de activacion de cuenta");
 		log.info("::::[esTokenVencidoOrValidado]::::se  activo la  cuenta del usuario::::value::::"
 				+ token.getUsuario().getUsername() + "::::");
-
+		
+		String jwt = tokenManager.generarToken((token.getUsuario()));
+		
 		res.setCodigo(Constantes.SUCCES);
 		res.setMensaje(Constantes.OK);
+		res.setJwt(jwt);
 		log.info("::::[esTokenVencidoOrValidado]::::Fin del  servicio para validar y activar cuenta del usuario::::");
 
 		return res;

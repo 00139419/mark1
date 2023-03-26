@@ -32,21 +32,25 @@ public class CtrlTokenOTP {
 	ITokenOTP srvToken;
 	
 	@PostMapping(value = "/crear/tokenOTP", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TokenDto> crearTokenOTP(@RequestBody TokenDto tokenInfo){
+	public ResponseEntity<SuperGenericResponse> crearTokenOTP(@RequestBody TokenDto tokenInfo){
 		log.info("***************** Inicio Servicio crear tokenOTP *****************");
 		log.info("::::[INCIO]::::[crearTokenOTP]::::Iniciando controlador de data::::");
-		TokenDto res = new TokenDto();
+		SuperGenericResponse res = new SuperGenericResponse();
+		TokenDto resSer = new TokenDto();
 		try {
 			if(tokenInfo.getUsername() !=  null) {
-				res = srvToken.creaTokenOTP(new Usuario(tokenInfo.getUsername()));
+				resSer = srvToken.creaTokenOTP(new Usuario(tokenInfo.getUsername()));
+				
 			}else {
-				res = srvToken.creaTokenOTP(new Usuario());
+				resSer = srvToken.creaTokenOTP(new Usuario());
 			}
+			res.setCodigo(resSer.getCodigo());
+			res.setMensaje(resSer.getMensaje());
 			log.info("::::[FIN]::::[crearTokenOTP]::::fin controlador de data::::");
-			return new ResponseEntity<TokenDto>(res, HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[crearTokenOTP]::::fin controlador de data::::");
-			return new ResponseEntity<TokenDto>(new TokenDto(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new TokenDto(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
 		} finally {
 			log.info("***************** Fin Servicio crear tokenOTP *****************");
 		}
