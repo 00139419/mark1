@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -62,6 +64,7 @@ public class ReporteDao implements IRepoReporte{
 	public static final String SQL_DELETE = "DELETE FROM " + DB_TABLA_REPORTE + " WHERE " + COL_ID + " = ?";
 	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_REPORTE + " WHERE " + COL_ID + " = ?";
 	public static final String SQL_SELECT_BY_NUM_DOC = "SELECT * FROM " + DB_TABLA_REPORTE + " WHERE " + COL_NUMDOC + " = ?";
+	public static final String SQL_SELECT_BY_FECHA = "SELECT * FROM " + DB_TABLA_REPORTE + " WHERE " + COL_FECHA + " = ?";
 	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_REPORTE
 			+ " SET "
 				+ COL_BASE64 + " = ?,"
@@ -89,8 +92,8 @@ public class ReporteDao implements IRepoReporte{
 			log.info("::::[insert]:::: Seteando valores al PreparedStatment... ::::");
 			stmt.setString(1, reporte.getBase64());
 			log.info("::::[insert]::::Valor ____________________ 1::::base64:::Value:::" + reporte.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setDate(2, DateUtils.convertirDateJavaToDateSQL(reporte.getFecha()));
-			log.info("::::[insert]::::Valor ____________________ 2::::fecha:::Value:::" + DateUtils.convertirDateJavaToDateSQL(reporte.getFecha()) + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setTimestamp(2, DateUtils.convertDateToTimeStamp(reporte.getFecha()));
+			log.info("::::[insert]::::Valor ____________________ 2::::fecha:::Value:::" + DateUtils.convertDateToTimeStamp(reporte.getFecha()) + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setString(3, reporte.getNombre());
 			log.info("::::[insert]::::Valor ____________________ 3::::nombre:::Value:::" + reporte.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setInt(4, reporte.getUserId().getId());
@@ -158,29 +161,29 @@ public class ReporteDao implements IRepoReporte{
 			log.info("::::[update]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[update]:::: Seteando valores al PreparedStatment... ::::");
 			stmt.setString(1, reporte.getBase64());
-			log.info("::::[insert]::::Valor ____________________ 1::::base64:::Value:::" + reporte.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setDate(2, DateUtils.convertirDateJavaToDateSQL(reporte.getFecha()));
-			log.info("::::[insert]::::Valor ____________________ 2::::fecha:::Value:::" + DateUtils.convertirDateJavaToDateSQL(reporte.getFecha()) + "::::" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[update]::::Valor ____________________ 1::::base64:::Value:::" + reporte.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setTimestamp(2, DateUtils.convertDateToTimeStamp(reporte.getFecha()));
+			log.info("::::[update]::::Valor ____________________ 2::::fecha:::Value:::" + DateUtils.convertDateToTimeStamp(reporte.getFecha()) + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setString(3, reporte.getNombre());
-			log.info("::::[insert]::::Valor ____________________ 3::::nombre:::Value:::" + reporte.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[update]::::Valor ____________________ 3::::nombre:::Value:::" + reporte.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setInt(4, reporte.getUserId().getId());
-			log.info("::::[insert]::::Valor ____________________ 4::::user_id:::Value:::" + reporte.getUserId().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[update]::::Valor ____________________ 4::::user_id:::Value:::" + reporte.getUserId().getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setString(5, reporte.getTipoDoc());
-			log.info("::::[insert]::::Valor ____________________ 5::::tipo documento:::Value:::" + reporte.getTipoDoc() + "::::" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[update]::::Valor ____________________ 5::::tipo documento:::Value:::" + reporte.getTipoDoc() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setString(6, reporte.getNumDoc());
-			log.info("::::[insert]::::Valor ____________________ 6::::numero documento:::Value:::" + reporte.getNumDoc() + "::::" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[update]::::Valor ____________________ 6::::numero documento:::Value:::" + reporte.getNumDoc() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setDouble(7, reporte.getTotal());
-			log.info("::::[insert]::::Valor ____________________ 7::::total:::Value:::" + reporte.getTotal() + "::::" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[update]::::Valor ____________________ 7::::total:::Value:::" + reporte.getTotal() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setDouble(8, reporte.getTotalrec());
-			log.info("::::[insert]::::Valor ____________________ 8::::total dinero recibido:::Value:::" + reporte.getTotalrec() + "::::" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[update]::::Valor ____________________ 8::::total dinero recibido:::Value:::" + reporte.getTotalrec() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setDouble(9, reporte.getTotalcam());
-			log.info("::::[insert]::::Valor ____________________ 9::::total dinero cambio:::Value:::" + reporte.getTotalcam() + "::::" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[update]::::Valor ____________________ 9::::total dinero cambio:::Value:::" + reporte.getTotalcam() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setString(10, reporte.getMetpag());
-			log.info("::::[insert]::::Valor ____________________ 10::::metodo de pago:::Value:::" + reporte.getMetpag() + "::::" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[update]::::Valor ____________________ 10::::metodo de pago:::Value:::" + reporte.getMetpag() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setString(11, reporte.getLv());
-			log.info("::::[insert]::::Valor ____________________ 11::::lv:::Value:::" + reporte.getLv() + "::::" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[update]::::Valor ____________________ 11::::lv:::Value:::" + reporte.getLv() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setInt(12, reporte.getId());
-			log.info("::::[insert]::::Valor ____________________ 12::::Id:::Value:::" + reporte.getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			log.info("::::[update]::::Valor ____________________ 12::::Id:::Value:::" + reporte.getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");
@@ -273,7 +276,7 @@ public class ReporteDao implements IRepoReporte{
 			while(rs.next()) {
 				reporte.setId(rs.getInt(COL_ID));
 				reporte.setBase64(rs.getString(COL_BASE64));
-				reporte.setFecha(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA)));
+				reporte.setFecha(DateUtils.convertTimeStampToDate(rs.getTimestamp(COL_FECHA)));
 				reporte.setNombre(rs.getString(COL_NOMBRE));
 				reporte.setUserId(new Usuario(rs.getInt(COL_USER_ID)));
 				reporte.setTipoDoc(rs.getString(COL_TIPODOC));
@@ -341,7 +344,7 @@ public class ReporteDao implements IRepoReporte{
 				reporte = new Reporte();
 				reporte.setId(rs.getInt(COL_ID));
 				reporte.setBase64(rs.getString(COL_BASE64));
-				reporte.setFecha(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA)));
+				reporte.setFecha(DateUtils.convertTimeStampToDate(rs.getTimestamp(COL_FECHA)));
 				reporte.setNombre(rs.getString(COL_NOMBRE));
 				reporte.setUserId(new Usuario(rs.getInt(COL_USER_ID)));
 				reporte.setTipoDoc(rs.getString(COL_TIPODOC));
@@ -409,7 +412,75 @@ public class ReporteDao implements IRepoReporte{
 			while(rs.next()) {
 				reporte.setId(rs.getInt(COL_ID));
 				reporte.setBase64(rs.getString(COL_BASE64));
-				reporte.setFecha(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA)));
+				reporte.setFecha(DateUtils.convetirStringToDate(rs.getString(COL_FECHA)));
+				reporte.setNombre(rs.getString(COL_NOMBRE));
+				reporte.setUserId(new Usuario(rs.getInt(COL_USER_ID)));
+				reporte.setTipoDoc(rs.getString(COL_TIPODOC));
+				reporte.setNumDoc(rs.getString(COL_NUMDOC));
+				reporte.setTotal( (float) rs.getDouble(COL_TOTAL));
+				reporte.setTotalrec( (float) rs.getDouble(COL_TOTALREC));
+				reporte.setTotalcam( (float) rs.getDouble(COL_TOTALCAM));
+				reporte.setMetpag(rs.getString(COL_METPAG));
+				reporte.setLv(rs.getString(COL_LV));
+			}
+			log.info("::::[getOneById]::::Fin interpretando Data recibida::::");
+			rs.close();
+			log.info("::::[getOneById]::::ResultSet CERRADO correctamente::::");
+			stmt.close();
+			log.info("::::[getOneById]::::PreparedStatement CERRADO correctamente::::");
+			conn.close();
+			log.info("::::[getOneById]::::Conexion CERRADO correctamente::::");
+			log.info("::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
+			res.setCodigo(Constantes.SUCCES);
+			res.setMensaje(Constantes.OK);
+			res.setEntity(reporte);
+		} catch (SQLException e) {
+			log.info("::::[ERROR]::::[getOneById]::::Error de SQL en la implementacion del DAO::::");
+			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
+			log.info("--------------------------------------------");
+			e.printStackTrace();
+			log.info("--------------------------------------------");
+			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
+		} catch (Exception e) {
+			log.info("::::[ERROR]::::[getOneById]::::Error de generico en la implementacion del DAO::::");
+			log.info("::::[ERROR]::::[getOneById]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[getOneById]::::Imprimiendo stacktrace::::");
+			log.info("--------------------------------------------");
+			e.printStackTrace();
+			log.info("--------------------------------------------");
+			log.info("::::[ERROR]::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
+		}
+		return res;
+	}
+	
+	
+	
+	@Override
+	public GenericEntityResponse<Reporte> getOneByFecha(Date fecha) {
+		log.info("::::[Incio]::::[getOneById]::::Iniciando implementacion del DAO::::");
+		GenericEntityResponse<Reporte> res = new GenericEntityResponse<>();
+		try {
+			Reporte reporte = new Reporte();
+			Connection conn = ConexionPostgres.getConnecion();
+			log.info("::::[getOneById]::::Conexion CREADO correctamente::::");
+			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_FECHA);
+			log.info("::::[getOneById]::::PreparedStatment CREADO correctamente::::");
+			log.info("::::[getOneById]::::Seteando datos al PreparedStatment::::");
+			stmt.setTimestamp(1, DateUtils.convertDateToTimeStamp(fecha));
+			log.info("::::[getOneById]::::Valor ____________________ 1::::fecha:::Value:::" + DateUtils.convertDateToTimeStamp(fecha) + "Seteado CORRECTAMENTE:::");
+			log.info("::::[getOneById]:::SQL generado:::" + stmt.toString() + "::::");
+			ResultSet rs = ConexionPostgres.executeQuery(stmt);
+			log.info("::::[getOneById]::::ResultSet CREADO correctamente::::");
+			log.info("::::[getOneById]::::Interpretando Data recibida::::");
+			while(rs.next()) {
+				reporte.setId(rs.getInt(COL_ID));
+				reporte.setBase64(rs.getString(COL_BASE64));
+				reporte.setFecha(DateUtils.convetirStringToDate(rs.getString(COL_FECHA)));
 				reporte.setNombre(rs.getString(COL_NOMBRE));
 				reporte.setUserId(new Usuario(rs.getInt(COL_USER_ID)));
 				reporte.setTipoDoc(rs.getString(COL_TIPODOC));

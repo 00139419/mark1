@@ -1,5 +1,6 @@
 package com.sv.apppyme.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import com.sv.apppyme.dto.GenericEntityResponse;
@@ -54,5 +55,13 @@ public interface IRepoReporte {
 	 * @return un registro de la base de datos, a traves de su numero de documento
 	 */
 	GenericEntityResponse<Reporte> getOneByNumDoc(String numdoc);
+	
+	/**
+	 * 
+	 * @param
+	 * @author dm420
+	 * @return un registro de la base de datos, a traves de la fecha de creacion del reporte
+	 */
+	GenericEntityResponse<Reporte> getOneByFecha(Date date);
 	
 }

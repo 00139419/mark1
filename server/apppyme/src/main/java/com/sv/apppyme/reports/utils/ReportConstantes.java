@@ -6,6 +6,7 @@ public class ReportConstantes {
 
 	public static final String DIR_REP_VINCULACION = BASE_DIR + "TestAppPyme.jasper";
 	public static final String DIR_REP_TOKEN_OTP= BASE_DIR + "TokenOTPjrxml.jasper";
+	public static final String DIR_REP_FACTURA = BASE_DIR + "factura.jasper";
 
 	
 }

@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "findRoles",
+			"name": "getAllRoles",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -468,6 +468,204 @@
 						"srv",
 						"email",
 						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InsertVideoJuego",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\":\"GTA San Andreas\",\n    \"categoria\":\"5\",\n    \"precio\":\"22.99\",\n    \"fechaDeLanzamiento\":\"22-11-2023\",\n    \"desarrolladora\":\"1\",\n    \"cantidadDisponible\":\"20\",\n    \"plataforma\":\"1\",\n    \"descripcion\":\"Juego donde puedes hacer lo que quieras\",\n    \"imgbase64\":\"asdlñaksldñaksldñkañlskd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/insert/videojuego",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"insert",
+						"videojuego"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateVideoJuego",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"4\",\n    \"nombre\":\"GTA San Andreita\",\n    \"categoria\":\"5\",\n    \"precio\":\"22.99\",\n    \"fechaDeLanzamiento\":\"22-11-2023\",\n    \"desarrolladora\":\"1\",\n    \"cantidadDisponible\":\"20\",\n    \"plataforma\":\"1\",\n    \"descripcion\":\"Juego donde puedes hacer lo que quieras\",\n    \"imgId\":\"6\",\n    \"imgbase64\":\"holis\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/update/videojuego",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"update",
+						"videojuego"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteVideoJuego",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"4\",\n    \"imgId\":\"6\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/delete/videojuego",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"delete",
+						"videojuego"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOneByIdVideoJuego",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/getOneById/videojuego",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"getOneById",
+						"videojuego"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllVideoJuego",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/getAll/videojuego",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"getAll",
+						"videojuego"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buyVideoJuego",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre1\":\"Daniel\",\n    \"nombre2\":\"Ernesto\",\n    \"apellido1\":\"Morales\",\n    \"apellido2\":\"Siguenza\",\n    \"tipoIdentificacion\":\"DUI\",\n    \"numeroIdentificacion\":\"12345678-9\",\n    \"total\":\"100\",\n    \"totalDineroFisicoRecibido\":\"110\",\n    \"totalDineroFisicoCambio\":\"10\",\n    \"metodoPago\":\"DINERO\",\n    \"lv\": [\n        {\n            \"id\": 5,\n            \"nombre\": \"GTA San Andreas\",\n            \"categoria\": {\n                \"id\": 5,\n                \"nombre\": \"RPG\"\n            },\n            \"precio\": 22.989999771118164,\n            \"fechaDeLanzamiento\": \"2023-11-22T06:00:00.000+00:00\",\n            \"desarrolladora\": {\n                \"id\": 1,\n                \"nombre\": \"RockstarGames\"\n            },\n            \"img\": {\n                \"id\": 5,\n                \"base64\": \"asdlñaksldñaksldñkañlskd\"\n            },\n            \"cantidadDisponible\": 20,\n            \"plataforma\": {\n                \"id\": 1,\n                \"nombre\": \"PC\"\n            },\n            \"descripcion\": \"Juego donde puedes hacer lo que quieras\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apppyme/api/srv/buy/videojuego",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apppyme",
+						"api",
+						"srv",
+						"buy",
+						"videojuego"
 					]
 				}
 			},

@@ -1,11 +1,13 @@
 package com.sv.apppyme.services.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Categoria;
 import com.sv.apppyme.entities.Desarrolladora;
@@ -170,7 +172,13 @@ public class srvTestTablasImpl implements ITestTablas {
 		if (!insertReporteSuccess(aux))
 			throw new SrvValidacionException(Constantes.ERROR, "No se pudo insertar en la base de datos°!");
 
-		aux.setId(3);
+		// obteniendo todos los resgistros
+		GenericEntityResponse<List<Reporte>> res = reporteDao.getAll();
+		if (res.getCodigo() != Constantes.SUCCES)
+			throw new SrvValidacionException(Constantes.ERROR, "No se pudo obtener data general en la base de datos°!");
+		
+		aux.setId(res.getEntity().size());
+		
 		// actualizando en la base de datos
 		if (!updateReporteSuccess(aux))
 			throw new SrvValidacionException(Constantes.ERROR, "No se pudo actualizar en la base de datos°!");
@@ -178,10 +186,6 @@ public class srvTestTablasImpl implements ITestTablas {
 		// obteniendo un registro por Id
 		if (!selectOneByIdReporteSuccess(aux))
 			throw new SrvValidacionException(Constantes.ERROR, "No se pudo obtener data unica en la base de datos°!");
-
-		// obteniendo todos los resgistros
-		if (!getAllReporteSuccess())
-			throw new SrvValidacionException(Constantes.ERROR, "No se pudo obtener data general en la base de datos°!");
 
 		// eliminado registro de la base de datos
 		if (!deleteReporteSuccess(aux))
@@ -201,10 +205,6 @@ public class srvTestTablasImpl implements ITestTablas {
 
 	public boolean selectOneByIdReporteSuccess(Reporte aux) {
 		return reporteDao.getOneById(1).getCodigo() == Constantes.SUCCES;
-	}
-
-	public boolean getAllReporteSuccess() {
-		return reporteDao.getAll().getCodigo() == Constantes.SUCCES;
 	}
 
 	public boolean deleteReporteSuccess(Reporte aux) {

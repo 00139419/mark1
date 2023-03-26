@@ -59,6 +59,7 @@ public class VideojuegoDao implements IRepoVideojuego {
 		+ " VALUES (?,?,?,?,?,?,?,?,?)";
 	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO;
 	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO + " WHERE " + COL_ID + " = ?";
+	public static final String SQL_SELECT_BY_NOMBRE = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO + " WHERE " + COL_NOMBRE + " = ?";
 	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_VIDEOJUEGO 
 			+ " SET " 
 				+ COL_NOMBRE + " = ?, "
@@ -369,6 +370,68 @@ public class VideojuegoDao implements IRepoVideojuego {
 			res.setMensaje(e.getMessage());
 		}
 		log.info("::::[FIN]::::[getAll]::::Fin implementacion del DAO::::");
+		return res;
+	}
+
+	@Override
+	public GenericEntityResponse<Videojuego> getOneByNombre(String nombre) {
+		log.info("::::[Incio]::::[getOneById]::::Iniciando implementacion del DAO::::");
+		GenericEntityResponse<Videojuego> res = new GenericEntityResponse<>();
+		try {
+			Videojuego videojuego = new Videojuego();
+			Connection conn = ConexionPostgres.getConnecion();
+			log.info("::::[getOneById]::::Conexion CREADO correctamente::::");
+			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_NOMBRE);
+			log.info("::::[getOneById]::::PreparedStatment CREADO correctamente::::");
+			log.info("::::[getOneById]::::Seteando datos al PreparedStatment::::");
+			stmt.setString(1, nombre);
+			log.info("::::[getOneById]::::Valor ____________________ 1::::Nombre:::Value:::" + nombre + "Seteado CORRECTAMENTE:::");
+			log.info("::::[getOneById]:::SQL generado:::" + stmt.toString() + "::::");
+			ResultSet rs = ConexionPostgres.executeQuery(stmt);
+			log.info("::::[getOneById]::::ResultSet CREADO correctamente::::");
+			log.info("::::[getOneById]::::Interpretando Data recibida::::");
+			while(rs.next()) {
+				videojuego.setId(rs.getInt(COL_ID));
+				videojuego.setNombre(rs.getString(COL_NOMBRE));
+				videojuego.setCategoria(new Categoria(rs.getInt(COL_CATEGORIA)));
+				videojuego.setPrecio( (float) rs.getDouble(COL_PRECIO));
+				videojuego.setFechaDeLanzamiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_LANZAMIENTO)));
+				videojuego.setDesarrolladora(new Desarrolladora(rs.getInt(COL_DESARROLLADORA)));
+				videojuego.setImg(new Img(rs.getInt(COL_IMG)));
+				videojuego.setCantidadDisponible(rs.getInt(COL_CANTIDAD_DISPONIBLE));
+				videojuego.setPlataforma(new Plataforma(rs.getInt(COL_PLATAFORMA)));
+				videojuego.setDescripcion(rs.getString(COL_DESCRIPCION));
+			}
+			log.info("::::[getOneById]::::Fin interpretando Data recibida::::");
+			rs.close();
+			log.info("::::[getOneById]::::ResultSet CERRADO correctamente::::");
+			stmt.close();
+			log.info("::::[getOneById]::::PreparedStatement CERRADO correctamente::::");
+			conn.close();
+			log.info("::::[getOneById]::::Conexion CERRADO correctamente::::");
+			log.info("::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
+			res.setCodigo(Constantes.SUCCES);
+			res.setMensaje(Constantes.OK);
+			res.setEntity(videojuego);
+		} catch (SQLException e) {
+			log.info("::::[ERROR]::::[insert]::::Error de SQL en la implementacion del DAO::::");
+			log.info("::::[ERROR]::::[insert]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[insert]::::Imprimiendo stacktrace::::");
+			log.info("--------------------------------------------");
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
+			log.info("--------------------------------------------");
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
+		} catch (Exception e) {
+			log.info("::::[ERROR]::::[insert]::::Error Generico en la implementacion del DAO::::");
+			log.info("::::[ERROR]::::[insert]::::Mensaje::::" + e.getMessage() + "::::");
+			log.info("::::[ERROR]::::[insert]::::Imprimiendo stacktrace::::");
+			log.info("--------------------------------------------");
+			log.info("An exception occurred: " + Log4jUtils.getStackTrace(e));
+			log.info("--------------------------------------------");
+			res.setCodigo(Constantes.ERROR);
+			res.setMensaje(e.getMessage());
+		}
 		return res;
 	}
 

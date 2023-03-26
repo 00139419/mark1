@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sv.apppyme.controllers.dto.ComprarVideojuegoReqDto;
+import com.sv.apppyme.controllers.dto.FacturaResDto;
 import com.sv.apppyme.controllers.dto.VideoJuegoDto;
+import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.ICRUDVideoJuego;
@@ -30,16 +32,16 @@ public class CtrlData {
 	@Autowired
 	ICRUDVideoJuego srvCrudVideojuegoImpl;
 	
-	@PostMapping(value = "/comprar/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<SuperGenericResponse> comprarVideojuego(@RequestBody ComprarVideojuegoReqDto compraInfo){
+	@PostMapping(value = "/buy/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<GenericEntityResponse<FacturaResDto>> comprarVideojuego(@RequestBody ComprarVideojuegoReqDto compraInfo){
 		log.info("***************** Inicio comprar Videojuego *****************");
-		SuperGenericResponse res;
+		GenericEntityResponse<FacturaResDto> res;
 		try {
 			res = srvComprarVideoJuegoImpl.comprarVideojuego(compraInfo);
-			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+			return new ResponseEntity<GenericEntityResponse<FacturaResDto>>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[comprarVideojuego]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<GenericEntityResponse<FacturaResDto>>(new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
 		} finally {
 			log.info("***************** Fin comprar Videojuego *****************");
 		}

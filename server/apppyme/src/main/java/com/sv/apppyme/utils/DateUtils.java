@@ -1,6 +1,7 @@
 package com.sv.apppyme.utils;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -29,7 +30,7 @@ public class DateUtils {
 		SimpleDateFormat formatoFecha = new SimpleDateFormat(FormatoDeFecha);
 		java.util.Date date1;
 		try {
-			date1 = new SimpleDateFormat("dd-MM-yyyy").parse(fechaString);
+			date1 = new SimpleDateFormat("dd-M-yyyy hh:mm:ss").parse(fechaString);
 			java.util.Date fechaUtil = new SimpleDateFormat(FormatoDeFecha).parse(formatoFecha.format(date1));
 			return fechaUtil;
 		} catch (ParseException e) {
@@ -48,14 +49,29 @@ public class DateUtils {
 						java.util.Date fechaUtil = new SimpleDateFormat(FormatoDeFecha).parse(formatoFecha.format(date1));
 						return fechaUtil;
 					} catch (ParseException e3) {
-						System.out.println(
-								"--> Error al convertir fecha String to java.sql.Date --->>> [" + fechaString + "]");
-						e1.printStackTrace();// 19000101
+						try {
+							date1 = new SimpleDateFormat("dd-MM-yyyy").parse(fechaString);
+							java.util.Date fechaUtil = new SimpleDateFormat(FormatoDeFecha).parse(formatoFecha.format(date1));
+							return fechaUtil;
+						} catch (ParseException e4) {
+							System.out.println(
+									"--> Error al convertir fecha String to java.sql.Date --->>> [" + fechaString + "]");
+							e1.printStackTrace();// 19000101
+						}
 					}
 				}
 			}
 		}
 		
 		return null;
+	}
+	
+	
+	public static Timestamp convertDateToTimeStamp(java.util.Date date) {
+		return new Timestamp(date.getTime());
+	}
+	
+	public static Date convertTimeStampToDate(Timestamp timeStamp) {
+		return new Date(timeStamp.getTime());
 	}
 }
