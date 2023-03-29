@@ -10,19 +10,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sv.apppyme.controllers.dto.ComprarVideojuegoReqDto;
-import com.sv.apppyme.controllers.dto.FacturaResDto;
 import com.sv.apppyme.controllers.dto.VideoJuegoDto;
-import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.exception.SrvValidacionException;
-import com.sv.apppyme.services.ICRUDVideoJuego;
 import com.sv.apppyme.services.IComprarVideoJuego;
+import com.sv.apppyme.services.ICrudCategoria;
+import com.sv.apppyme.services.ICrudVideoJuego;
 import com.sv.apppyme.utils.Constantes;
 
 @RestController
 @RequestMapping(value = Constantes.ROOT_CTRL)
-public class CtrlData {
+public class CtrlVideoJuego {
 	
 	Logger log = Logger.getLogger(getClass());
 	
@@ -30,29 +28,18 @@ public class CtrlData {
 	IComprarVideoJuego srvComprarVideoJuegoImpl;
 	
 	@Autowired
-	ICRUDVideoJuego srvCrudVideojuegoImpl;
+	ICrudVideoJuego crudVideojuegoImpl;
 	
-	@PostMapping(value = "/buy/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<GenericEntityResponse<FacturaResDto>> comprarVideojuego(@RequestBody ComprarVideojuegoReqDto compraInfo){
-		log.info("***************** Inicio comprar Videojuego *****************");
-		GenericEntityResponse<FacturaResDto> res;
-		try {
-			res = srvComprarVideoJuegoImpl.comprarVideojuego(compraInfo);
-			return new ResponseEntity<GenericEntityResponse<FacturaResDto>>(res, HttpStatus.OK);
-		} catch (SrvValidacionException e) {
-			log.info("::::[FIN]:::[ERROR]::::[comprarVideojuego]::::fin controlador de data::::");
-			return new ResponseEntity<GenericEntityResponse<FacturaResDto>>(new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
-		} finally {
-			log.info("***************** Fin comprar Videojuego *****************");
-		}
-	}
+	@Autowired
+	ICrudCategoria crudCategoriaimpl;
+	
 	
 	@PostMapping(value = "/insert/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<SuperGenericResponse> insertVideojuego(@RequestBody VideoJuegoDto videojuegoInfo){
 		log.info("***************** Inicio insertar Videojuego *****************");
 		SuperGenericResponse res;
 		try {
-			res = srvCrudVideojuegoImpl.insertVideojuego(videojuegoInfo);
+			res = crudVideojuegoImpl.insertVideojuego(videojuegoInfo);
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[insertVideojuego]::::fin controlador de data::::");
@@ -67,7 +54,7 @@ public class CtrlData {
 		log.info("***************** Inicio actualizar Videojuego *****************");
 		SuperGenericResponse res;
 		try {
-			res = srvCrudVideojuegoImpl.UpdateVideojuego(videojuegoInfo);
+			res = crudVideojuegoImpl.updateVideojuego(videojuegoInfo);
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[updateVideojuego]::::fin controlador de data::::");
@@ -82,7 +69,7 @@ public class CtrlData {
 		log.info("***************** Inicio eliminar Videojuego *****************");
 		SuperGenericResponse res;
 		try {
-			res = srvCrudVideojuegoImpl.DeleteVideojuego(videojuegoInfo);
+			res = crudVideojuegoImpl.deleteVideojuego(videojuegoInfo);
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[deleteVideojuego]::::fin controlador de data::::");
@@ -97,7 +84,7 @@ public class CtrlData {
 		log.info("***************** Inicio obtener por id Videojuego *****************");
 		SuperGenericResponse res;
 		try {
-			res = srvCrudVideojuegoImpl.getOneByIDVideojuego(videojuegoInfo);
+			res = crudVideojuegoImpl.getOneByIDVideojuego(videojuegoInfo);
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getOneByIdVideojuego]::::fin controlador de data::::");
@@ -112,7 +99,7 @@ public class CtrlData {
 		log.info("***************** Inicio obtener todos los Videojuego *****************");
 		SuperGenericResponse res;
 		try {
-			res = srvCrudVideojuegoImpl.getAllVideojuego();
+			res = crudVideojuegoImpl.getAllVideojuego();
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getAllVideojuego]::::fin controlador de data::::");
@@ -121,6 +108,5 @@ public class CtrlData {
 			log.info("***************** Fin obtener todos los Videojuego *****************");
 		}
 	}
-	
-	
+
 }

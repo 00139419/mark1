@@ -8,7 +8,7 @@ import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Videojuego;
 import com.sv.apppyme.exception.SrvValidacionException;
 
-public interface ICRUDVideoJuego {
+public interface ICrudVideoJuego {
 	
 	/**
 	 * Metodo que se encarga de insertar videojuegos desde el cliente
@@ -24,7 +24,7 @@ public interface ICRUDVideoJuego {
 	 * @return una respuesta generica con el status de la transaccion
 	 * @throws SrvValidacionException
 	 */
-	SuperGenericResponse UpdateVideojuego(VideoJuegoDto videojuegoInfo) throws SrvValidacionException;
+	SuperGenericResponse updateVideojuego(VideoJuegoDto videojuegoInfo) throws SrvValidacionException;
 	
 	/**
 	 * Metodo que se encarga de eliminar un videojuego desde el cliente
@@ -32,7 +32,7 @@ public interface ICRUDVideoJuego {
 	 * @return una respuesta generica con el status de la transaccion
 	 * @throws SrvValidacionException
 	 */
-	SuperGenericResponse DeleteVideojuego(VideoJuegoDto videojuegoInfo) throws SrvValidacionException;
+	SuperGenericResponse deleteVideojuego(VideoJuegoDto videojuegoInfo) throws SrvValidacionException;
 	
 	/**
 	 * Metodo que se encarga de obtener un videojuego por su id videojuegos desde el cliente

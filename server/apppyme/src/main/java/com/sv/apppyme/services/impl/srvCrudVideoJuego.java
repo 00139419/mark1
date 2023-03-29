@@ -22,13 +22,13 @@ import com.sv.apppyme.repository.IRepoDesarrolladora;
 import com.sv.apppyme.repository.IRepoImg;
 import com.sv.apppyme.repository.IRepoPlataforma;
 import com.sv.apppyme.repository.IRepoVideojuego;
-import com.sv.apppyme.services.ICRUDVideoJuego;
+import com.sv.apppyme.services.ICrudVideoJuego;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.DateUtils;
 import com.sv.apppyme.utils.ObjectMapperUtils;
 
 @Service
-public class srvCrudVideoJuego implements ICRUDVideoJuego {
+public class srvCrudVideoJuego implements ICrudVideoJuego {
 
 	Logger log = Logger.getLogger(getClass());
 
@@ -104,7 +104,7 @@ public class srvCrudVideoJuego implements ICRUDVideoJuego {
 	}
 
 	@Override
-	public SuperGenericResponse UpdateVideojuego(VideoJuegoDto videojuegoInfo) throws SrvValidacionException {
+	public SuperGenericResponse updateVideojuego(VideoJuegoDto videojuegoInfo) throws SrvValidacionException {
 		String key = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		mostrarDataRecibida(videojuegoInfo, key);
@@ -155,7 +155,7 @@ public class srvCrudVideoJuego implements ICRUDVideoJuego {
 	}
 
 	@Override
-	public SuperGenericResponse DeleteVideojuego(VideoJuegoDto videojuegoInfo) throws SrvValidacionException {
+	public SuperGenericResponse deleteVideojuego(VideoJuegoDto videojuegoInfo) throws SrvValidacionException {
 		String key = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		mostrarDataRecibida(videojuegoInfo, key);
