@@ -35,13 +35,13 @@ public class CtrlSignUp {
 		log.info("::::[INCIO]::::[insetarNuevoUsuario]::::Iniciando controlador de data::::");
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
-			res = srvSignUpImpl.insertarUsuario(userInfo);
+			res = srvSignUpImpl.registrarUsuario(userInfo);
 			log.info("::::[FIN]::::[insetarNuevoUsuario]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[insetarNuevoUsuario]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin Servicio inserta Usuario *****************");
 		}

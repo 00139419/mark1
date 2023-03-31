@@ -21,21 +21,20 @@ import com.sv.apppyme.utils.Constantes;
 @RestController
 @RequestMapping(value = Constantes.ROOT_CTRL)
 public class CtrlVideoJuego {
-	
+
 	Logger log = Logger.getLogger(getClass());
-	
+
 	@Autowired
 	IComprarVideoJuego srvComprarVideoJuegoImpl;
-	
+
 	@Autowired
 	ICrudVideoJuego crudVideojuegoImpl;
-	
+
 	@Autowired
 	ICrudCategoria crudCategoriaimpl;
-	
-	
+
 	@PostMapping(value = "/insert/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<SuperGenericResponse> insertVideojuego(@RequestBody VideoJuegoDto videojuegoInfo){
+	ResponseEntity<SuperGenericResponse> insertVideojuego(@RequestBody VideoJuegoDto videojuegoInfo) {
 		log.info("***************** Inicio insertar Videojuego *****************");
 		SuperGenericResponse res;
 		try {
@@ -43,14 +42,15 @@ public class CtrlVideoJuego {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[insertVideojuego]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin insertar Videojuego *****************");
 		}
 	}
-	
+
 	@PostMapping(value = "/update/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<SuperGenericResponse> updateVideojuego(@RequestBody VideoJuegoDto videojuegoInfo){
+	ResponseEntity<SuperGenericResponse> updateVideojuego(@RequestBody VideoJuegoDto videojuegoInfo) {
 		log.info("***************** Inicio actualizar Videojuego *****************");
 		SuperGenericResponse res;
 		try {
@@ -58,14 +58,15 @@ public class CtrlVideoJuego {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[updateVideojuego]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin actualizar Videojuego *****************");
 		}
 	}
-	
+
 	@PostMapping(value = "/delete/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<SuperGenericResponse> deleteVideojuego(@RequestBody VideoJuegoDto videojuegoInfo){
+	ResponseEntity<SuperGenericResponse> deleteVideojuego(@RequestBody VideoJuegoDto videojuegoInfo) {
 		log.info("***************** Inicio eliminar Videojuego *****************");
 		SuperGenericResponse res;
 		try {
@@ -73,14 +74,15 @@ public class CtrlVideoJuego {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[deleteVideojuego]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin eliminar Videojuego *****************");
 		}
 	}
-	
+
 	@PostMapping(value = "/getOneById/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<SuperGenericResponse> getOneByIdVideojuego(@RequestBody VideoJuegoDto videojuegoInfo){
+	ResponseEntity<SuperGenericResponse> getOneByIdVideojuego(@RequestBody VideoJuegoDto videojuegoInfo) {
 		log.info("***************** Inicio obtener por id Videojuego *****************");
 		SuperGenericResponse res;
 		try {
@@ -88,14 +90,15 @@ public class CtrlVideoJuego {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getOneByIdVideojuego]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin obtener por id Videojuego *****************");
 		}
 	}
-	
+
 	@PostMapping(value = "/getAll/videojuego", produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<SuperGenericResponse> getAllVideojuego(){
+	ResponseEntity<SuperGenericResponse> getAllVideojuego() {
 		log.info("***************** Inicio obtener todos los Videojuego *****************");
 		SuperGenericResponse res;
 		try {
@@ -103,7 +106,8 @@ public class CtrlVideoJuego {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getAllVideojuego]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin obtener todos los Videojuego *****************");
 		}

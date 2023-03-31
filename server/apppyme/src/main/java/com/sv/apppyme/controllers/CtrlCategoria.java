@@ -38,7 +38,7 @@ public class CtrlCategoria {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[insertCategoria]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin insertar Categoria *****************");
 		}
@@ -53,7 +53,7 @@ public class CtrlCategoria {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[updateCategoria]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin actualizar Categoria *****************");
 		}
@@ -68,7 +68,7 @@ public class CtrlCategoria {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[deleteCategoria]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin eliminar Categoria *****************");
 		}
@@ -83,7 +83,7 @@ public class CtrlCategoria {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getOneByIdCategoria]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin obtener por id Categoria *****************");
 		}
@@ -98,7 +98,7 @@ public class CtrlCategoria {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getAllCategoria]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin obtener todos los Categoria *****************");
 		}

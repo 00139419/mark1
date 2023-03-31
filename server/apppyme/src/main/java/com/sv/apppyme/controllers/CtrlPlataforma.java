@@ -40,7 +40,7 @@ public class CtrlPlataforma {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[insertPlataforma]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin insertar Plataforma *****************");
 		}
@@ -56,7 +56,7 @@ public class CtrlPlataforma {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[updatePlataforma]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin actualizar Plataforma *****************");
 		}
@@ -72,7 +72,7 @@ public class CtrlPlataforma {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[deletePlataforma]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin eliminar Plataforma *****************");
 		}
@@ -88,7 +88,7 @@ public class CtrlPlataforma {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getOneByIdPlataforma]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin obtener por id Plataforma *****************");
 		}
@@ -104,7 +104,7 @@ public class CtrlPlataforma {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getAllPlataforma]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin obtener todos los Plataforma *****************");
 		}

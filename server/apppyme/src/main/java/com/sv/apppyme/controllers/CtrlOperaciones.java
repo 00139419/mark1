@@ -20,14 +20,15 @@ import com.sv.apppyme.utils.Constantes;
 @RestController
 @RequestMapping(value = Constantes.ROOT_CTRL)
 public class CtrlOperaciones {
-	
+
 	Logger log = Logger.getLogger(getClass());
-	
+
 	@Autowired
 	IComprarVideoJuego srvComprarVideoJuegoImpl;
-	
+
 	@PostMapping(value = "/buy/videojuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<GenericEntityResponse<FacturaResDto>> comprarVideojuego(@RequestBody ComprarVideojuegoReqDto compraInfo){
+	ResponseEntity<GenericEntityResponse<FacturaResDto>> comprarVideojuego(
+			@RequestBody ComprarVideojuegoReqDto compraInfo) {
 		log.info("***************** Inicio comprar Videojuego *****************");
 		GenericEntityResponse<FacturaResDto> res;
 		try {
@@ -35,10 +36,11 @@ public class CtrlOperaciones {
 			return new ResponseEntity<GenericEntityResponse<FacturaResDto>>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[comprarVideojuego]::::fin controlador de data::::");
-			return new ResponseEntity<GenericEntityResponse<FacturaResDto>>(new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<GenericEntityResponse<FacturaResDto>>(
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin comprar Videojuego *****************");
 		}
 	}
-	
+
 }

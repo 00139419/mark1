@@ -37,7 +37,7 @@ public class CrtlAuthentication {
 			return new ResponseEntity<GenericEntityResponse<TokenDto>>(res,HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]::::[login]::::Iniciando controlador de auth::::");
-			return new ResponseEntity<GenericEntityResponse<TokenDto>>(new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<GenericEntityResponse<TokenDto>>(new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		} finally {

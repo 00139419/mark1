@@ -50,7 +50,7 @@ public class CtrlTokenOTP {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[crearTokenOTP]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new TokenDto(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new TokenDto(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin Servicio crear tokenOTP *****************");
 		}
@@ -67,7 +67,7 @@ public class CtrlTokenOTP {
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[validarTokenOTP]::::fin controlador de data::::");
-			return new ResponseEntity<SuperGenericResponse>(new TokenDto(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(new TokenDto(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin Servicio validar tokenOTP *****************");
 		}

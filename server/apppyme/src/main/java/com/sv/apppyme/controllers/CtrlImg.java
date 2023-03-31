@@ -40,7 +40,7 @@ public class CtrlImg {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[insertImg]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin insertar Img *****************");
 		}
@@ -56,7 +56,7 @@ public class CtrlImg {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[updateImg]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin actualizar Img *****************");
 		}
@@ -72,7 +72,7 @@ public class CtrlImg {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[deleteImg]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin eliminar Img *****************");
 		}
@@ -88,7 +88,7 @@ public class CtrlImg {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getOneByIdImg]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin obtener por id Img *****************");
 		}
@@ -104,7 +104,7 @@ public class CtrlImg {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getAllImg]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin obtener todos los Img *****************");
 		}

@@ -39,7 +39,7 @@ public class CtrlDesarrolladora {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[insertDesarrolladora]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin insertar Desarrolladora *****************");
 		}
@@ -55,7 +55,7 @@ public class CtrlDesarrolladora {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[updateDesarrolladora]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin actualizar Desarrolladora *****************");
 		}
@@ -71,7 +71,7 @@ public class CtrlDesarrolladora {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[deleteDesarrolladora]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin eliminar Desarrolladora *****************");
 		}
@@ -87,7 +87,7 @@ public class CtrlDesarrolladora {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getOneByIdDesarrolladora]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin obtener por id Desarrolladora *****************");
 		}
@@ -103,7 +103,7 @@ public class CtrlDesarrolladora {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[getAllDesarrolladora]::::fin controlador de data::::");
 			return new ResponseEntity<SuperGenericResponse>(new SuperGenericResponse(e.getCodigo(), e.getMensaje()),
-					HttpStatus.OK);
+					HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin obtener todos los Desarrolladora *****************");
 		}

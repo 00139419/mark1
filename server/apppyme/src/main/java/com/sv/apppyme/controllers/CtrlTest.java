@@ -2,14 +2,12 @@ package com.sv.apppyme.controllers;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +19,6 @@ import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.email.dto.SendEmailDto;
 import com.sv.apppyme.email.repository.IEmails;
-import com.sv.apppyme.entities.Rol;
 import com.sv.apppyme.entities.Usuario;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.ISignUp;
@@ -58,7 +55,7 @@ public class CtrlTest {
 			res.setCodigo(Constantes.ERROR);
 			res.setMensaje(Constantes.FAIL);
 			log.info("::::[FIN]::::[ERRROR]::::[ComprobarConeccionConLaApi]::::Error generico::::");
-			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin test *****************");
 		}
@@ -79,7 +76,7 @@ public class CtrlTest {
 			res.setCodigo(Constantes.ERROR);
 			res.setMensaje(Constantes.FAIL);
 			log.info("::::[FIN]::::[ERRROR]::::[encriptar]::::Error encripatando los datos::::");
-			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin test encriptacion *****************");
 		}
@@ -101,27 +98,9 @@ public class CtrlTest {
 			log.info("Error: " + e.getMessage());
 			e.printStackTrace();
 			log.info("::::[FIN]::::[ERRROR]::::[sendEmails]::::Error generico::::");
-			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin test *****************");
-		}
-	}
-	
-	@GetMapping(value = "/getAllRoles", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GenericEntityResponse<List<Rol>>> getAllRoles() {
-		log.info("***************** Inicio Servicio Obtener Roles *****************");
-		log.info("::::[INCIO]::::[getAllRoles]::::Iniciando controlador de test::::");
-		GenericEntityResponse<List<Rol>> resController = new GenericEntityResponse<>();
-		try {
-			resController = srvSignUpImpl.getAllRoles();
-			log.info("::::[FIN]::::[getAllRoles]::::fin controlador de data::::");
-			return new ResponseEntity<GenericEntityResponse<List<Rol>>>(resController, HttpStatus.OK);
-		} catch (SrvValidacionException e) {
-			log.info("::::[FIN]:::[ERROR]::::[getAllRoles]::::fin controlador de test::::");
-			return new ResponseEntity<GenericEntityResponse<List<Rol>>>(
-					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
-		} finally {
-			log.info("***************** Fin Servicio Obtener Roles *****************");
 		}
 	}
 	
@@ -137,7 +116,7 @@ public class CtrlTest {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
 			return new ResponseEntity<GenericEntityResponse<Usuario>>(
-					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
 		}
@@ -155,7 +134,7 @@ public class CtrlTest {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
 			return new ResponseEntity<SuperGenericResponse>(
-					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
 		}
@@ -172,7 +151,7 @@ public class CtrlTest {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
 			return new ResponseEntity<SuperGenericResponse>(
-					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
 		}
@@ -189,7 +168,7 @@ public class CtrlTest {
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
 			return new ResponseEntity<SuperGenericResponse>(
-					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
 		}
