@@ -6,46 +6,44 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 
-import com.sv.apppyme.controllers.dto.CategoriaDto;
+import com.sv.apppyme.controllers.dto.ImgDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Categoria;
+import com.sv.apppyme.entities.Img;
 import com.sv.apppyme.exception.SrvValidacionException;
-import com.sv.apppyme.repository.IRepoCategoria;
-import com.sv.apppyme.services.ICrudCategoria;
+import com.sv.apppyme.repository.IRepoImg;
+import com.sv.apppyme.services.ICrudImg;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Log4jUtils;
 
-@Service
-public class SrvCrudCategoria implements ICrudCategoria{
-	
-	Logger log = Logger.getLogger(getClass());
+public class srvCrudImgImpl implements ICrudImg {
+
+Logger log = Logger.getLogger(getClass());
 	
 	@Autowired
-	IRepoCategoria categoriaDao;
+	IRepoImg ImgDao;
 	
 	/**
 	 * Metodo para validar la data recibida del front
-	 * @param categoriaInfo
+	 * @param imgInfo
 	 * @param key
 	 * @return una respuesta boolena con el status de todas las valdiaciones
 	 */
-	public boolean isDataValida(CategoriaDto categoriaInfo, String key) {
+	public boolean isDataValida(ImgDto imgInfo, String key) {
 		
-		if(categoriaInfo == null) {
-			log.info("[" + key + "]" +  "::::[isDataValida]::::informacion de categoria general viene null!");
+		if(imgInfo == null) {
+			log.info("[" + key + "]" +  "::::[isDataValida]::::informacion de Img general viene null!");
 			return false;
 		}
 		
-		if(categoriaInfo.getId() <= 0) {
+		if(imgInfo.getId() <= 0) {
 			log.info("[" + key + "]" +  "::::[isDataValida]::::Id no valido!");
 			return false;
 		}
 		
-		if(categoriaInfo.getNombre().trim().isBlank() || categoriaInfo.getNombre().trim().isEmpty()) {
-			log.info("[" + key + "]" +  "::::[isDataValida]::::nombre de la categoria a ingresar no es valido!");
+		if(imgInfo.getBase64().trim().isBlank() || imgInfo.getBase64().trim().isEmpty()) {
+			log.info("[" + key + "]" +  "::::[isDataValida]::::Base64 de la Img a ingresar no es valido!");
 			return false;
 		}
 		
@@ -54,139 +52,139 @@ public class SrvCrudCategoria implements ICrudCategoria{
 	}
 	
 	/**
-	 * Metodo para crear objecto de tipo categoria utilizando la informacion recibida por el cliente
-	 * @param categoriaInfo
+	 * Metodo para crear objecto de tipo Img utilizando la informacion recibida por el cliente
+	 * @param imgInfo
 	 * @param key
-	 * @return Categoria
+	 * @return Img
 	 */
-	public Categoria crearObjectoCategoria(CategoriaDto categoriaInfo, String key) {
-		Categoria aux = new  Categoria();
+	public Img crearObjectoImg(ImgDto imgInfo, String key) {
+		Img aux = new  Img();
 		try {
-			aux.setId(categoriaInfo.getId());
-			aux.setNombre(categoriaInfo.getNombre());
+			aux.setId(imgInfo.getId());
+			aux.setBase64(imgInfo.getBase64());
 			return aux;
 		} catch (Exception e) {
-			log.info("[" + key + "]" +  "::::[crearObjectoCategoria]::::Error generico en la creacion de Objecto categoria con data recibida!");
+			log.info("[" + key + "]" +  "::::[crearObjectoImg]::::Error generico en la creacion de Objecto Img con data recibida!");
 			log.info(Log4jUtils.getStackTrace(e));
 			return null;
 		}
 	}
 
 	@Override
-	public SuperGenericResponse insertCategoria(CategoriaDto categoriaInfo) throws SrvValidacionException {
+	public SuperGenericResponse insertImg(ImgDto imgInfo) throws SrvValidacionException {
 		String key = SecurityContextHolder.getContext().getAuthentication().getName();
 		SuperGenericResponse res = new SuperGenericResponse(Constantes.ERROR, "Error generico en el servicio!");
-		Categoria categoria = new Categoria();
+		Img Img = new Img();
 		
 		//Validando la data recibida
-		categoriaInfo.setId(1);
-		if(!isDataValida(categoriaInfo, key))
+		imgInfo.setId(1);
+		if(!isDataValida(imgInfo, key))
 			throw new SrvValidacionException(Constantes.ERROR, "Data no es valida!");
 		
 		//creando objecto que se insertara en l base de datos
-		categoria = crearObjectoCategoria(categoriaInfo, key);
-		if(categoria == null)
+		Img = crearObjectoImg(imgInfo, key);
+		if(Img == null)
 			throw new SrvValidacionException(Constantes.ERROR, "Error en el proceos de crear objecto con la data recibida!");
 		
 		//Insertando en la base de datos!
-		if(categoriaDao.insert(categoria).getCodigo() != Constantes.SUCCES)
+		if(ImgDao.insert(Img).getCodigo() != Constantes.SUCCES)
 			throw new SrvValidacionException(Constantes.ERROR, "Error en el proceos de insertar en la base de datos!");
 		
-		log.info("[" + key + "]" +  "::::[insertCategoria]::::Registro agregado correctamente!");
+		log.info("[" + key + "]" +  "::::[insertImg]::::Registro agregado correctamente!");
 		res.setCodigo(Constantes.SUCCES);
 		res.setMensaje(Constantes.OK);
 		return res;
 	}
 	
 	@Override
-	public SuperGenericResponse updateCategoria(CategoriaDto categoriaInfo) throws SrvValidacionException {
+	public SuperGenericResponse updateImg(ImgDto imgInfo) throws SrvValidacionException {
 		String key = SecurityContextHolder.getContext().getAuthentication().getName();
 		SuperGenericResponse res = new SuperGenericResponse(Constantes.ERROR, "Error generico en el servicio!");
-		Categoria categoria = new Categoria();
+		Img Img = new Img();
 		
 		//Validando la data recibida
-		if(!isDataValida(categoriaInfo, key))
+		if(!isDataValida(imgInfo, key))
 			throw new SrvValidacionException(Constantes.ERROR, "Data no es valida!");
 		
 		//creando objecto que se insertara en l base de datos
-		categoria = crearObjectoCategoria(categoriaInfo, key);
-		if(categoria == null)
+		Img = crearObjectoImg(imgInfo, key);
+		if(Img == null)
 			throw new SrvValidacionException(Constantes.ERROR, "Error en el proceos de crear objecto con la data recibida!");
 		
 		//actualizando en la base de datos!
-		if(categoriaDao.update(categoria).getCodigo() != Constantes.SUCCES)
+		if(ImgDao.update(Img).getCodigo() != Constantes.SUCCES)
 			throw new SrvValidacionException(Constantes.ERROR, "Error en el proceos de actualizar en la base de datos!");
 		
-		log.info("[" + key + "]" +  "::::[UpdateCategoria]::::Registro agregado correctamente!");
+		log.info("[" + key + "]" +  "::::[UpdateImg]::::Registro agregado correctamente!");
 		res.setCodigo(Constantes.SUCCES);
 		res.setMensaje(Constantes.OK);
 		return res;
 	}
 
 	@Override
-	public SuperGenericResponse deleteCategoria(CategoriaDto categoriaInfo) throws SrvValidacionException {
+	public SuperGenericResponse deleteImg(ImgDto imgInfo) throws SrvValidacionException {
 		String key = SecurityContextHolder.getContext().getAuthentication().getName();
 		SuperGenericResponse res = new SuperGenericResponse(Constantes.ERROR, "Error generico en el servicio!");
-		Categoria categoria = new Categoria();
+		Img Img = new Img();
 		
 		//Validando la data recibida
-		categoriaInfo.setNombre("relleno para validacion");
-		if(!isDataValida(categoriaInfo, key))
+		imgInfo.setBase64("relleno para validacion");
+		if(!isDataValida(imgInfo, key))
 			throw new SrvValidacionException(Constantes.ERROR, "Data no es valida!");
 		
 		//creando objecto que se insertara en l base de datos
-		categoria = crearObjectoCategoria(categoriaInfo, key);
-		if(categoria == null)
+		Img = crearObjectoImg(imgInfo, key);
+		if(Img == null)
 			throw new SrvValidacionException(Constantes.ERROR, "Error en el proceos de crear objecto con la data recibida!");
 		
 		//elimninando en la base de datos!
-		if(categoriaDao.delete(categoria).getCodigo() != Constantes.SUCCES)
+		if(ImgDao.delete(Img).getCodigo() != Constantes.SUCCES)
 			throw new SrvValidacionException(Constantes.ERROR, "Error en el proceos de actualizar en la base de datos!");
 		
-		log.info("[" + key + "]" +  "::::[UpdateCategoria]::::Registro eliminado correctamente!");
+		log.info("[" + key + "]" +  "::::[UpdateImg]::::Registro eliminado correctamente!");
 		res.setCodigo(Constantes.SUCCES);
 		res.setMensaje(Constantes.OK);
 		return res;
 	}
 	
 	@Override
-	public GenericEntityResponse<Categoria> getOneByIDCategoria(CategoriaDto categoriaInfo)
+	public GenericEntityResponse<Img> getOneByIDImg(ImgDto imgInfo)
 			throws SrvValidacionException {
 		String key = SecurityContextHolder.getContext().getAuthentication().getName();
-		GenericEntityResponse<Categoria> res = new GenericEntityResponse<>(Constantes.ERROR, "Error generico en obtener por ID");
-		Categoria categoria = new Categoria();
+		GenericEntityResponse<Img> res = new GenericEntityResponse<>(Constantes.ERROR, "Error generico en obtener por ID");
+		Img Img = new Img();
 		
 		//Validando la data recibida
-		categoriaInfo.setNombre("relleno para validacion");
-		if(!isDataValida(categoriaInfo, key))
+		imgInfo.setBase64("relleno para validacion");
+		if(!isDataValida(imgInfo, key))
 			throw new SrvValidacionException(Constantes.ERROR, "Data no es valida!");
 		
 		//obteniendo en la base de datos!
-		categoria = categoriaDao.getOneById(categoriaInfo.getId()).getEntity();
-		if(categoria == null)
+		Img = ImgDao.getOneById(imgInfo.getId()).getEntity();
+		if(Img == null)
 			throw new SrvValidacionException(Constantes.ERROR, "Error en el proceos de obtener en la base de datos!");
 		
-		log.info("[" + key + "]" +  "::::[getOneByIDCategoria]::::Registro obtenido correctamente!");
+		log.info("[" + key + "]" +  "::::[getOneByIDImg]::::Registro obtenido correctamente!");
 		res.setCodigo(Constantes.SUCCES);
 		res.setMensaje(Constantes.OK);
-		res.setEntity(categoria);
+		res.setEntity(Img);
 		return res;
 	}
 
-	public GenericEntityResponse<List<Categoria>> getAllCategoria() throws SrvValidacionException {
+	public GenericEntityResponse<List<Img>> getAllImg() throws SrvValidacionException {
 		String key = SecurityContextHolder.getContext().getAuthentication().getName();
-		GenericEntityResponse<List<Categoria>> res = new GenericEntityResponse<>(Constantes.ERROR, "Error generico en obtener por ID");
-		List<Categoria> categoria = new ArrayList<>();
+		GenericEntityResponse<List<Img>> res = new GenericEntityResponse<>(Constantes.ERROR, "Error generico en obtener por ID");
+		List<Img> Img = new ArrayList<>();
 		
 		//obteniendo en la base de datos!
-		categoria = categoriaDao.getAll().getEntity();
-		if(categoria.isEmpty())
+		Img = ImgDao.getAll().getEntity();
+		if(Img.isEmpty())
 			throw new SrvValidacionException(Constantes.ERROR, "Error en el proceos de obtener todos en la base de datos!");
 		
-		log.info("[" + key + "]" +  "::::[getOneByIDCategoria]::::Registro obtenido correctamente!");
+		log.info("[" + key + "]" +  "::::[getOneByIDImg]::::Registro obtenido correctamente!");
 		res.setCodigo(Constantes.SUCCES);
 		res.setMensaje(Constantes.OK);
-		res.setListaEntity(categoria);
+		res.setListaEntity(Img);
 		return res;
 	}
 

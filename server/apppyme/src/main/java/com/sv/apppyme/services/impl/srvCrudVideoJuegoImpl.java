@@ -28,7 +28,7 @@ import com.sv.apppyme.utils.DateUtils;
 import com.sv.apppyme.utils.ObjectMapperUtils;
 
 @Service
-public class srvCrudVideoJuego implements ICrudVideoJuego {
+public class srvCrudVideoJuegoImpl implements ICrudVideoJuego {
 
 	Logger log = Logger.getLogger(getClass());
 

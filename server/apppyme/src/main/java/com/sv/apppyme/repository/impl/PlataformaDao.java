@@ -158,7 +158,7 @@ public class PlataformaDao implements IRepoPlataforma{
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_DELETE);
 			log.info("::::[delete]::::PreparedStatment creado correctamente::::");
 			stmt.setInt(1, plataforma.getId());
-			log.info("::::[delete]::::Valor ____________________ 1::::categoria:::Value:::" + plataforma.getId() + "Seteado CORRECTAMENTE::::");
+			log.info("::::[delete]::::Valor ____________________ 1::::plataforma:::Value:::" + plataforma.getId() + "Seteado CORRECTAMENTE::::");
 			log.info("::::[delete]:::SQL generado:::" + stmt.toString() + "::::");
 			int rs = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[delete]::::Datos guardado correctamente::::");
