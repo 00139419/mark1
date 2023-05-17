@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.ISignUp;
 import com.sv.apppyme.services.ITestTablas;
 import com.sv.apppyme.utils.Constantes;
+import com.sv.apppyme.utils.UtilsComponent;
 import com.sv.apppyme.utils.encriptacion.MD5;
 
 @RestController
@@ -40,6 +42,7 @@ public class CtrlTest {
 	
 	@Autowired
 	ITestTablas srvTestTablasImpl;
+
 	
 	@PostMapping(value = "/getConnection", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SuperGenericResponse> ComprobarConeccionConLaApi(){

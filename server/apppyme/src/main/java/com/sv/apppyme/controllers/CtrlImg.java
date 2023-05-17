@@ -24,7 +24,6 @@ import com.sv.apppyme.utils.Constantes;
 @RequestMapping(value = Constantes.ROOT_CTRL)
 public class CtrlImg {
 
-
 	Logger log = Logger.getLogger(getClass());
 
 	@Autowired

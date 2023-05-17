@@ -23,7 +23,6 @@ import com.sv.apppyme.utils.Constantes;
 @RestController
 @RequestMapping(value = Constantes.ROOT_CTRL)
 public class CtrlPlataforma {
-	
 
 	Logger log = Logger.getLogger(getClass());
 

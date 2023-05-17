@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import com.sv.apppyme.controllers.dto.ImgDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
@@ -17,6 +18,7 @@ import com.sv.apppyme.services.ICrudImg;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Log4jUtils;
 
+@Service
 public class srvCrudImgImpl implements ICrudImg {
 
 Logger log = Logger.getLogger(getClass());
