@@ -15,7 +15,7 @@ import com.sv.apppyme.entities.Categoria;
 import com.sv.apppyme.entities.Desarrolladora;
 import com.sv.apppyme.entities.Img;
 import com.sv.apppyme.entities.Plataforma;
-import com.sv.apppyme.entities.Videojuego;
+import com.sv.apppyme.entities.Producto;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.repository.IRepoCategoria;
 import com.sv.apppyme.repository.IRepoDesarrolladora;
@@ -84,7 +84,7 @@ public class srvCrudVideoJuegoImpl implements ICrudVideoJuego {
 
 	public boolean insetarJuegoSucces(VideoJuegoDto videojuegoInfo, String key) {
 		Img img = ImgDao.getOneByBase64(videojuegoInfo.getImgbase64()).getEntity();
-		Videojuego vjE = new Videojuego();
+		Producto vjE = new Producto();
 		vjE.setNombre(videojuegoInfo.getNombre());
 		vjE.setCategoria(new Categoria(videojuegoInfo.getCategoria()));
 		vjE.setPrecio(videojuegoInfo.getPrecio());
@@ -134,7 +134,7 @@ public class srvCrudVideoJuegoImpl implements ICrudVideoJuego {
 
 	public boolean updateJuegoSucces(VideoJuegoDto videojuegoInfo, String key) {
 		Img img = ImgDao.getOneByBase64(videojuegoInfo.getImgbase64()).getEntity();
-		Videojuego vjE = new Videojuego();
+		Producto vjE = new Producto();
 		vjE.setId(videojuegoInfo.getId());
 		vjE.setNombre(videojuegoInfo.getNombre());
 		vjE.setCategoria(new Categoria(videojuegoInfo.getCategoria()));
@@ -183,7 +183,7 @@ public class srvCrudVideoJuegoImpl implements ICrudVideoJuego {
 	}
 
 	public boolean deleteJuegoSucces(VideoJuegoDto videojuegoInfo, String key) {
-		Videojuego vjE = new Videojuego();
+		Producto vjE = new Producto();
 		vjE.setId(videojuegoInfo.getId());
 
 		if (videojuegoDao.delete(vjE).getCodigo() != Constantes.SUCCES)
@@ -194,17 +194,17 @@ public class srvCrudVideoJuegoImpl implements ICrudVideoJuego {
 	}
 
 	@Override
-	public GenericEntityResponse<Videojuego> getOneByIDVideojuego(VideoJuegoDto videojuegoInfo)
+	public GenericEntityResponse<Producto> getOneByIDVideojuego(VideoJuegoDto videojuegoInfo)
 			throws SrvValidacionException {
 		String key = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		mostrarDataRecibida(videojuegoInfo, key);
 		
-		GenericEntityResponse<Videojuego> res = new GenericEntityResponse<>();
-		Videojuego v = new Videojuego();
+		GenericEntityResponse<Producto> res = new GenericEntityResponse<>();
+		Producto v = new Producto();
 
 		// obteniendo la da del la base de datps por ID
-		GenericEntityResponse<Videojuego> resDao = videojuegoDao.getOneById(videojuegoInfo.getId());
+		GenericEntityResponse<Producto> resDao = videojuegoDao.getOneById(videojuegoInfo.getId());
 
 		if (resDao.getCodigo() != Constantes.SUCCES) {
 			throw new SrvValidacionException(Constantes.ERROR,
@@ -219,7 +219,7 @@ public class srvCrudVideoJuegoImpl implements ICrudVideoJuego {
 		return res;
 	}
 
-	public Videojuego setearAtributosVideoJuegosIndividuales(Videojuego v, String key) throws SrvValidacionException {
+	public Producto setearAtributosVideoJuegosIndividuales(Producto v, String key) throws SrvValidacionException {
 
 		GenericEntityResponse<Categoria> resCat = categoriaDao.getOneById(v.getCategoria().getId());
 		if (resCat.getCodigo() != Constantes.SUCCES) {
@@ -255,21 +255,21 @@ public class srvCrudVideoJuegoImpl implements ICrudVideoJuego {
 	}
 
 	@Override
-	public GenericEntityResponse<List<Videojuego>> getAllVideojuego() throws SrvValidacionException {
+	public GenericEntityResponse<List<Producto>> getAllVideojuego() throws SrvValidacionException {
 		String key = SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		// obteniendo la da del la base de datps por ID
-		GenericEntityResponse<List<Videojuego>> res = new GenericEntityResponse<>();
-		GenericEntityResponse<List<Videojuego>> resDao = videojuegoDao.getAll();
+		GenericEntityResponse<List<Producto>> res = new GenericEntityResponse<>();
+		GenericEntityResponse<List<Producto>> resDao = videojuegoDao.getAll();
 
-		List<Videojuego> ls = new ArrayList<>();
+		List<Producto> ls = new ArrayList<>();
 
 		if (resDao.getCodigo() != Constantes.SUCCES) {
 			throw new SrvValidacionException(Constantes.ERROR, "Error en el proceso de obtener todos los videojuegos");
 		}
 
 		// TODO setear las entidades
-		for (Videojuego v : resDao.getEntity()) {
+		for (Producto v : resDao.getEntity()) {
 			ls.add(setearAtributosVideoJuegosIndividuales(v, key));
 		}
 

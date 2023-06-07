@@ -5,7 +5,7 @@ import java.util.List;
 import com.sv.apppyme.controllers.dto.VideoJuegoDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Videojuego;
+import com.sv.apppyme.entities.Producto;
 import com.sv.apppyme.exception.SrvValidacionException;
 
 public interface ICrudVideoJuego {
@@ -40,7 +40,7 @@ public interface ICrudVideoJuego {
 	 * @return una respuesta generica con el status de la transaccion
 	 * @throws SrvValidacionException
 	 */
-	GenericEntityResponse<Videojuego> getOneByIDVideojuego(VideoJuegoDto videojuegoInfo) throws SrvValidacionException;
+	GenericEntityResponse<Producto> getOneByIDVideojuego(VideoJuegoDto videojuegoInfo) throws SrvValidacionException;
 	
 	/**
 	 * Metodo que se encarga de obtener todos videojuego videojuegos desde el cliente
@@ -48,6 +48,6 @@ public interface ICrudVideoJuego {
 	 * @return una respuesta generica con el status de la transaccion
 	 * @throws SrvValidacionException
 	 */
-	GenericEntityResponse<List<Videojuego>> getAllVideojuego() throws SrvValidacionException;
+	GenericEntityResponse<List<Producto>> getAllVideojuego() throws SrvValidacionException;
 	
 }

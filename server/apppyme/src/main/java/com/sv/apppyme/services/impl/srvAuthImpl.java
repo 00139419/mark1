@@ -10,7 +10,7 @@ import com.sv.apppyme.controllers.dto.TokenDto;
 import com.sv.apppyme.controllers.dto.UsuarioDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.IAuth;
 import com.sv.apppyme.services.ISignUp;
@@ -42,7 +42,7 @@ public class srvAuthImpl implements IAuth {
 		log.info(mapper.writeValueAsString(userinfo));
 		log.info(":::Login]::::Fin mostrando datos recibidos en Json::::");
 		log.info("::::[Login]::::Obteniendo usario::::");
-		GenericEntityResponse<Usuario> resDaoUsario = srvDataimpl.obtenerUsuarioByUsername(userinfo);
+		GenericEntityResponse<User> resDaoUsario = srvDataimpl.obtenerUsuarioByUsername(userinfo);
 		log.info("::::[login]:::Respuesta obtenida del DAO::::");
 		log.info("::::[login]:::codigo::::" + resDaoUsario.getCodigo() + "::::");
 		log.info("::::[login]:::mensaje::::" + resDaoUsario.getMensaje() + "::::");

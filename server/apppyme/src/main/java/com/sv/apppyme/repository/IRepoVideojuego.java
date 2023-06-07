@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Videojuego;
+import com.sv.apppyme.entities.Producto;
 
 public interface IRepoVideojuego {
 	
@@ -14,7 +14,7 @@ public interface IRepoVideojuego {
 	 * @author dm420
 	 * @return una respuesta con el status de la operacion INSERT en la base de datos
 	 */
-	SuperGenericResponse insert(Videojuego videojuego);
+	SuperGenericResponse insert(Producto videojuego);
 	
 	/**
 	 * 
@@ -22,7 +22,7 @@ public interface IRepoVideojuego {
 	 * @author dm420
 	 * @return una respuesta con el status de la operacion UPDATE en la base de datos para cierto registro
 	 */
-	SuperGenericResponse update(Videojuego videojuego);
+	SuperGenericResponse update(Producto videojuego);
 	
 	/**
 	 * 
@@ -30,7 +30,7 @@ public interface IRepoVideojuego {
 	 * @author dm420
 	 * @return una respuesta con el status de la operacion DELETE en la base de datos para cierto registro
 	 */
-	SuperGenericResponse delete(Videojuego videojuego);
+	SuperGenericResponse delete(Producto videojuego);
 	
 	/**
 	 * 
@@ -38,7 +38,7 @@ public interface IRepoVideojuego {
 	 * @author dm420
 	 * @return un registro de la base de datos, a traves de su ID
 	 */
-	GenericEntityResponse<Videojuego> getOneById(int id);
+	GenericEntityResponse<Producto> getOneById(int id);
 	
 	/**
 	 * 
@@ -46,12 +46,12 @@ public interface IRepoVideojuego {
 	 * @author dm420
 	 * @return un registro de la base de datos, a traves de su ID
 	 */
-	GenericEntityResponse<Videojuego> getOneByNombre(String nombre);
+	GenericEntityResponse<Producto> getOneByNombre(String nombre);
 	
 	/**
 	 * 
 	 * @author dm420
 	 * @return todos los registros de la tabla en la base de datos
 	 */
-	GenericEntityResponse<List<Videojuego>> getAll();
+	GenericEntityResponse<List<Producto>> getAll();
 }

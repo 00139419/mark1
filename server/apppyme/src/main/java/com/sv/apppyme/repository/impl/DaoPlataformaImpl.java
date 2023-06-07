@@ -19,7 +19,7 @@ import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Log4jUtils;
 
 @Repository
-public class PlataformaDao implements IRepoPlataforma{
+public class DaoPlataformaImpl implements IRepoPlataforma{
 	
 	Logger log = Logger.getLogger(getClass());
 
@@ -29,16 +29,19 @@ public class PlataformaDao implements IRepoPlataforma{
 	// Columnas de la tabla
 	public static final String COL_ID = "id";
 	public static final String COL_NOMBRE = "nombre";
+	public static final String COL_IMG_ID = "img_id";
+	
 	
 	// Consultas de la tabla
-	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_PLATAFORMA + "(" + COL_NOMBRE + ")" + " VALUES (?)";
+	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_PLATAFORMA + "(" + COL_NOMBRE + "," + COL_IMG_ID + ")" + " VALUES (?,?)";
 	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_PLATAFORMA;
 	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_PLATAFORMA 
 			+ " WHERE " 
 				+ COL_ID + " = ?";
 	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_PLATAFORMA 
 			+ " SET " 
-				+ COL_NOMBRE + " = ?"
+				+ COL_NOMBRE + " = ?, "
+				+ COL_IMG_ID + " = ?"
 			+ " WHERE " 
 				+ COL_ID + " = ?";
 	public static final String SQL_DELETE = "DELETE FROM " + DB_TABLA_PLATAFORMA + " WHERE " + COL_ID + " = ?";

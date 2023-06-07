@@ -4,7 +4,7 @@ package com.sv.apppyme.services;
 import com.sv.apppyme.controllers.dto.UsuarioDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 import com.sv.apppyme.exception.SrvValidacionException;
 
 public interface ISignUp {
@@ -31,7 +31,7 @@ public interface ISignUp {
 	 * @throws SrvValidacionException
 	 * @author dm420
 	 */
-	GenericEntityResponse<Usuario> obtenerUsuarioByUsername(UsuarioDto userInfo) throws SrvValidacionException;
+	GenericEntityResponse<User> obtenerUsuarioByUsername(UsuarioDto userInfo) throws SrvValidacionException;
 	
 	/**
 	 * 

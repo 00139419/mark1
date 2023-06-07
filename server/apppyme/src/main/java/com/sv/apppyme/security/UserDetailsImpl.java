@@ -6,7 +6,7 @@ import java.util.Collections;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 
 import lombok.AllArgsConstructor;
 
@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 public class UserDetailsImpl implements UserDetails{
 	
 	private static final long serialVersionUID = 1L;
-	public final Usuario usuario;
+	public final User usuario;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -31,7 +31,7 @@ public class UserDetailsImpl implements UserDetails{
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return usuario.getUsername();
+		return usuario.getEmail();
 	}
 
 	@Override
@@ -58,8 +58,8 @@ public class UserDetailsImpl implements UserDetails{
 		return true;
 	}
 	
-	public String obtenerUsername() {
-		return usuario.getUsername();
+	public String obtenerEmail() {
+		return usuario.getEmail();
 	}
 
 }

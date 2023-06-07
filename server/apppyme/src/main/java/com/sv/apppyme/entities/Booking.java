@@ -7,18 +7,18 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Img {
+public class Booking {
 
 	private int id;
-	private String base64;
+	private User user;
+	private String listP;
 	private Date fecha;
+	private boolean vigente;
+	private boolean pagada;
+	private boolean cancelada;
 
-	public Img() {
+	public Booking() {
 		super();
 	}
 
-	public Img(int id) {
-		super();
-		this.id = id;
-	}
 }

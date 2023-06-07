@@ -9,7 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.ISignUp;
 import com.sv.apppyme.services.ITokenOTP;
@@ -75,7 +75,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
 		try {
 			if(srvDaraImpl.esCuentaActiva(username).getCodigo() ==  Constantes.SUCCES) {
-				String token = tokeManager.generarToken(new Usuario(username, password));
+				String token = tokeManager.generarToken(new User(username, password));
 				
 				response.addHeader("codigo", "0");
 				response.addHeader("descripcionm", "OK");

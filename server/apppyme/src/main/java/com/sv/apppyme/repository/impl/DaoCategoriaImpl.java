@@ -19,7 +19,7 @@ import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Log4jUtils;
 
 @Repository
-public class CategoriaDao implements IRepoCategoria {
+public class DaoCategoriaImpl implements IRepoCategoria {
 
 	Logger log = Logger.getLogger(getClass());
 

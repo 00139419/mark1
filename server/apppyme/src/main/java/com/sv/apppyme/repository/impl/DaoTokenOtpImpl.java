@@ -14,14 +14,14 @@ import com.sv.apppyme.conexciones.ConexionPostgres;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.TokenOTP;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 import com.sv.apppyme.repository.IRepoTokenOTP;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.DateUtils;
 import com.sv.apppyme.utils.Log4jUtils;
 
 @Repository
-public class TokenOTPDao implements IRepoTokenOTP {
+public class DaoTokenOtpImpl implements IRepoTokenOTP {
 
 	Logger log = Logger.getLogger(getClass());
 
@@ -56,7 +56,7 @@ public class TokenOTPDao implements IRepoTokenOTP {
 				+ COL_FECHA_CREACION + " = ?, " 
 				+ COL_FECHA_VENCIMIENTO + " = ?, " 
 				+ COL_ES_VALIDO + " = ?, " 
-				+ COL_ESTA_VERIFICADO + " = ?"
+				+ COL_ESTA_VERIFICADO + " = ? "
 			+ " WHERE " 
 				+ COL_ID  + " = ?";
 	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_TOKENOPT;
@@ -90,7 +90,7 @@ public class TokenOTPDao implements IRepoTokenOTP {
 				tokenOtp.setFechaDeCreacion(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_CREACION)));
 				tokenOtp.setFechaDeVencimiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_VENCIMIENTO)));
 				tokenOtp.setEstaVerificado(rs.getBoolean(COL_ESTA_VERIFICADO));
-				tokenOtp.setUsuario(new Usuario(rs.getInt(COL_USER_ID)));
+				tokenOtp.setUsuario(new User(rs.getInt(COL_USER_ID)));
 				
 				ls.add(tokenOtp);
 			}
@@ -251,7 +251,7 @@ public class TokenOTPDao implements IRepoTokenOTP {
 			while (rs.next()) {
 				token = new TokenOTP();
 				token.setId(rs.getInt(COL_ID));
-				token.setUsuario(new Usuario(rs.getInt(COL_USER_ID)));
+				token.setUsuario(new User(rs.getInt(COL_USER_ID)));
 				token.setEstaVerificado(rs.getBoolean(COL_ESTA_VERIFICADO));
 				token.setFechaDeCreacion(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_CREACION)));
 				token.setFechaDeVencimiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_VENCIMIENTO)));

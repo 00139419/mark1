@@ -17,7 +17,7 @@ import com.sv.apppyme.repository.IRepoRol;
 import com.sv.apppyme.utils.Constantes;
 
 @Repository
-public class RolDao implements IRepoRol {
+public class DaoRolImpl implements IRepoRol {
 	
 	//nombre de la tabla
 	public static final String DB_TABLA_ROL = "rol";
@@ -27,7 +27,7 @@ public class RolDao implements IRepoRol {
 	public static final String COL_DESCRIPCION = "descripcion";
 	
 
-	Logger log = Logger.getLogger(RolDao.class);
+	Logger log = Logger.getLogger(DaoRolImpl.class);
 	
 	//querys de la tabla
 	private String SQL_SELECT_BY_DESCRIPCION = "SELECT * FROM " + DB_TABLA_ROL + " WHERE " + COL_DESCRIPCION + " = ?";

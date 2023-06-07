@@ -14,8 +14,8 @@ import com.sv.apppyme.entities.Desarrolladora;
 import com.sv.apppyme.entities.Img;
 import com.sv.apppyme.entities.Plataforma;
 import com.sv.apppyme.entities.Reporte;
-import com.sv.apppyme.entities.Usuario;
-import com.sv.apppyme.entities.Videojuego;
+import com.sv.apppyme.entities.User;
+import com.sv.apppyme.entities.Producto;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.repository.IRepoCategoria;
 import com.sv.apppyme.repository.IRepoReporte;
@@ -94,7 +94,7 @@ public class srvTestTablasImpl implements ITestTablas {
 		log.info(
 				"::::[INICIO]:::[testCategoria]:::: Iniciando implementacion del servicio de test tabla videojuego::::");
 
-		Videojuego aux = new Videojuego();
+		Producto aux = new Producto();
 		aux.setNombre("GTA");
 		aux.setCategoria(new Categoria(5));
 		aux.setPrecio((float) 18.99);
@@ -130,15 +130,15 @@ public class srvTestTablasImpl implements ITestTablas {
 		return new SuperGenericResponse(Constantes.SUCCES, Constantes.OK);
 	}
 
-	public boolean insertVideoJuegoSuccess(Videojuego aux) {
+	public boolean insertVideoJuegoSuccess(Producto aux) {
 		return videoJuegoDao.insert(aux).getCodigo() == Constantes.SUCCES;
 	}
 
-	public boolean updateVideoJuegoSuccess(Videojuego aux) {
+	public boolean updateVideoJuegoSuccess(Producto aux) {
 		return videoJuegoDao.update(aux).getCodigo() == Constantes.SUCCES;
 	}
 
-	public boolean selectOneByIdVideoJuegoSuccess(Videojuego aux) {
+	public boolean selectOneByIdVideoJuegoSuccess(Producto aux) {
 		return videoJuegoDao.getOneById(1).getCodigo() == Constantes.SUCCES;
 	}
 
@@ -146,7 +146,7 @@ public class srvTestTablasImpl implements ITestTablas {
 		return videoJuegoDao.getAll().getCodigo() == Constantes.SUCCES;
 	}
 
-	public boolean deleteVideoJuegoSuccess(Videojuego aux) {
+	public boolean deleteVideoJuegoSuccess(Producto aux) {
 		return videoJuegoDao.delete(aux).getCodigo() == Constantes.SUCCES;
 	}
 
@@ -159,7 +159,7 @@ public class srvTestTablasImpl implements ITestTablas {
 		aux.setBase64("ASDAsdasd");
 		aux.setFecha(new Date());
 		aux.setNombre("asdasd");
-		aux.setUserId(new Usuario(51));
+		aux.setUserId(new User(51));
 		aux.setTipoDoc("asdas");
 		aux.setNumDoc("Asdasd");
 		aux.setTotal((float) 12.1);

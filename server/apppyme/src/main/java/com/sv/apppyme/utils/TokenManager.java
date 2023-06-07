@@ -7,7 +7,7 @@ import java.util.HashMap;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -21,7 +21,7 @@ public class TokenManager {
 	public static SignatureAlgorithm ALGORTMO_DE_CIFRADO = SignatureAlgorithm.HS256;
 	
 	
-	public String generarToken(Usuario userInfo){
+	public String generarToken(User userInfo){
 		
 		try {
 			HashMap<String, Object> header = new HashMap<>();
@@ -36,7 +36,7 @@ public class TokenManager {
 			JwtBuilder tokenJWT = Jwts.builder()
 								  .setHeader(header)
 								  .addClaims(claims)
-								  .setSubject(userInfo.getUsername())
+								  .setSubject(userInfo.getEmail())
 								  .setIssuedAt(new Date(System.currentTimeMillis()))
 								  .setExpiration(new Date(System.currentTimeMillis() + Constantes.JWT_EXP_TIME_MILLIS))
 								  .signWith(ALGORTMO_DE_CIFRADO, Constantes.JWT_SECRETKEY);

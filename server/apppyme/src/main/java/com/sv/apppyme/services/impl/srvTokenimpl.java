@@ -14,11 +14,11 @@ import com.sv.apppyme.controllers.dto.ValidarTokenOTPDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.TokenOTP;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.repository.IRepoTokenOTP;
 import com.sv.apppyme.repository.IRepoUsuario;
-import com.sv.apppyme.repository.impl.TokenOTPDao;
+import com.sv.apppyme.repository.impl.DaoTokenOtpImpl;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.ObjectMapperUtils;
 import com.sv.apppyme.utils.TokenManager;
@@ -41,7 +41,7 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 	public static int EXP_TOKE_OTP_MILLIS = 1000 * 60 * 60 * 10000;
 
 	@Override
-	public TokenDto creaTokenOTP(Usuario usuario) throws SrvValidacionException {
+	public TokenDto creaTokenOTP(User usuario) throws SrvValidacionException {
 		log.info("::::[Inicio]::::[creaToken]::::Iniciando servicio de crearToken::::");
 		log.info("::::[Inicio]::::[creaToken]::::Datos Recibidos::::value::::" + ObjectMapperUtils.ObjectToJsonString(usuario));
 		
@@ -53,11 +53,11 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 		tokenOTP.setFechaDeVencimiento(new Date(System.currentTimeMillis() + EXP_TOKE_OTP_MILLIS));
 		tokenOTP.setEstaVerificado(false);
 		
-		if(usuario.getUsername() == null)
-			usuario = userDao.getOneByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getEntity();
+		if(usuario.getEmail() == null)
+			usuario = userDao.getOneByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).getEntity();
 		
-		if(usuario.getUsername() !=  null)
-			usuario = userDao.getOneByUsername(usuario.getUsername()).getEntity();
+		if(usuario.getEmail() !=  null)
+			usuario = userDao.getOneByEmail(usuario.getEmail()).getEntity();
 		
 		tokenOTP.setUsuario(usuario);
 			
@@ -107,7 +107,7 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 			log.info("::::[verificarExistenciaToken]::::Token es valido);:::");
 		}
 
-		Usuario user = null;
+		User user = null;
 		if (res.getCodigo() == Constantes.SUCCES && !res.getListaEntity().isEmpty()) {
 			for (TokenOTP objeto : res.getListaEntity()) {
 				token = objeto;
@@ -147,7 +147,7 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 		if (activarCuenta(token.getUsuario()).getCodigo() != Constantes.SUCCES)
 			throw new SrvValidacionException(Constantes.ERROR, "Error interno en el proceso de activacion de cuenta");
 		log.info("::::[esTokenVencidoOrValidado]::::se  activo la  cuenta del usuario::::value::::"
-				+ token.getUsuario().getUsername() + "::::");
+				+ token.getUsuario().getEmail() + "::::");
 		
 		String jwt = tokenManager.generarToken((token.getUsuario()));
 		
@@ -176,7 +176,7 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 		return false;
 	}
 
-	public SuperGenericResponse activarCuenta(Usuario user) throws SrvValidacionException {
+	public SuperGenericResponse activarCuenta(User user) throws SrvValidacionException {
 		user.setCuentaActiva(true);
 		return userDao.update(user);
 	}
@@ -190,7 +190,7 @@ public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 	@Override
 	public void eliminarTokensObsoletos() {
 		log.info("::::[PROCESO INTERNO]::::Proceso interno para eliminar los token obsoletos::::");
-		srvTokenOTP = new TokenOTPDao();
+		srvTokenOTP = new DaoTokenOtpImpl();
 		List<TokenOTP> ls = srvTokenOTP.getAll().getEntity();
 		for (TokenOTP token : ls) {
 			

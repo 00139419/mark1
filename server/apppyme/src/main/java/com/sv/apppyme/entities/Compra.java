@@ -1,22 +1,21 @@
 package com.sv.apppyme.entities;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Rol {
+public class Compra {
 
 	private int id;
-	private String descripcion;
+	private User agente;
+	private User user;
+	private Date fecha;
 
-	public Rol() {
+	public Compra() {
 		super();
-	}
-
-	public Rol(int id) {
-		super();
-		this.id = id;
 	}
 
 }

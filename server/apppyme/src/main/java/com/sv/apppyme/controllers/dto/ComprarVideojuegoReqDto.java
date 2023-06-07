@@ -2,7 +2,7 @@ package com.sv.apppyme.controllers.dto;
 
 import java.util.List;
 
-import com.sv.apppyme.entities.Videojuego;
+import com.sv.apppyme.entities.Producto;
 
 import lombok.Data;
 
@@ -15,7 +15,7 @@ public class ComprarVideojuegoReqDto {
 	private String apellido2;
 	private String tipoIdentificacion;
 	private String numeroIdentificacion;
-	private List<Videojuego> lv;
+	private List<Producto> lv;
 	private double total;
 	private double totalDineroFisicoRecibido;
 	private double totalDineroFisicoCambio;

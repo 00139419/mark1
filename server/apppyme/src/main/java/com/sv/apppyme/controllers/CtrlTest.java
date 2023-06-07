@@ -20,7 +20,7 @@ import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.email.dto.SendEmailDto;
 import com.sv.apppyme.email.repository.IEmails;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.ISignUp;
 import com.sv.apppyme.services.ITestTablas;
@@ -108,17 +108,17 @@ public class CtrlTest {
 	}
 	
 	@PostMapping(value = "/obtener/usuarioByUsername", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GenericEntityResponse<Usuario>> obtenerUsuarioByUsername(@RequestBody UsuarioDto userInfo) {
+	public ResponseEntity<GenericEntityResponse<User>> obtenerUsuarioByUsername(@RequestBody UsuarioDto userInfo) {
 		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
 		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
-		GenericEntityResponse<Usuario> res = new GenericEntityResponse<>();
+		GenericEntityResponse<User> res = new GenericEntityResponse<>();
 		try {
 			res = srvSignUpImpl.obtenerUsuarioByUsername(userInfo);
 			log.info("::::[FIN]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
-			return new ResponseEntity<GenericEntityResponse<Usuario>>(res, HttpStatus.OK);
+			return new ResponseEntity<GenericEntityResponse<User>>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
-			return new ResponseEntity<GenericEntityResponse<Usuario>>(
+			return new ResponseEntity<GenericEntityResponse<User>>(
 					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
 		} finally {
 			log.info("***************** Fin Servicio obtener Usuario by Username *****************");

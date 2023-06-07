@@ -12,50 +12,81 @@ import com.sv.apppyme.conexciones.ConexionPostgres;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Rol;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 import com.sv.apppyme.repository.IRepoUsuario;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Log4jUtils;
 
 @Repository
-public class UsuarioDao implements IRepoUsuario {
+public class DaoUsuarioImpl implements IRepoUsuario {
 	
-	Logger log = Logger.getLogger(UsuarioDao.class);
+	Logger log = Logger.getLogger(DaoUsuarioImpl.class);
 	
 	//nombre de la tabla
 	public static final String DB_TABLA_USUARIO = "usuario";
 	
 	//columnas de la tabla
 	public static final String COL_ID = "id";
-	public static final String COL_USERNAME = "username";
+	public static final String COL_NOMBRE = "nombre";
 	public static final String COL_PASSWORD = "password";
 	public static final String COL_ROL_ID = "rol_id";
-	public static final String COL_CUENTA_ACTIVA = "cuentaactiva";
+	public static final String COL_CUENTA_ACTIVA = "cuentaacti	va";
+	public static final String COL_EMAIL = "email";
+	public static final String COL_DEPARTAMENTO = "departamento";
+	public static final String COL_MUNICIPIO = "municipio";
+	public static final String COL_FECHA_NACIMIENTO = "fechanacimiento";
+	public static final String COL_EMISION_DUI = "fechaemidoc";
+	public static final String COL_VENCIMIENTO_DUI = "fechavendoc";
+	public static final String COL_GENERO = "genero";
+	public static final String COL_NUMERO_DOCUMENTO = "numdoc";
+	public static final String COL_TIPO_DOCUMENTO = "tipodoc";
+	public static final String COL_IMAGEN_ID = "img_id";
+	
 	
 	//consultas de la tabla
-	public static final String SQL_SELECT_BY_USERNAME = "SELECT * FROM " + DB_TABLA_USUARIO 
+	public static final String SQL_SELECT_BY_EMAIL = "SELECT * FROM " + DB_TABLA_USUARIO 
 			+ " WHERE " 
-				+ COL_USERNAME + " = ?";
+				+ COL_EMAIL + " = ?";
 	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_USUARIO + " WHERE " +  COL_ID + "= ? ";
 	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_USUARIO 
 			+ "( " 
-				+  COL_USERNAME +  ", " 
+				+  COL_NOMBRE +  ", " 
 				+ COL_PASSWORD +", " 
-				+ COL_ROL_ID + ", " 
-				+ COL_CUENTA_ACTIVA
+				+ COL_ROL_ID + ", "
+				+ COL_CUENTA_ACTIVA + ", "
+				+ COL_EMAIL + ", "
+				+ COL_DEPARTAMENTO + ", "
+				+ COL_MUNICIPIO + ", "
+				+ COL_FECHA_NACIMIENTO + ", "
+				+ COL_EMISION_DUI + ", "
+				+ COL_VENCIMIENTO_DUI + ", "
+				+ COL_GENERO + ", "
+				+ COL_NUMERO_DOCUMENTO + ", "
+				+ COL_TIPO_DOCUMENTO + ", "
+				+ COL_IMAGEN_ID
 			+ " )"
-			+ " VALUES (?,?,?,?)";
+			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_USUARIO 
 			+ " SET " 
-				+  COL_USERNAME +  " = ?, "  
+				+  COL_NOMBRE +  " = ?, "  
 				+  COL_PASSWORD +  " = ?, "  
-				+  COL_ROL_ID +  " = ?, "  
-				+  COL_CUENTA_ACTIVA +  " = ? "
+				+  COL_ROL_ID +  " = ?, "
+				+  COL_CUENTA_ACTIVA +  " = ?, "
+				+  COL_EMAIL +  " = ?, "
+				+  COL_DEPARTAMENTO +  " = ?, "
+				+  COL_MUNICIPIO +  " = ?, "
+				+  COL_FECHA_NACIMIENTO +  " = ?, "
+				+  COL_EMISION_DUI +  " = ?, "
+				+  COL_VENCIMIENTO_DUI +  " = ?, "
+				+  COL_GENERO +  " = ?, "
+				+  COL_NUMERO_DOCUMENTO +  " = ?, "
+				+  COL_TIPO_DOCUMENTO +  " = ?, "
+				+  COL_IMAGEN_ID +  " = ? "
 			+ "WHERE "
-				+ COL_USERNAME + " = ?" ;
+				+ COL_ID + " = ?" ;
 	
 	@Override
-	public SuperGenericResponse insert(Usuario usuario) {
+	public SuperGenericResponse insert(User usuario) {
 		log.info("::::[Incio]::::[insert]::::Iniciando implementacion del DAO para los usuarios::::");
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
@@ -64,8 +95,8 @@ public class UsuarioDao implements IRepoUsuario {
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, SQL_INSERT);
 			log.info("::::[insert]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[insert]:::: Seteando valores al PreparedStatment... ::::");
-			stmt.setString(1, usuario.getUsername());
-			log.info("::::[insert]::::Valor ____________________ 1::::Nombre:::Value:::" + usuario.getUsername() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(1, usuario.getEmail());
+			log.info("::::[insert]::::Valor ____________________ 1::::Nombre:::Value:::" + usuario.getEmail() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setString(2, usuario.getPassword());
 			log.info("::::[insert]::::Valor ____________________ 2::::Password:::Value:::" + usuario.getPassword() + ":::"  +  "Seteado CORRECTAMENTE:::");
 			stmt.setInt(3, usuario.getRol().getId());
@@ -111,25 +142,25 @@ public class UsuarioDao implements IRepoUsuario {
 	}
 
 	@Override
-	public GenericEntityResponse<Usuario> getOneByUsername(String username) {
+	public GenericEntityResponse<User> getOneByEmail(String email) {
 		log.info("::::[Incio]::::[getOneByUsername]::::Iniciando implementacion del DAO::::");
-		GenericEntityResponse<Usuario> res = new GenericEntityResponse<>();
+		GenericEntityResponse<User> res = new GenericEntityResponse<>();
 		try {
-			Usuario usuario = null;
+			User usuario = null;
 			Connection conn = ConexionPostgres.getConnecion();
 			log.info("::::[getOneByUsername]::::Conexion CREADO correctamente::::");
-			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_USERNAME);
+			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_EMAIL);
 			log.info("::::[selectByUsername]::::PreparedStatment CREADO correctamente::::");
-			stmt.setString(1, username);
-			log.info("::::[getOneByUsername]::::Valor ____________________ 1::::Username:::Value:::" + username + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(1, email);
+			log.info("::::[getOneByUsername]::::Valor ____________________ 1::::Email:::Value:::" + email + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[getOneByUsername]:::SQL generado:::" + stmt.toString() + "::::");
 			ResultSet rs = ConexionPostgres.executeQuery(stmt);
 			log.info("::::[getOneByUsername]::::ResultSet CREADO correctamente::::");
 			log.info("::::[getOneByUsername]::::Interpretando Data recibida::::");
 			while(rs.next()) {
-				usuario = new Usuario();
+				usuario = new User();
 				usuario.setId(rs.getInt(COL_ID));
-				usuario.setUsername(rs.getString(COL_USERNAME));
+				usuario.setEmail(rs.getString(COL_NOMBRE));
 				usuario.setRol(new Rol(rs.getInt(COL_ROL_ID)));
 				usuario.setPassword(rs.getString(COL_PASSWORD));
 				usuario.setCuentaActiva(rs.getBoolean(COL_CUENTA_ACTIVA));
@@ -168,11 +199,11 @@ public class UsuarioDao implements IRepoUsuario {
 	}
 
 	@Override
-	public GenericEntityResponse<Usuario> getOneById(int id) {
+	public GenericEntityResponse<User> getOneById(int id) {
 		log.info("::::[Incio]::::[getOneById]::::Iniciando implementacion del DAO::::");
-		GenericEntityResponse<Usuario> res = new GenericEntityResponse<>();
+		GenericEntityResponse<User> res = new GenericEntityResponse<>();
 		try {
-			Usuario usuario = null;
+			User usuario = null;
 			Connection conn = ConexionPostgres.getConnecion();
 			log.info("::::[getOneById]::::Conexion CREADO correctamente::::");
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_ID);
@@ -184,9 +215,9 @@ public class UsuarioDao implements IRepoUsuario {
 			log.info("::::[getOneById]::::ResultSet CREADO correctamente::::");
 			log.info("::::[getOneById]::::Interpretando Data recibida::::");
 			while(rs.next()) {
-				usuario = new Usuario();
+				usuario = new User();
 				usuario.setId(rs.getInt(COL_ID));
-				usuario.setUsername(rs.getString(COL_USERNAME));
+				usuario.setEmail(rs.getString(COL_NOMBRE));
 				usuario.setRol(new Rol(rs.getInt(COL_ROL_ID)));
 				usuario.setPassword(rs.getString(COL_PASSWORD));
 			}
@@ -224,7 +255,7 @@ public class UsuarioDao implements IRepoUsuario {
 	}
 
 	@Override
-	public SuperGenericResponse update(Usuario usuario) {
+	public SuperGenericResponse update(User usuario) {
 		log.info("::::[Incio]::::[update]::::Iniciando implementacion del DAO::::");
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
@@ -233,16 +264,16 @@ public class UsuarioDao implements IRepoUsuario {
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, SQL_UPDATE);
 			log.info("::::[update]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[update]:::: Seteando valores al PreparedStatment... ::::");
-			stmt.setString(1, usuario.getUsername());
-			log.info("::::[update]::::Valor ____________________ 1::::Nombre:::Value:::" + usuario.getUsername() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(1, usuario.getEmail());
+			log.info("::::[update]::::Valor ____________________ 1::::Nombre:::Value:::" + usuario.getEmail() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setString(2, usuario.getPassword());
 			log.info("::::[update]::::Valor ____________________ 2::::Password:::Value:::" + usuario.getPassword() + "::::"  +  "Seteado CORRECTAMENTE:::");
 			stmt.setInt(3, usuario.getRol().getId());
 			log.info("::::[update]::::Valor ____________________ 3::::Rol:::Value:::" + usuario.getRol().getDescripcion() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setBoolean(4, usuario.getCuentaActiva());
 			log.info("::::[update]::::Valor ____________________ 4::::cuentaActiva:::Value:::" + usuario.getCuentaActiva() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setString(5, usuario.getUsername());
-			log.info("::::[update]::::Valor ____________________ 5::::usuario:::Value:::" + usuario.getUsername() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(5, usuario.getEmail());
+			log.info("::::[update]::::Valor ____________________ 5::::usuario:::Value:::" + usuario.getEmail() + "::::" + "Seteado CORRECTAMENTE:::");
 			
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);

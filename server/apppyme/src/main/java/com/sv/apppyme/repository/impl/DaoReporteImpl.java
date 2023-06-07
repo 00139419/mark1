@@ -15,14 +15,14 @@ import com.sv.apppyme.conexciones.ConexionPostgres;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Reporte;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 import com.sv.apppyme.repository.IRepoReporte;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.DateUtils;
 import com.sv.apppyme.utils.Log4jUtils;
 
 @Repository
-public class ReporteDao implements IRepoReporte{
+public class DaoReporteImpl implements IRepoReporte{
 	
 	Logger log = Logger.getLogger(getClass());
 
@@ -277,7 +277,7 @@ public class ReporteDao implements IRepoReporte{
 				reporte.setBase64(rs.getString(COL_BASE64));
 				reporte.setFecha(DateUtils.convertTimeStampToDate(rs.getTimestamp(COL_FECHA)));
 				reporte.setNombre(rs.getString(COL_NOMBRE));
-				reporte.setUserId(new Usuario(rs.getInt(COL_USER_ID)));
+				reporte.setUserId(new User(rs.getInt(COL_USER_ID)));
 				reporte.setTipoDoc(rs.getString(COL_TIPODOC));
 				reporte.setNumDoc(rs.getString(COL_NUMDOC));
 				reporte.setTotal( (float) rs.getDouble(COL_TOTAL));
@@ -345,7 +345,7 @@ public class ReporteDao implements IRepoReporte{
 				reporte.setBase64(rs.getString(COL_BASE64));
 				reporte.setFecha(DateUtils.convertTimeStampToDate(rs.getTimestamp(COL_FECHA)));
 				reporte.setNombre(rs.getString(COL_NOMBRE));
-				reporte.setUserId(new Usuario(rs.getInt(COL_USER_ID)));
+				reporte.setUserId(new User(rs.getInt(COL_USER_ID)));
 				reporte.setTipoDoc(rs.getString(COL_TIPODOC));
 				reporte.setNumDoc(rs.getString(COL_NUMDOC));
 				reporte.setTotal( (float) rs.getDouble(COL_TOTAL));
@@ -413,7 +413,7 @@ public class ReporteDao implements IRepoReporte{
 				reporte.setBase64(rs.getString(COL_BASE64));
 				reporte.setFecha(DateUtils.convetirStringToDate(rs.getString(COL_FECHA)));
 				reporte.setNombre(rs.getString(COL_NOMBRE));
-				reporte.setUserId(new Usuario(rs.getInt(COL_USER_ID)));
+				reporte.setUserId(new User(rs.getInt(COL_USER_ID)));
 				reporte.setTipoDoc(rs.getString(COL_TIPODOC));
 				reporte.setNumDoc(rs.getString(COL_NUMDOC));
 				reporte.setTotal( (float) rs.getDouble(COL_TOTAL));
@@ -481,7 +481,7 @@ public class ReporteDao implements IRepoReporte{
 				reporte.setBase64(rs.getString(COL_BASE64));
 				reporte.setFecha(DateUtils.convetirStringToDate(rs.getString(COL_FECHA)));
 				reporte.setNombre(rs.getString(COL_NOMBRE));
-				reporte.setUserId(new Usuario(rs.getInt(COL_USER_ID)));
+				reporte.setUserId(new User(rs.getInt(COL_USER_ID)));
 				reporte.setTipoDoc(rs.getString(COL_TIPODOC));
 				reporte.setNumDoc(rs.getString(COL_NUMDOC));
 				reporte.setTotal( (float) rs.getDouble(COL_TOTAL));

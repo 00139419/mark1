@@ -14,8 +14,8 @@ import com.sv.apppyme.controllers.dto.ComprarVideojuegoReqDto;
 import com.sv.apppyme.controllers.dto.FacturaResDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.entities.Reporte;
-import com.sv.apppyme.entities.Usuario;
-import com.sv.apppyme.entities.Videojuego;
+import com.sv.apppyme.entities.User;
+import com.sv.apppyme.entities.Producto;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.reports.dto.FacturaDto;
 import com.sv.apppyme.reports.repository.IReportManagerJasper;
@@ -144,7 +144,7 @@ public class srvComprarVideoJuegoImpl implements IComprarVideoJuego {
 			return false;
 		}
 		
-		for(Videojuego v: compraInfo.getLv()) {
+		for(Producto v: compraInfo.getLv()) {
 			if(v.getNombre().trim().equals("") || v.getNombre() == null) {
 				log.info("[" + key + "]" + "::::[verificarDataReq]::::[ERROR]::::Lista de productos Incorrecta::::");
 				return false;
@@ -161,15 +161,15 @@ public class srvComprarVideoJuegoImpl implements IComprarVideoJuego {
 	 * @return un arreglo donde la primera posicion es la afirmacion o negacion de la existencia de productos y la segunda el producto que no esta disponible, si es que lo hubiera
 	 * @author dm420
 	 */
-	public Object[] verificarExistenProd(List<Videojuego> ls, String key) {
+	public Object[] verificarExistenProd(List<Producto> ls, String key) {
 		log.info("[" + key + "]" + "::::[verificarExistenProd]::::Verificando la disponibilidad de los productos!::::");
 		
 		Object[] res = {-1, "Error generico!"};
 		
 		HashMap< String, Integer> cantidadDisponibles = new HashMap<>();
-		List<Videojuego> juegosDisponibles = videojuegoDao.getAll().getEntity();
+		List<Producto> juegosDisponibles = videojuegoDao.getAll().getEntity();
 		
-		for(Videojuego v: juegosDisponibles) {
+		for(Producto v: juegosDisponibles) {
 			cantidadDisponibles.put(v.getNombre(), v.getCantidadDisponible());
 		}
 		
@@ -180,7 +180,7 @@ public class srvComprarVideoJuegoImpl implements IComprarVideoJuego {
 			return res;
 		}
 		
-		for(Videojuego v:ls) {
+		for(Producto v:ls) {
 			if(cantidadDisponibles.get(v.getNombre()) > 0) {
 				Integer cantidadActualDeProdIndividual = cantidadDisponibles.get(v.getNombre());
 				cantidadDisponibles.replace(v.getNombre(), cantidadActualDeProdIndividual - 1);
@@ -204,12 +204,12 @@ public class srvComprarVideoJuegoImpl implements IComprarVideoJuego {
 	 * @return
 	 * @throws SrvValidacionException
 	 */
-	public boolean actualizarCantidadProd(List<Videojuego> ls, String key) throws SrvValidacionException {
+	public boolean actualizarCantidadProd(List<Producto> ls, String key) throws SrvValidacionException {
 		HashMap<String, Integer> productosComprados = obtenerProductosComprados(ls, key);
 		
 		try {
 				productosComprados.forEach((k,v) -> {
-				Videojuego aux = videojuegoDao.getOneByNombre(k).getEntity();
+				Producto aux = videojuegoDao.getOneByNombre(k).getEntity();
 				aux.setCantidadDisponible(aux.getCantidadDisponible() - v);
 				
 				if(videojuegoDao.update(aux).getCodigo() != Constantes.SUCCES)
@@ -231,10 +231,10 @@ public class srvComprarVideoJuegoImpl implements IComprarVideoJuego {
 	 * @param key
 	 * @return un hashMap con los productos listados y sus cantidades compradas
 	 */
-	public HashMap<String, Integer> obtenerProductosComprados(List<Videojuego> ls, String key){
+	public HashMap<String, Integer> obtenerProductosComprados(List<Producto> ls, String key){
 		HashMap<String, Integer> productosComprados = new HashMap<>();
 		
-		for(Videojuego v: ls) {
+		for(Producto v: ls) {
 			if(productosComprados.containsKey(v.getNombre())) {
 				productosComprados.replace(v.getNombre(), productosComprados.get(v.getNombre()) + 1);
 			}else {
@@ -314,9 +314,9 @@ public class srvComprarVideoJuegoImpl implements IComprarVideoJuego {
 	 * meetodo para obtener al usuario Asignador
 	 * @return Usuario asginador
 	 */
-	public Usuario obtenerUsuarioAsignador() {
+	public User obtenerUsuarioAsignador() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		return usuarioDao.getOneByUsername(username).getEntity();
+		return usuarioDao.getOneByEmail(username).getEntity();
 	}
 	
 	/**
@@ -333,7 +333,7 @@ public class srvComprarVideoJuegoImpl implements IComprarVideoJuego {
 		factura.setFecha(reporte.getFecha().toString());
 		factura.setNombreCompleto(reporte.getNombre());
 		factura.setTotal(String.valueOf(reporte.getTotal()));
-		factura.setUser(obtenerUsuarioAsignador().getUsername());
+		factura.setUser(obtenerUsuarioAsignador().getEmail());
 		factura.setMetPag(reporte.getMetpag());
 		factura.setNumDoc(String.valueOf(reporte.getNumDoc()));
 		

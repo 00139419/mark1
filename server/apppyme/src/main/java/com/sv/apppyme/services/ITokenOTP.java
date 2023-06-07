@@ -3,7 +3,7 @@ package com.sv.apppyme.services;
 import com.sv.apppyme.controllers.dto.TokenDto;
 import com.sv.apppyme.controllers.dto.ValidarTokenOTPDto;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 import com.sv.apppyme.exception.SrvValidacionException;
 
 public interface ITokenOTP {
@@ -16,7 +16,7 @@ public interface ITokenOTP {
 	 * @throws SrvValidacionException
 	 *  @author dm420
 	 */
-	TokenDto creaTokenOTP(Usuario usuario) throws SrvValidacionException;
+	TokenDto creaTokenOTP(User usuario) throws SrvValidacionException;
 	
 	/**
 	 * 

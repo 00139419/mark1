@@ -15,7 +15,7 @@ import com.sv.apppyme.controllers.dto.UsuarioDto;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Rol;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.reports.dto.FormularioVinculacionDto;
 import com.sv.apppyme.reports.repository.IReportManagerJasper;
@@ -23,7 +23,7 @@ import com.sv.apppyme.reports.repository.impl.srvReportManagerJasperimpl;
 import com.sv.apppyme.reports.utils.DocumentTypesToGenerated;
 import com.sv.apppyme.repository.IRepoRol;
 import com.sv.apppyme.repository.IRepoUsuario;
-import com.sv.apppyme.repository.impl.UsuarioDao;
+import com.sv.apppyme.repository.impl.DaoUsuarioImpl;
 import com.sv.apppyme.services.ISignUp;
 import com.sv.apppyme.services.ITokenOTP;
 import com.sv.apppyme.utils.Constantes;
@@ -59,10 +59,10 @@ public class srvSignUpImpl implements ISignUp {
 			//mostrando data recibida del request
 			log.info("::::[INICIO]::::[insertarUsuario]:::Iniciando proceso de insertar nuevo usuario::::");
 			GenericEntityResponse<Rol> resObtenerRol = null;
-			Usuario usuario = new Usuario();
+			User usuario = new User();
 			
 			//verifiando que no exista ese username en la base de datos
-			Usuario userregistered = obtenerUsuarioByUsername(userInfo).getEntity();
+			User userregistered = obtenerUsuarioByUsername(userInfo).getEntity();
 			
 			if(userregistered != null) {
 				log.info("::::[insertarUsuario]:::: Usuario ya esta registrado::::");
@@ -97,7 +97,7 @@ public class srvSignUpImpl implements ISignUp {
 			}
 			
 			//Creando el Usuario
-			usuario.setUsername(userInfo.getUsername());
+			usuario.setEmail(userInfo.getEmail());
 			usuario.setPassword(userInfo.getPassword());
 			usuario.setRol(resObtenerRol.getEntity());
 			log.info("::::[insertarUsuario]:::entidad usuario creado correctamente::::" + usuario.toString() + "::::");
@@ -113,10 +113,10 @@ public class srvSignUpImpl implements ISignUp {
 			resServicio.setMensaje(Constantes.OK);
 			
 			//Creando el formulario de vinculacion
-			Usuario userAux = obtenerUsuarioByUsername(userInfo).getEntity();
+			User userAux = obtenerUsuarioByUsername(userInfo).getEntity();
 			vinculacionDto = new FormularioVinculacionDto();
 			vinculacionDto.setId(userAux.getId());
-			vinculacionDto.setNombres(userAux.getUsername());
+			vinculacionDto.setNombres(userAux.getEmail());
 			vinculacionDto.setPassword(userAux.getPassword());
 			vinculacionDto.setRol(userAux.getRol().getDescripcion());
 			vinculacionDto.setDateVinculation((new Date()).toString());
@@ -137,9 +137,9 @@ public class srvSignUpImpl implements ISignUp {
 	}
 
 	@Override
-	public GenericEntityResponse<Usuario> obtenerUsuarioByUsername(UsuarioDto userInfo) throws SrvValidacionException {
-		GenericEntityResponse<Usuario> resServicio = new GenericEntityResponse<>();
-			resServicio = userDao.getOneByUsername(userInfo.getUsername());
+	public GenericEntityResponse<User> obtenerUsuarioByUsername(UsuarioDto userInfo) throws SrvValidacionException {
+		GenericEntityResponse<User> resServicio = new GenericEntityResponse<>();
+			resServicio = userDao.getOneByEmail(userInfo.getEmail());
 			
 			if (resServicio.getCodigo() != Constantes.SUCCES)
 				throw new SrvValidacionException(Constantes.ERROR, resServicio.getMensaje());
@@ -150,7 +150,7 @@ public class srvSignUpImpl implements ISignUp {
 				if(rol.getCodigo() != Constantes.SUCCES)
 					throw new SrvValidacionException(Constantes.ERROR, rol.getMensaje());
 				
-				Usuario usuarioFinal = resServicio.getEntity();
+				User usuarioFinal = resServicio.getEntity();
 				usuarioFinal.setRol(rol.getEntity());
 				resServicio.setEntity(usuarioFinal);
 				resServicio.setCodigo(Constantes.SUCCES);
@@ -165,8 +165,8 @@ public class srvSignUpImpl implements ISignUp {
 	public SuperGenericResponse esCuentaActiva(String username) throws SrvValidacionException {
 		log.info("::::[INICIO]::::[obtenerUsuarioByUsername]:::Iniciando servicio para verificar que la cuenta del usuario este activa::::");
 		
-		userDao = new UsuarioDao();
-		Usuario user = userDao.getOneByUsername(username).getEntity();
+		userDao = new DaoUsuarioImpl();
+		User user = userDao.getOneByEmail(username).getEntity();
 		log.info("::::[obtenerUsuarioByUsername]:::Usuario encontrado::::value::::" + user.toString()  + "::::");
 		
 		if(user.getCuentaActiva()) {

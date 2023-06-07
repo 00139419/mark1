@@ -14,12 +14,13 @@ import com.sv.apppyme.conexciones.ConexionPostgres;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Desarrolladora;
+import com.sv.apppyme.entities.Img;
 import com.sv.apppyme.repository.IRepoDesarrolladora;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Log4jUtils;
 
 @Repository
-public class DesarrolladoraDao implements IRepoDesarrolladora {
+public class DaoDesarrolladoraImpl implements IRepoDesarrolladora {
 
 	Logger log = Logger.getLogger(getClass());
 
@@ -29,16 +30,18 @@ public class DesarrolladoraDao implements IRepoDesarrolladora {
 	// Columnas de la tabla
 	public static final String COL_ID = "id";
 	public static final String COL_NOMBRE = "nombre";
+	public static final String COL_IMG = "img_id";
 	
 	// Consultas de la tabla
-	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_DESARROLLADORA + "(" + COL_NOMBRE + ")" + " VALUES (?)";
+	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_DESARROLLADORA + "(" + COL_NOMBRE + ", " + COL_IMG + ")" + " VALUES (?,?)";
 	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_DESARROLLADORA;
 	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_DESARROLLADORA
 			+ " WHERE " 
 				+ COL_ID + " = ?";
 	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_DESARROLLADORA 
 			+ " SET " 
-				+ COL_NOMBRE + " = ? "
+				+ COL_NOMBRE + " = ?, "
+				+ COL_IMG + " = ? "
 			+ " WHERE " 
 				+ COL_ID + " = ?";
 	public static final String SQL_DELETE = "DELETE FROM " + DB_TABLA_DESARROLLADORA + " WHERE " + COL_ID + " = ?";
@@ -55,6 +58,8 @@ public class DesarrolladoraDao implements IRepoDesarrolladora {
 			log.info("::::[insert]:::: Seteando valores al PreparedStatment... ::::");
 			stmt.setString(1, desarrolladora.getNombre());
 			log.info("::::[insert]::::Valor ____________________ 1::::Nombre:::Value:::" + desarrolladora.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(2, desarrolladora.getImg().getId());
+			log.info("::::[insert]::::Valor ____________________ 2::::Id img:::Value:::" + desarrolladora.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[insert]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[insert]::::stmt ejecutado correctamente::::");
@@ -107,6 +112,8 @@ public class DesarrolladoraDao implements IRepoDesarrolladora {
 			log.info("::::[update]::::Valor ____________________ 1::::Nombre:::Value:::" + desarrolladora.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
 			stmt.setInt(2, desarrolladora.getId());
 			log.info("::::[update]::::Valor ____________________ 2::::ID:::Value:::" + desarrolladora.getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(3, desarrolladora.getImg().getId());
+			log.info("::::[update]::::Valor ____________________ 3::::Id img:::Value:::" + desarrolladora.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");
@@ -199,6 +206,7 @@ public class DesarrolladoraDao implements IRepoDesarrolladora {
 			while(rs.next()) {
 				desarrolladora.setId(rs.getInt(COL_ID));
 				desarrolladora.setNombre(rs.getString(COL_NOMBRE));
+				desarrolladora.setImg(new Img(rs.getInt(COL_IMG)));
 			}
 			log.info("::::[getOneById]::::Fin interpretando Data recibida::::");
 			rs.close();
@@ -257,6 +265,7 @@ public class DesarrolladoraDao implements IRepoDesarrolladora {
 				desarrolladora = new Desarrolladora();
 				desarrolladora.setId(rs.getInt(COL_ID));
 				desarrolladora.setNombre(rs.getString(COL_NOMBRE));
+				desarrolladora.setImg(new Img(rs.getInt(COL_IMG)));
 				ls.add(desarrolladora);
 			}
 			log.info("::::[getAll]::::Fin interpretando Data recibida::::");

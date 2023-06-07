@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sv.apppyme.controllers.dto.TokenDto;
 import com.sv.apppyme.controllers.dto.ValidarTokenOTPDto;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.services.ISignUp;
 import com.sv.apppyme.services.ITokenOTP;
@@ -38,11 +38,11 @@ public class CtrlTokenOTP {
 		SuperGenericResponse res = new SuperGenericResponse();
 		TokenDto resSer = new TokenDto();
 		try {
-			if(tokenInfo.getUsername() !=  null) {
-				resSer = srvToken.creaTokenOTP(new Usuario(tokenInfo.getUsername()));
+			if(tokenInfo.getEmail() !=  null) {
+				resSer = srvToken.creaTokenOTP(new User(tokenInfo.getEmail()));
 				
 			}else {
-				resSer = srvToken.creaTokenOTP(new Usuario());
+				resSer = srvToken.creaTokenOTP(new User());
 			}
 			res.setCodigo(resSer.getCodigo());
 			res.setMensaje(resSer.getMensaje());

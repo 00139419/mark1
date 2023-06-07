@@ -2,7 +2,7 @@ package com.sv.apppyme.repository;
 
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Usuario;
+import com.sv.apppyme.entities.User;
 
 public interface IRepoUsuario {
 
@@ -13,7 +13,7 @@ public interface IRepoUsuario {
 	 * @author dm420
 	 * @return una respuesta con el status de la operacion INSERT en la base de datos
 	 */
-	SuperGenericResponse insert(Usuario usuario); 
+	SuperGenericResponse insert(User usuario); 
 	
 	/**
 	 * 
@@ -21,7 +21,7 @@ public interface IRepoUsuario {
 	 * @author dm420
 	 * @return un registro de la base de datos, a traves de su Username
 	 */
-	GenericEntityResponse<Usuario> getOneByUsername(String username);
+	GenericEntityResponse<User> getOneByEmail(String username);
 	
 	/**
 	 * 
@@ -29,7 +29,7 @@ public interface IRepoUsuario {
 	 * @author dm420
 	 * @return un registro de la base de datos, a traves de su ID
 	 */
-	GenericEntityResponse<Usuario> getOneById(int id);
+	GenericEntityResponse<User> getOneById(int id);
 	
 	/**
 	 * 
@@ -37,5 +37,5 @@ public interface IRepoUsuario {
 	 * @author dm420
 	 * @return una respuesta con el status de la operacion UPDATE en la base de datos para cierto registro
 	 */
-	SuperGenericResponse update(Usuario usuario);
+	SuperGenericResponse update(User usuario);
 }
