@@ -25,4 +25,9 @@ public class Producto {
 		super();
 	}
 
+	public Producto(int id) {
+		super();
+		this.id = id;
+	}
+
 }

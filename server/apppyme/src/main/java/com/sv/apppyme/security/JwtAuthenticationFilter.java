@@ -85,7 +85,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				
 				super.successfulAuthentication(request, response, chain, authResult);
 			}else {
-				response.addHeader("codigo", "-2");
+				response.addHeader("codigo", "-1");
 				response.addHeader("descripcionm", "Cuenta Inactiva");
 				response.getWriter().flush();
 				

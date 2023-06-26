@@ -21,7 +21,7 @@ import com.sv.apppyme.repository.IRepoCategoria;
 import com.sv.apppyme.repository.IRepoDesarrolladora;
 import com.sv.apppyme.repository.IRepoImg;
 import com.sv.apppyme.repository.IRepoPlataforma;
-import com.sv.apppyme.repository.IRepoVideojuego;
+import com.sv.apppyme.repository.IRepoProducto;
 import com.sv.apppyme.services.ICrudVideoJuego;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.DateUtils;
@@ -36,7 +36,7 @@ public class srvCrudVideoJuegoImpl implements ICrudVideoJuego {
 	IRepoImg ImgDao;
 
 	@Autowired
-	IRepoVideojuego videojuegoDao;
+	IRepoProducto videojuegoDao;
 	
 	@Autowired
 	IRepoCategoria categoriaDao;

@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.sv.apppyme.entities.User;
 import com.sv.apppyme.exception.SrvUsernameNotFoundException;
-import com.sv.apppyme.repository.IRepoUsuario;
+import com.sv.apppyme.repository.IRepoUser;
 import com.sv.apppyme.security.UserDetailsImpl;
 
 @Service
 public class srvAuthUserDetailsServiceImpl implements UserDetailsService{
 
 	@Autowired
-	private IRepoUsuario userDao;
+	private IRepoUser userDao;
 	
 	
 	@Override

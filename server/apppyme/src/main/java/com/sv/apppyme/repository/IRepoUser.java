@@ -1,10 +1,12 @@
 package com.sv.apppyme.repository;
 
+import java.util.List;
+
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.User;
 
-public interface IRepoUsuario {
+public interface IRepoUser {
 
 	
 	/**
@@ -38,4 +40,22 @@ public interface IRepoUsuario {
 	 * @return una respuesta con el status de la operacion UPDATE en la base de datos para cierto registro
 	 */
 	SuperGenericResponse update(User usuario);
+	
+	/**
+	 * 
+	 * @param
+	 * @author dm420
+	 * @return un todos los registro de la base de datos
+	 */
+	GenericEntityResponse<List<User>> getAll();
+	
+	/**
+	 * 
+	 * @param
+	 * @author dm420
+	 * @return una respuesta con el status de la operacion INSERT en la base de datos
+	 */
+	SuperGenericResponse delete(User usuario); 
+	
+	
 }

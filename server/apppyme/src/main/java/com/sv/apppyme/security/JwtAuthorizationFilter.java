@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.sv.apppyme.repository.impl.DaoUsuarioImpl;
+import com.sv.apppyme.repository.impl.DaoUserImpl;
 import com.sv.apppyme.services.impl.srvAuthUserDetailsServiceImpl;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.TokenManager;
@@ -29,7 +29,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	TokenManager tokenManager;
 
 	@Autowired
-	DaoUsuarioImpl userDao;
+	DaoUserImpl userDao;
 
 
 	Logger log = Logger.getLogger(getClass());

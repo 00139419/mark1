@@ -20,8 +20,8 @@ import com.sv.apppyme.exception.SrvValidacionException;
 import com.sv.apppyme.reports.dto.FacturaDto;
 import com.sv.apppyme.reports.repository.IReportManagerJasper;
 import com.sv.apppyme.repository.IRepoReporte;
-import com.sv.apppyme.repository.IRepoUsuario;
-import com.sv.apppyme.repository.IRepoVideojuego;
+import com.sv.apppyme.repository.IRepoUser;
+import com.sv.apppyme.repository.IRepoProducto;
 import com.sv.apppyme.services.IComprarVideoJuego;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.Log4jUtils;
@@ -33,10 +33,10 @@ public class srvComprarVideoJuegoImpl implements IComprarVideoJuego {
 	Logger log = Logger.getLogger(getClass());
 	
 	@Autowired
-	IRepoVideojuego videojuegoDao;
+	IRepoProducto videojuegoDao;
 	
 	@Autowired
-	IRepoUsuario usuarioDao;
+	IRepoUser usuarioDao;
 	
 	@Autowired
 	IRepoReporte reporteDao;

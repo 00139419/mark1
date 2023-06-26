@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.sv.apppyme.conexciones.ConexionPostgres;
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
+import com.sv.apppyme.entities.Img;
 import com.sv.apppyme.entities.Plataforma;
 import com.sv.apppyme.repository.IRepoPlataforma;
 import com.sv.apppyme.utils.Constantes;
@@ -59,6 +60,8 @@ public class DaoPlataformaImpl implements IRepoPlataforma{
 			log.info("::::[insert]:::: Seteando valores al PreparedStatment... ::::");
 			stmt.setString(1, plataforma.getNombre());
 			log.info("::::[insert]::::Valor ____________________ 1::::Nombre:::Value:::" + plataforma.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(2, plataforma.getImg().getId());
+			log.info("::::[insert]::::Valor ____________________ 2::::Img ID:::Value:::" + plataforma.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[insert]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[insert]::::stmt ejecutado correctamente::::");
@@ -109,8 +112,10 @@ public class DaoPlataformaImpl implements IRepoPlataforma{
 			log.info("::::[update]:::: Seteando valores al PreparedStatment... ::::");
 			stmt.setString(1, plataforma.getNombre());
 			log.info("::::[update]::::Valor ____________________ 1::::Nombre:::Value:::" + plataforma.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(2, plataforma.getId());
-			log.info("::::[update]::::Valor ____________________ 2::::ID:::Value:::" + plataforma.getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(2, plataforma.getImg().getId());
+			log.info("::::[update]::::Valor ____________________ 2::::Img ID:::Value:::" + plataforma.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(3, plataforma.getId());
+			log.info("::::[update]::::Valor ____________________ 3::::ID:::Value:::" + plataforma.getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");
@@ -204,6 +209,7 @@ public class DaoPlataformaImpl implements IRepoPlataforma{
 			while(rs.next()) {
 				plataforma.setId(rs.getInt(COL_ID));
 				plataforma.setNombre(rs.getString(COL_NOMBRE));
+				plataforma.setImg(new Img(rs.getInt(COL_IMG_ID)));
 			}
 			log.info("::::[getOneById]::::Fin interpretando Data recibida::::");
 			rs.close();
@@ -262,6 +268,7 @@ public class DaoPlataformaImpl implements IRepoPlataforma{
 				plataforma = new Plataforma();
 				plataforma.setId(rs.getInt(COL_ID));
 				plataforma.setNombre(rs.getString(COL_NOMBRE));
+				plataforma.setImg(new Img(rs.getInt(COL_IMG_ID)));
 				ls.add(plataforma);
 			}
 			log.info("::::[getAll]::::Fin interpretando Data recibida::::");

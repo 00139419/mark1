@@ -4,10 +4,9 @@ import java.util.List;
 
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Categoria;
+import com.sv.apppyme.entities.Producto;
 
-//Certificado
-public interface IRepoCategoria {
+public interface IRepoProducto {
 	
 	/**
 	 * 
@@ -15,7 +14,7 @@ public interface IRepoCategoria {
 	 * @author dm420
 	 * @return una respuesta con el status de la operacion INSERT en la base de datos
 	 */
-	SuperGenericResponse insert(Categoria categoria);
+	SuperGenericResponse insert(Producto producto);
 	
 	/**
 	 * 
@@ -23,7 +22,7 @@ public interface IRepoCategoria {
 	 * @author dm420
 	 * @return una respuesta con el status de la operacion UPDATE en la base de datos para cierto registro
 	 */
-	SuperGenericResponse update(Categoria categoria);
+	SuperGenericResponse update(Producto producto);
 	
 	/**
 	 * 
@@ -31,7 +30,7 @@ public interface IRepoCategoria {
 	 * @author dm420
 	 * @return una respuesta con el status de la operacion DELETE en la base de datos para cierto registro
 	 */
-	SuperGenericResponse delete(Categoria categoria);
+	SuperGenericResponse delete(Producto producto);
 	
 	/**
 	 * 
@@ -39,12 +38,20 @@ public interface IRepoCategoria {
 	 * @author dm420
 	 * @return un registro de la base de datos, a traves de su ID
 	 */
-	GenericEntityResponse<Categoria> getOneById(int id);
+	GenericEntityResponse<Producto> getOneById(int id);
+	
+	/**
+	 * 
+	 * @param
+	 * @author dm420
+	 * @return un registro de la base de datos, a traves de su ID
+	 */
+	GenericEntityResponse<Producto> getOneByNombre(String nombre);
 	
 	/**
 	 * 
 	 * @author dm420
 	 * @return todos los registros de la tabla en la base de datos
 	 */
-	GenericEntityResponse<List<Categoria>> getAll();
+	GenericEntityResponse<List<Producto>> getAll();
 }

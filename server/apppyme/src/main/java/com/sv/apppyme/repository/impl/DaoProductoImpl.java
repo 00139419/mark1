@@ -18,18 +18,18 @@ import com.sv.apppyme.entities.Desarrolladora;
 import com.sv.apppyme.entities.Img;
 import com.sv.apppyme.entities.Plataforma;
 import com.sv.apppyme.entities.Producto;
-import com.sv.apppyme.repository.IRepoVideojuego;
+import com.sv.apppyme.repository.IRepoProducto;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.DateUtils;
 import com.sv.apppyme.utils.Log4jUtils;
 
 @Repository
-public class DaoProductoImpl implements IRepoVideojuego {
+public class DaoProductoImpl implements IRepoProducto {
 
 	Logger log = Logger.getLogger(getClass());
 
 	// Nombre de la tabla
-	public static final String DB_TABLA_VIDEOJUEGO = "videojuego";
+	public static final String DB_TABLA_PRODUCTO = "producto";
 
 	// Columnas de la tabla
 	public static final String COL_ID = "id";
@@ -45,7 +45,7 @@ public class DaoProductoImpl implements IRepoVideojuego {
 	public static final String COL_FECHA_PUBLICACION = "fechapublicacion";
 
 	// Consultas de la tabla
-	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_VIDEOJUEGO
+	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_PRODUCTO
 			+ "(" 
 				+ COL_NOMBRE + ", " 
 				+ COL_CATEGORIA + ", " 
@@ -58,11 +58,11 @@ public class DaoProductoImpl implements IRepoVideojuego {
 				+ COL_DESCRIPCION + ", " 
 				+ COL_FECHA_PUBLICACION
 			+ ")"
-		+ " VALUES (?,?,?,?,?,?,?,?,?)";
-	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO;
-	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO + " WHERE " + COL_ID + " = ?";
-	public static final String SQL_SELECT_BY_NOMBRE = "SELECT * FROM " + DB_TABLA_VIDEOJUEGO + " WHERE " + COL_NOMBRE + " = ?";
-	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_VIDEOJUEGO 
+		+ " VALUES (?,?,?,?,?,?,?,?,?,?)";
+	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_PRODUCTO;
+	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_PRODUCTO + " WHERE " + COL_ID + " = ?";
+	public static final String SQL_SELECT_BY_NOMBRE = "SELECT * FROM " + DB_TABLA_PRODUCTO + " WHERE " + COL_NOMBRE + " = ?";
+	public static final String SQL_UPDATE = "UPDATE " + DB_TABLA_PRODUCTO 
 			+ " SET " 
 				+ COL_NOMBRE + " = ?, "
 				+ COL_CATEGORIA + " = ?, "
@@ -76,10 +76,10 @@ public class DaoProductoImpl implements IRepoVideojuego {
 				+ COL_FECHA_PUBLICACION + " = ? "
 			+ "WHERE " 
 				+ COL_ID + " = ?";
-	public static final String SQL_DELETE = "DELETE FROM " + DB_TABLA_VIDEOJUEGO + " WHERE " + COL_ID + " = ?";
+	public static final String SQL_DELETE = "DELETE FROM " + DB_TABLA_PRODUCTO + " WHERE " + COL_ID + " = ?";
 
 	@Override
-	public SuperGenericResponse insert(Producto videojuego) {
+	public SuperGenericResponse insert(Producto producto) {
 		log.info("::::[Incio]::::[insert]::::Iniciando implementacion del DAO::::");
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
@@ -88,26 +88,26 @@ public class DaoProductoImpl implements IRepoVideojuego {
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, SQL_INSERT);
 			log.info("::::[insert]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[insert]:::: Seteando valores al PreparedStatment... ::::");
-			stmt.setString(1, videojuego.getNombre());
-			log.info("::::[insert]::::Valor ____________________ 1::::Nombre:::Value:::" + videojuego.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(2, videojuego.getCategoria().getId());
-			log.info("::::[insert]::::Valor ____________________ 2::::Categoria_id:::Value:::" + videojuego.getCategoria().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setFloat(3, (float) videojuego.getPrecio());
-			log.info("::::[insert]::::Valor ____________________ 3::::Precio:::Value:::" + videojuego.getPrecio() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setDate(4, DateUtils.convertirDateJavaToDateSQL(videojuego.getFechaDeLanzamiento()));
-			log.info("::::[insert]::::Valor ____________________ 4::::Fecha de lanzamiento:::Value:::" + DateUtils.convertirDateJavaToDateSQL(videojuego.getFechaDeLanzamiento()) + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(5, videojuego.getDesarrolladora().getId());
-			log.info("::::[insert]::::Valor ____________________ 5::::Desarrolladora_id:::Value:::" + videojuego.getDesarrolladora().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(6, videojuego.getImg().getId());
-			log.info("::::[insert]::::Valor ____________________ 6::::Img_id:::Value:::" + videojuego.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(7, videojuego.getCantidadDisponible());
-			log.info("::::[insert]::::Valor ____________________ 7::::Cantidad disponible:::Value:::" + videojuego.getCantidadDisponible() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(8, videojuego.getPlataforma().getId());
-			log.info("::::[insert]::::Valor ____________________ 8::::Plataforma_id:::Value:::" + videojuego.getPlataforma().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setString(9, videojuego.getDescripcion());
-			log.info("::::[insert]::::Valor ____________________ 9::::Descripcion:::Value:::" + videojuego.getDescripcion() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setTimestamp(10, DateUtils.convertDateToTimeStamp(videojuego.getFechaPublicacion()));
-			log.info("::::[insert]::::Valor ____________________ 10::::fecha_publicacion:::Value:::" + DateUtils.convertDateToTimeStamp(videojuego.getFechaPublicacion()) + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(1, producto.getNombre());
+			log.info("::::[insert]::::Valor ____________________ 1::::Nombre:::Value:::" + producto.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(2, producto.getCategoria().getId());
+			log.info("::::[insert]::::Valor ____________________ 2::::Categoria_id:::Value:::" + producto.getCategoria().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setFloat(3, (float) producto.getPrecio());
+			log.info("::::[insert]::::Valor ____________________ 3::::Precio:::Value:::" + producto.getPrecio() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setDate(4, DateUtils.convertirDateJavaToDateSQL(producto.getFechaDeLanzamiento()));
+			log.info("::::[insert]::::Valor ____________________ 4::::Fecha de lanzamiento:::Value:::" + DateUtils.convertirDateJavaToDateSQL(producto.getFechaDeLanzamiento()) + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(5, producto.getDesarrolladora().getId());
+			log.info("::::[insert]::::Valor ____________________ 5::::Desarrolladora_id:::Value:::" + producto.getDesarrolladora().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(6, producto.getImg().getId());
+			log.info("::::[insert]::::Valor ____________________ 6::::Img_id:::Value:::" + producto.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(7, producto.getCantidadDisponible());
+			log.info("::::[insert]::::Valor ____________________ 7::::Cantidad disponible:::Value:::" + producto.getCantidadDisponible() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(8, producto.getPlataforma().getId());
+			log.info("::::[insert]::::Valor ____________________ 8::::Plataforma_id:::Value:::" + producto.getPlataforma().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(9, producto.getDescripcion());
+			log.info("::::[insert]::::Valor ____________________ 9::::Descripcion:::Value:::" + producto.getDescripcion() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setTimestamp(10, DateUtils.convertDateToTimeStamp(producto.getFechaPublicacion()));
+			log.info("::::[insert]::::Valor ____________________ 10::::fecha_publicacion:::Value:::" + DateUtils.convertDateToTimeStamp(producto.getFechaPublicacion()) + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[insert]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[insert]::::stmt ejecutado correctamente::::");
@@ -147,7 +147,7 @@ public class DaoProductoImpl implements IRepoVideojuego {
 	}
 
 	@Override
-	public SuperGenericResponse update(Producto videojuego) {
+	public SuperGenericResponse update(Producto producto) {
 		log.info("::::[Incio]::::[update]::::Iniciando implementacion del DAO::::");
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
@@ -156,28 +156,28 @@ public class DaoProductoImpl implements IRepoVideojuego {
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(con, SQL_UPDATE);
 			log.info("::::[update]::::PreparedStatmente CREADO correctamente::::");
 			log.info("::::[update]:::: Seteando valores al PreparedStatment... ::::");
-			stmt.setString(1, videojuego.getNombre());
-			log.info("::::[insert]::::Valor ____________________ 1::::Nombre:::Value:::" + videojuego.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(2, videojuego.getCategoria().getId());
-			log.info("::::[insert]::::Valor ____________________ 2::::Categoria_id:::Value:::" + videojuego.getCategoria().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setDouble(3, videojuego.getPrecio());
-			log.info("::::[insert]::::Valor ____________________ 3::::Precio:::Value:::" + videojuego.getPrecio() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setDate(4, DateUtils.convertirDateJavaToDateSQL(videojuego.getFechaDeLanzamiento()));
-			log.info("::::[insert]::::Valor ____________________ 4::::Fecha de lanzamiento:::Value:::" + DateUtils.convertirDateJavaToDateSQL(videojuego.getFechaDeLanzamiento()) + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(5, videojuego.getDesarrolladora().getId());
-			log.info("::::[insert]::::Valor ____________________ 5::::Desarrolladora_id:::Value:::" + videojuego.getDesarrolladora().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(6, videojuego.getImg().getId());
-			log.info("::::[insert]::::Valor ____________________ 6::::Img_id:::Value:::" + videojuego.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(7, videojuego.getCantidadDisponible());
-			log.info("::::[insert]::::Valor ____________________ 7::::Cantidad disponible:::Value:::" + videojuego.getCantidadDisponible() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(8, videojuego.getPlataforma().getId());
-			log.info("::::[insert]::::Valor ____________________ 8::::Plataforma_id:::Value:::" + videojuego.getPlataforma().getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setString(9, videojuego.getDescripcion());
-			log.info("::::[insert]::::Valor ____________________ 9::::Descripcion:::Value:::" + videojuego.getDescripcion() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(10, videojuego.getId());
-			log.info("::::[insert]::::Valor ____________________ 9::::Descripcion:::Value:::" + videojuego.getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setTimestamp(11, DateUtils.convertDateToTimeStamp(videojuego.getFechaPublicacion()));
-			log.info("::::[update]::::Valor ____________________ 10::::fecha_publicacion:::Value:::" + DateUtils.convertDateToTimeStamp(videojuego.getFechaPublicacion()) + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(1, producto.getNombre());
+			log.info("::::[update]::::Valor ____________________ 1::::Nombre:::Value:::" + producto.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(2, producto.getCategoria().getId());
+			log.info("::::[update]::::Valor ____________________ 2::::Categoria_id:::Value:::" + producto.getCategoria().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setDouble(3, producto.getPrecio());
+			log.info("::::[update]::::Valor ____________________ 3::::Precio:::Value:::" + producto.getPrecio() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setDate(4, DateUtils.convertirDateJavaToDateSQL(producto.getFechaDeLanzamiento()));
+			log.info("::::[update]::::Valor ____________________ 4::::Fecha de lanzamiento:::Value:::" + DateUtils.convertirDateJavaToDateSQL(producto.getFechaDeLanzamiento()) + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(5, producto.getDesarrolladora().getId());
+			log.info("::::[update]::::Valor ____________________ 5::::Desarrolladora_id:::Value:::" + producto.getDesarrolladora().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(6, producto.getImg().getId());
+			log.info("::::[update]::::Valor ____________________ 6::::Img_id:::Value:::" + producto.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(7, producto.getCantidadDisponible());
+			log.info("::::[update]::::Valor ____________________ 7::::Cantidad disponible:::Value:::" + producto.getCantidadDisponible() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(8, producto.getPlataforma().getId());
+			log.info("::::[update]::::Valor ____________________ 8::::Plataforma_id:::Value:::" + producto.getPlataforma().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setString(9, producto.getDescripcion());
+			log.info("::::[update]::::Valor ____________________ 9::::Descripcion:::Value:::" + producto.getDescripcion() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setTimestamp(10, DateUtils.convertDateToTimeStamp(producto.getFechaPublicacion()));
+			log.info("::::[update]::::Valor ____________________ 10::::Descripcion:::Value:::" + DateUtils.convertDateToTimeStamp(producto.getFechaPublicacion()) + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(11, producto.getId());
+			log.info("::::[update]::::Valor ____________________ 11::::fecha_publicacion:::Value:::" +producto.getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");
@@ -218,7 +218,7 @@ public class DaoProductoImpl implements IRepoVideojuego {
 	}
 
 	@Override
-	public SuperGenericResponse delete(Producto videojuego) {
+	public SuperGenericResponse delete(Producto producto) {
 		log.info("::::[INCIO]::::[delete]::::Incio de DAO::::");
 		SuperGenericResponse res = new SuperGenericResponse(Constantes.ERROR, Constantes.FAIL);
 
@@ -227,8 +227,8 @@ public class DaoProductoImpl implements IRepoVideojuego {
 			log.info("::::[delete]::::Conexcion creada correctamente::::");
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_DELETE);
 			log.info("::::[delete]::::PreparedStatment creado correctamente::::");
-			stmt.setInt(1, videojuego.getId());
-			log.info("::::[delete]::::Valor ____________________ 1::::categoria:::Value:::" + videojuego.getId() + "Seteado CORRECTAMENTE::::");
+			stmt.setInt(1, producto.getId());
+			log.info("::::[delete]::::Valor ____________________ 1::::categoria:::Value:::" + producto.getId() + "Seteado CORRECTAMENTE::::");
 			log.info("::::[delete]:::SQL generado:::" + stmt.toString() + "::::");
 			int rs = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[delete]::::Datos guardado correctamente::::");
@@ -255,7 +255,7 @@ public class DaoProductoImpl implements IRepoVideojuego {
 		log.info("::::[Incio]::::[getOneById]::::Iniciando implementacion del DAO::::");
 		GenericEntityResponse<Producto> res = new GenericEntityResponse<>();
 		try {
-			Producto videojuego = new Producto();
+			Producto producto = new Producto();
 			Connection conn = ConexionPostgres.getConnecion();
 			log.info("::::[getOneById]::::Conexion CREADO correctamente::::");
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_ID);
@@ -268,17 +268,17 @@ public class DaoProductoImpl implements IRepoVideojuego {
 			log.info("::::[getOneById]::::ResultSet CREADO correctamente::::");
 			log.info("::::[getOneById]::::Interpretando Data recibida::::");
 			while(rs.next()) {
-				videojuego.setId(rs.getInt(COL_ID));
-				videojuego.setNombre(rs.getString(COL_NOMBRE));
-				videojuego.setCategoria(new Categoria(rs.getInt(COL_CATEGORIA)));
-				videojuego.setPrecio( (float) rs.getDouble(COL_PRECIO));
-				videojuego.setFechaDeLanzamiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_LANZAMIENTO)));
-				videojuego.setDesarrolladora(new Desarrolladora(rs.getInt(COL_DESARROLLADORA)));
-				videojuego.setImg(new Img(rs.getInt(COL_IMG)));
-				videojuego.setCantidadDisponible(rs.getInt(COL_CANTIDAD_DISPONIBLE));
-				videojuego.setPlataforma(new Plataforma(rs.getInt(COL_PLATAFORMA)));
-				videojuego.setDescripcion(rs.getString(COL_DESCRIPCION));
-				videojuego.setFechaPublicacion(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_PUBLICACION)));
+				producto.setId(rs.getInt(COL_ID));
+				producto.setNombre(rs.getString(COL_NOMBRE));
+				producto.setCategoria(new Categoria(rs.getInt(COL_CATEGORIA)));
+				producto.setPrecio( (float) rs.getDouble(COL_PRECIO));
+				producto.setFechaDeLanzamiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_LANZAMIENTO)));
+				producto.setDesarrolladora(new Desarrolladora(rs.getInt(COL_DESARROLLADORA)));
+				producto.setImg(new Img(rs.getInt(COL_IMG)));
+				producto.setCantidadDisponible(rs.getInt(COL_CANTIDAD_DISPONIBLE));
+				producto.setPlataforma(new Plataforma(rs.getInt(COL_PLATAFORMA)));
+				producto.setDescripcion(rs.getString(COL_DESCRIPCION));
+				producto.setFechaPublicacion(DateUtils.convertTimeStampToDate(rs.getTimestamp(COL_FECHA_PUBLICACION)));
 			}
 			log.info("::::[getOneById]::::Fin interpretando Data recibida::::");
 			rs.close();
@@ -290,7 +290,7 @@ public class DaoProductoImpl implements IRepoVideojuego {
 			log.info("::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
 			res.setCodigo(Constantes.SUCCES);
 			res.setMensaje(Constantes.OK);
-			res.setEntity(videojuego);
+			res.setEntity(producto);
 		} catch (SQLException e) {
 			log.info("::::[ERROR]::::[insert]::::Error de SQL en la implementacion del DAO::::");
 			log.info("::::[ERROR]::::[insert]::::Mensaje::::" + e.getMessage() + "::::");
@@ -316,7 +316,7 @@ public class DaoProductoImpl implements IRepoVideojuego {
 	@Override
 	public GenericEntityResponse<List<Producto>> getAll() {
 		log.info("::::[Incio]::::[getAll]::::Iniciando implementacion del DAO para los roles::::");
-		Producto videojuego;
+		Producto producto;
 		List<Producto> ls = new ArrayList<>();
 		GenericEntityResponse<List<Producto>> res = new GenericEntityResponse<>();
 		Connection conn;
@@ -332,18 +332,19 @@ public class DaoProductoImpl implements IRepoVideojuego {
 			log.info("::::[getAll]::::ResultSet CREADO correctamente::::");
 			log.info("::::[getAll]::::Interpretando Data recibida::::");
 			while (rs.next()) {
-				videojuego = new Producto();
-				videojuego.setId(rs.getInt(COL_ID));
-				videojuego.setNombre(rs.getString(COL_NOMBRE));
-				videojuego.setCategoria(new Categoria(rs.getInt(COL_CATEGORIA)));
-				videojuego.setPrecio( (float) rs.getDouble(COL_PRECIO));
-				videojuego.setFechaDeLanzamiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_LANZAMIENTO)));
-				videojuego.setDesarrolladora(new Desarrolladora(rs.getInt(COL_DESARROLLADORA)));
-				videojuego.setImg(new Img(rs.getInt(COL_IMG)));
-				videojuego.setCantidadDisponible(rs.getInt(COL_CANTIDAD_DISPONIBLE));
-				videojuego.setPlataforma(new Plataforma(rs.getInt(COL_PLATAFORMA)));
-				videojuego.setDescripcion(rs.getString(COL_DESCRIPCION));
-				ls.add(videojuego);
+				producto = new Producto();
+				producto.setId(rs.getInt(COL_ID));
+				producto.setNombre(rs.getString(COL_NOMBRE));
+				producto.setCategoria(new Categoria(rs.getInt(COL_CATEGORIA)));
+				producto.setPrecio( (float) rs.getDouble(COL_PRECIO));
+				producto.setFechaDeLanzamiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_LANZAMIENTO)));
+				producto.setDesarrolladora(new Desarrolladora(rs.getInt(COL_DESARROLLADORA)));
+				producto.setImg(new Img(rs.getInt(COL_IMG)));
+				producto.setCantidadDisponible(rs.getInt(COL_CANTIDAD_DISPONIBLE));
+				producto.setPlataforma(new Plataforma(rs.getInt(COL_PLATAFORMA)));
+				producto.setDescripcion(rs.getString(COL_DESCRIPCION));
+				producto.setFechaPublicacion(DateUtils.convertTimeStampToDate(rs.getTimestamp(COL_FECHA_PUBLICACION)));
+				ls.add(producto);
 			}
 			log.info("::::[getAll]::::Fin interpretando Data recibida::::");
 			rs.close();
@@ -386,7 +387,7 @@ public class DaoProductoImpl implements IRepoVideojuego {
 		log.info("::::[Incio]::::[getOneById]::::Iniciando implementacion del DAO::::");
 		GenericEntityResponse<Producto> res = new GenericEntityResponse<>();
 		try {
-			Producto videojuego = new Producto();
+			Producto producto = new Producto();
 			Connection conn = ConexionPostgres.getConnecion();
 			log.info("::::[getOneById]::::Conexion CREADO correctamente::::");
 			PreparedStatement stmt = ConexionPostgres.getPreparedStatement(conn, SQL_SELECT_BY_NOMBRE);
@@ -399,16 +400,17 @@ public class DaoProductoImpl implements IRepoVideojuego {
 			log.info("::::[getOneById]::::ResultSet CREADO correctamente::::");
 			log.info("::::[getOneById]::::Interpretando Data recibida::::");
 			while(rs.next()) {
-				videojuego.setId(rs.getInt(COL_ID));
-				videojuego.setNombre(rs.getString(COL_NOMBRE));
-				videojuego.setCategoria(new Categoria(rs.getInt(COL_CATEGORIA)));
-				videojuego.setPrecio( (float) rs.getDouble(COL_PRECIO));
-				videojuego.setFechaDeLanzamiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_LANZAMIENTO)));
-				videojuego.setDesarrolladora(new Desarrolladora(rs.getInt(COL_DESARROLLADORA)));
-				videojuego.setImg(new Img(rs.getInt(COL_IMG)));
-				videojuego.setCantidadDisponible(rs.getInt(COL_CANTIDAD_DISPONIBLE));
-				videojuego.setPlataforma(new Plataforma(rs.getInt(COL_PLATAFORMA)));
-				videojuego.setDescripcion(rs.getString(COL_DESCRIPCION));
+				producto.setId(rs.getInt(COL_ID));
+				producto.setNombre(rs.getString(COL_NOMBRE));
+				producto.setCategoria(new Categoria(rs.getInt(COL_CATEGORIA)));
+				producto.setPrecio( (float) rs.getDouble(COL_PRECIO));
+				producto.setFechaDeLanzamiento(DateUtils.convertirDateSQLToDateJava(rs.getDate(COL_FECHA_LANZAMIENTO)));
+				producto.setDesarrolladora(new Desarrolladora(rs.getInt(COL_DESARROLLADORA)));
+				producto.setImg(new Img(rs.getInt(COL_IMG)));
+				producto.setCantidadDisponible(rs.getInt(COL_CANTIDAD_DISPONIBLE));
+				producto.setPlataforma(new Plataforma(rs.getInt(COL_PLATAFORMA)));
+				producto.setDescripcion(rs.getString(COL_DESCRIPCION));
+				producto.setFechaPublicacion(DateUtils.convertTimeStampToDate(rs.getTimestamp(COL_FECHA_PUBLICACION)));
 			}
 			log.info("::::[getOneById]::::Fin interpretando Data recibida::::");
 			rs.close();
@@ -420,7 +422,7 @@ public class DaoProductoImpl implements IRepoVideojuego {
 			log.info("::::[getOneById]::::Enviando repsuesta del implementacion del DAO::::");
 			res.setCodigo(Constantes.SUCCES);
 			res.setMensaje(Constantes.OK);
-			res.setEntity(videojuego);
+			res.setEntity(producto);
 		} catch (SQLException e) {
 			log.info("::::[ERROR]::::[insert]::::Error de SQL en la implementacion del DAO::::");
 			log.info("::::[ERROR]::::[insert]::::Mensaje::::" + e.getMessage() + "::::");

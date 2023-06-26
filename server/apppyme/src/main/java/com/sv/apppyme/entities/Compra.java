@@ -18,4 +18,9 @@ public class Compra {
 		super();
 	}
 
+	public Compra(int id) {
+		super();
+		this.id = id;
+	}
+
 }

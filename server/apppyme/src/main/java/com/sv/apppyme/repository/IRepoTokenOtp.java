@@ -6,7 +6,7 @@ import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.TokenOTP;
 
-public interface IRepoTokenOTP {
+public interface IRepoTokenOtp {
 	
 	
 	/**

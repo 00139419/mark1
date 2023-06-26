@@ -110,10 +110,10 @@ public class DaoDesarrolladoraImpl implements IRepoDesarrolladora {
 			log.info("::::[update]:::: Seteando valores al PreparedStatment... ::::");
 			stmt.setString(1, desarrolladora.getNombre());
 			log.info("::::[update]::::Valor ____________________ 1::::Nombre:::Value:::" + desarrolladora.getNombre() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(2, desarrolladora.getId());
-			log.info("::::[update]::::Valor ____________________ 2::::ID:::Value:::" + desarrolladora.getId() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(3, desarrolladora.getImg().getId());
-			log.info("::::[update]::::Valor ____________________ 3::::Id img:::Value:::" + desarrolladora.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(2, desarrolladora.getImg().getId());
+			log.info("::::[update]::::Valor ____________________ 2::::Id img:::Value:::" + desarrolladora.getImg().getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(3, desarrolladora.getId());
+			log.info("::::[update]::::Valor ____________________ 3::::ID:::Value:::" + desarrolladora.getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");

@@ -18,10 +18,15 @@ public class CabeceraFac {
 	private Date fecha;
 	private String MetPag;
 	private String nombre;
-	private double total;
+	private float total;
 
 	public CabeceraFac() {
 		super();
+	}
+
+	public CabeceraFac(int id) {
+		super();
+		this.id = id;
 	}
 
 }

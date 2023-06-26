@@ -9,6 +9,7 @@ public class Plataforma {
 
 	private int id;
 	private String nombre;
+	private Img img;
 
 	public Plataforma() {
 		super();

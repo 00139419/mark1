@@ -16,8 +16,8 @@ import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.TokenOTP;
 import com.sv.apppyme.entities.User;
 import com.sv.apppyme.exception.SrvValidacionException;
-import com.sv.apppyme.repository.IRepoTokenOTP;
-import com.sv.apppyme.repository.IRepoUsuario;
+import com.sv.apppyme.repository.IRepoTokenOtp;
+import com.sv.apppyme.repository.IRepoUser;
 import com.sv.apppyme.repository.impl.DaoTokenOtpImpl;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.ObjectMapperUtils;
@@ -27,10 +27,10 @@ import com.sv.apppyme.utils.TokenManager;
 public class srvTokenimpl implements com.sv.apppyme.services.ITokenOTP {
 
 	@Autowired
-	IRepoTokenOTP srvTokenOTP;
+	IRepoTokenOtp srvTokenOTP;
 
 	@Autowired
-	IRepoUsuario userDao;
+	IRepoUser userDao;
 	
 	@Autowired
 	TokenManager tokenManager;

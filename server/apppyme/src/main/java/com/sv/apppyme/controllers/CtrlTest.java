@@ -126,8 +126,8 @@ public class CtrlTest {
 	}
 	
 	
-	@PostMapping(value = "/tablaCategoria", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SuperGenericResponse> tablaCat() {
+	@PostMapping(value = "/tablaCategoria", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SuperGenericResponse> tablaCategoria() {
 		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
 		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
 		SuperGenericResponse res = new SuperGenericResponse();
@@ -142,14 +142,31 @@ public class CtrlTest {
 			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
 		}
 	}
-	
-	@PostMapping(value = "/tablaVideoJuego", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SuperGenericResponse> tablaVideojuego() {
+
+	@PostMapping(value = "/tablaPlataforma", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SuperGenericResponse> tablaPlataforma() {
 		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
 		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
-			res = srvTestTablasImpl.testVideojuego();
+			res = srvTestTablasImpl.testPlataforma();
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
+			return new ResponseEntity<SuperGenericResponse>(
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
+		} finally {
+			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
+		}
+	}
+
+	@PostMapping(value = "/tablaDesarrolladora", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SuperGenericResponse> tablaDesarrolladora() {
+		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
+		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
+		SuperGenericResponse res = new SuperGenericResponse();
+		try {
+			res = srvTestTablasImpl.testDesarrolladora();
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
@@ -160,13 +177,134 @@ public class CtrlTest {
 		}
 	}
 	
-	@PostMapping(value = "/tablaReporte", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SuperGenericResponse> tablaReporte() {
+	@PostMapping(value = "/tablaImg", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SuperGenericResponse> tablaImg() {
 		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
 		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
 		SuperGenericResponse res = new SuperGenericResponse();
 		try {
-			res = srvTestTablasImpl.testReporte();
+			res = srvTestTablasImpl.testImg();
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
+			return new ResponseEntity<SuperGenericResponse>(
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
+		} finally {
+			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
+		}
+	}
+
+	@PostMapping(value = "/tablaRol", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SuperGenericResponse> tablaRol() {
+		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
+		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
+		SuperGenericResponse res = new SuperGenericResponse();
+		try {
+			res = srvTestTablasImpl.testRol();
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
+			return new ResponseEntity<SuperGenericResponse>(
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
+		} finally {
+			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
+		}
+	}
+	
+	@PostMapping(value = "/tablaTokeOtp", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SuperGenericResponse> tablaTokeOtp() {
+		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
+		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
+		SuperGenericResponse res = new SuperGenericResponse();
+		try {
+			res = srvTestTablasImpl.testTokenOtp();
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
+			return new ResponseEntity<SuperGenericResponse>(
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
+		} finally {
+			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
+		}
+	}
+
+
+	@PostMapping(value = "/tablaUser", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SuperGenericResponse> tablaUser() {
+		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
+		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
+		SuperGenericResponse res = new SuperGenericResponse();
+		try {
+			res = srvTestTablasImpl.testUser();
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
+			return new ResponseEntity<SuperGenericResponse>(
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
+		} finally {
+			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
+		}
+	}
+	
+	@PostMapping(value = "/tablaCompra", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SuperGenericResponse> tabaCompra() {
+		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
+		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
+		SuperGenericResponse res = new SuperGenericResponse();
+		try {
+			res = srvTestTablasImpl.testCompra();
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
+			return new ResponseEntity<SuperGenericResponse>(
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
+		} finally {
+			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
+		}
+	}
+	
+	@PostMapping(value = "/tablaCabeceraFac", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SuperGenericResponse> tabaCabeceraFac() {
+		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
+		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
+		SuperGenericResponse res = new SuperGenericResponse();
+		try {
+			res = srvTestTablasImpl.testCabeceraFac();
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
+			return new ResponseEntity<SuperGenericResponse>(
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
+		} finally {
+			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
+		}
+	}
+	
+	@PostMapping(value = "/tablaDetalleFac", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SuperGenericResponse> tablaDetalleFac() {
+		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
+		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
+		SuperGenericResponse res = new SuperGenericResponse();
+		try {
+			res = srvTestTablasImpl.testDetalleFac();
+			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
+		} catch (SrvValidacionException e) {
+			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");
+			return new ResponseEntity<SuperGenericResponse>(
+					new GenericEntityResponse<>(e.getCodigo(), e.getMensaje()), HttpStatus.BAD_REQUEST);
+		} finally {
+			log.info("***************** Fin Servicio obtener Usuario by Username *****************");
+		}
+	}
+
+	
+	@PostMapping(value = "/tablaProducto", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SuperGenericResponse> tablaVideojuego() {
+		log.info("***************** Inicio Servicio obtener Usuario por username *****************");
+		log.info("::::[INCIO]::::[obtenerUsuarioByUsername]::::Iniciando controlador de test::::");
+		SuperGenericResponse res = new SuperGenericResponse();
+		try {
+			res = srvTestTablasImpl.testProducto();
 			return new ResponseEntity<SuperGenericResponse>(res, HttpStatus.OK);
 		} catch (SrvValidacionException e) {
 			log.info("::::[FIN]:::[ERROR]::::[obtenerUsuarioByUsername]::::fin controlador de test::::");

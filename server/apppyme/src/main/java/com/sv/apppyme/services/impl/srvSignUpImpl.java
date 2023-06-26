@@ -22,8 +22,8 @@ import com.sv.apppyme.reports.repository.IReportManagerJasper;
 import com.sv.apppyme.reports.repository.impl.srvReportManagerJasperimpl;
 import com.sv.apppyme.reports.utils.DocumentTypesToGenerated;
 import com.sv.apppyme.repository.IRepoRol;
-import com.sv.apppyme.repository.IRepoUsuario;
-import com.sv.apppyme.repository.impl.DaoUsuarioImpl;
+import com.sv.apppyme.repository.IRepoUser;
+import com.sv.apppyme.repository.impl.DaoUserImpl;
 import com.sv.apppyme.services.ISignUp;
 import com.sv.apppyme.services.ITokenOTP;
 import com.sv.apppyme.utils.Constantes;
@@ -38,7 +38,7 @@ public class srvSignUpImpl implements ISignUp {
 	IRepoRol rolDao;
 	
 	@Autowired
-	IRepoUsuario userDao;
+	IRepoUser userDao;
 	
 	@Autowired
 	ObjectMapper mapper;
@@ -165,7 +165,7 @@ public class srvSignUpImpl implements ISignUp {
 	public SuperGenericResponse esCuentaActiva(String username) throws SrvValidacionException {
 		log.info("::::[INICIO]::::[obtenerUsuarioByUsername]:::Iniciando servicio para verificar que la cuenta del usuario este activa::::");
 		
-		userDao = new DaoUsuarioImpl();
+		userDao = new DaoUserImpl();
 		User user = userDao.getOneByEmail(username).getEntity();
 		log.info("::::[obtenerUsuarioByUsername]:::Usuario encontrado::::value::::" + user.toString()  + "::::");
 		

@@ -11,8 +11,8 @@ public class DetalleFac {
 	private CabeceraFac cabeceraFac;
 	private Producto producto;
 	private int cantidad;
-	private double precioUnitario;
-	private double subTotal;
+	private float precioUnitario;
+	private float subTotal;
 
 	public DetalleFac() {
 		super();

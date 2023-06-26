@@ -16,6 +16,7 @@ import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.Img;
 import com.sv.apppyme.repository.IRepoImg;
 import com.sv.apppyme.utils.Constantes;
+import com.sv.apppyme.utils.DateUtils;
 import com.sv.apppyme.utils.Log4jUtils;
 
 @Repository
@@ -32,7 +33,7 @@ public class DaoImgImpl implements IRepoImg{
 	public static final String COL_FECHA = "fecha";
 	
 	// Consultas de la tabla
-	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_IMG + "(" + COL_BASE64 + ", " + COL_FECHA + ")" + " VALUES (?)";
+	public static final String SQL_INSERT = "INSERT INTO " + DB_TABLA_IMG + "(" + COL_BASE64 + ", " + COL_FECHA + ")" + " VALUES (?,?)";
 	public static final String SQL_SELECT = "SELECT * FROM " + DB_TABLA_IMG;
 	public static final String SQL_SELECT_BY_ID = "SELECT * FROM " + DB_TABLA_IMG 
 			+ " WHERE " 
@@ -60,6 +61,8 @@ public class DaoImgImpl implements IRepoImg{
 			log.info("::::[insert]:::: Seteando valores al PreparedStatment... ::::");
 			stmt.setString(1, img.getBase64());
 			log.info("::::[insert]::::Valor ____________________ 1::::Nombre:::Value:::" + img.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setTimestamp(2, DateUtils.convertDateToTimeStamp(img.getFecha()));
+			log.info("::::[insert]::::Valor ____________________ 2::::Fecha:::Value:::" + DateUtils.convertDateToTimeStamp(img.getFecha()) + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[insert]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[insert]::::stmt ejecutado correctamente::::");
@@ -110,8 +113,10 @@ public class DaoImgImpl implements IRepoImg{
 			log.info("::::[update]:::: Seteando valores al PreparedStatment... ::::");
 			stmt.setString(1, img.getBase64());
 			log.info("::::[update]::::Valor ____________________ 1::::base64:::Value:::" + img.getBase64() + "::::" + "Seteado CORRECTAMENTE:::");
-			stmt.setInt(2, img.getId());
-			log.info("::::[update]::::Valor ____________________ 2::::ID:::Value:::" + img.getId() + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setTimestamp(2, DateUtils.convertDateToTimeStamp(img.getFecha()));
+			log.info("::::[update]::::Valor ____________________ 2::::Fecha:::Value:::" + DateUtils.convertDateToTimeStamp(img.getFecha()) + "::::" + "Seteado CORRECTAMENTE:::");
+			stmt.setInt(3, img.getId());
+			log.info("::::[update]::::Valor ____________________ 3::::ID:::Value:::" + img.getId() + "::::" + "Seteado CORRECTAMENTE:::");
 			log.info("::::[update]:::SQL generado:::" + stmt.toString() + "::::");
 			int resultado = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[update]::::stmt ejecutado correctamente::::");
@@ -204,6 +209,7 @@ public class DaoImgImpl implements IRepoImg{
 			while(rs.next()) {
 				img.setId(rs.getInt(COL_ID));
 				img.setBase64(rs.getString(COL_BASE64));
+				img.setFecha(DateUtils.convertTimeStampToDate(rs.getTimestamp(COL_FECHA)));
 			}
 			log.info("::::[getOneById]::::Fin interpretando Data recibida::::");
 			rs.close();
@@ -262,6 +268,7 @@ public class DaoImgImpl implements IRepoImg{
 				img = new Img();
 				img.setId(rs.getInt(COL_ID));
 				img.setBase64(rs.getString(COL_BASE64));
+				img.setFecha(DateUtils.convertTimeStampToDate(rs.getTimestamp(COL_FECHA)));
 				ls.add(img);
 			}
 			log.info("::::[getAll]::::Fin interpretando Data recibida::::");

@@ -15,13 +15,13 @@ import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
 import com.sv.apppyme.entities.TokenOTP;
 import com.sv.apppyme.entities.User;
-import com.sv.apppyme.repository.IRepoTokenOTP;
+import com.sv.apppyme.repository.IRepoTokenOtp;
 import com.sv.apppyme.utils.Constantes;
 import com.sv.apppyme.utils.DateUtils;
 import com.sv.apppyme.utils.Log4jUtils;
 
 @Repository
-public class DaoTokenOtpImpl implements IRepoTokenOTP {
+public class DaoTokenOtpImpl implements IRepoTokenOtp {
 
 	Logger log = Logger.getLogger(getClass());
 
@@ -312,9 +312,9 @@ public class DaoTokenOtpImpl implements IRepoTokenOTP {
 			
 			log.info("::::[delete]:::SQL generado:::" + stmt.toString() + "::::");
 
-			ResultSet rs = ConexionPostgres.executeQuery(stmt);
+			int rs = ConexionPostgres.updateQuery(stmt);
 			log.info("::::[delete]::::Datos guardado correctamente::::");
-			log.info("::::[delete]::::Cantidad de datos eliminados::::value::::" + rs.getFetchSize() + "::::");
+			log.info("::::[delete]::::Cantidad de datos eliminados::::value::::" + rs + "::::");
 			res.setCodigo(Constantes.SUCCES);
 			res.setMensaje(Constantes.OK);
 			log.info("::::[delete]::::Respuesta creada correctamente::::");

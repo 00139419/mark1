@@ -24,11 +24,9 @@ public class WebSecurityConfig {
 	
 	@Autowired
 	JwtAuthorizationFilter authorizationFilter;
-
-	@SuppressWarnings("deprecation")
+	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager manager) throws Exception {
-		
 		JwtAuthenticationFilter authenticationFilter = new JwtAuthenticationFilter();
 		authenticationFilter.setAuthenticationManager(manager);
 		authenticationFilter.setFilterProcessesUrl("/apppyme/api/srv/login");
@@ -53,7 +51,7 @@ public class WebSecurityConfig {
 	}
 	
 	@Bean
-	AuthenticationManager authmManager(HttpSecurity httpSecurity) throws NoSuchAlgorithmException, Exception {
+	AuthenticationManager authManager(HttpSecurity httpSecurity) throws NoSuchAlgorithmException, Exception {
 		return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
 				.userDetailsService(detailsService)
 				.passwordEncoder(passwordEncoder())

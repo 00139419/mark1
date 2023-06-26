@@ -4,17 +4,15 @@ import java.util.List;
 
 import com.sv.apppyme.dto.GenericEntityResponse;
 import com.sv.apppyme.dto.SuperGenericResponse;
-import com.sv.apppyme.entities.Producto;
+import com.sv.apppyme.entities.Booking;
 
-public interface IRepoVideojuego {
-	
-	/**
+public interface IRepoBooking {/**
 	 * 
 	 * @param
 	 * @author dm420
 	 * @return una respuesta con el status de la operacion INSERT en la base de datos
 	 */
-	SuperGenericResponse insert(Producto videojuego);
+	SuperGenericResponse insert(Booking booking);
 	
 	/**
 	 * 
@@ -22,7 +20,7 @@ public interface IRepoVideojuego {
 	 * @author dm420
 	 * @return una respuesta con el status de la operacion UPDATE en la base de datos para cierto registro
 	 */
-	SuperGenericResponse update(Producto videojuego);
+	SuperGenericResponse update(Booking booking);
 	
 	/**
 	 * 
@@ -30,7 +28,7 @@ public interface IRepoVideojuego {
 	 * @author dm420
 	 * @return una respuesta con el status de la operacion DELETE en la base de datos para cierto registro
 	 */
-	SuperGenericResponse delete(Producto videojuego);
+	SuperGenericResponse delete(Booking booking);
 	
 	/**
 	 * 
@@ -38,20 +36,13 @@ public interface IRepoVideojuego {
 	 * @author dm420
 	 * @return un registro de la base de datos, a traves de su ID
 	 */
-	GenericEntityResponse<Producto> getOneById(int id);
-	
-	/**
-	 * 
-	 * @param
-	 * @author dm420
-	 * @return un registro de la base de datos, a traves de su ID
-	 */
-	GenericEntityResponse<Producto> getOneByNombre(String nombre);
+	GenericEntityResponse<Booking> getOneById(int id);
 	
 	/**
 	 * 
 	 * @author dm420
 	 * @return todos los registros de la tabla en la base de datos
 	 */
-	GenericEntityResponse<List<Producto>> getAll();
+	GenericEntityResponse<List<Booking>> getAll();
+
 }
